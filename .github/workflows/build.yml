@@ -1,0 +1,67 @@
+name: Build
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        directory: [vt52] # TODO remove the matrix
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v6
+
+      - name: Install OpenSCAD
+        run: sudo apt install openscad
+
+      - name: Install BOSL
+        run: |
+          wget --output-document /tmp/bosl.tar.gz https://github.com/revarbat/BOSL/archive/refs/tags/v1.0.3.tar.gz
+          mkdir -p $HOME/.local/share/OpenSCAD/libraries/BOSL
+          tar -xzf /tmp/bosl.tar.gz --directory=$HOME/.local/share/OpenSCAD/libraries/BOSL --strip-components=1
+
+      - name: Build the model
+        run: |
+          make -C ${{ matrix.directory }}
+
+      # Generating PNG doesn't work without X: https://github.com/openscad/openscad/issues/1798
+      - name: Build the renders
+        if: github.ref == 'refs/heads/main'
+        run: |
+          Xvfb :99 &
+          export DISPLAY=:99
+          make -C ${{ matrix.directory }} preview
+
+      - name: Commit the renders
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git fetch origin assets
+          git checkout assets
+          git add ${{ matrix.directory }}
+          git commit -m "Update renders for ${{ matrix.directory }}" || true
+
+      - name: Push the assets branch
+        if: github.ref == 'refs/heads/main'
+        uses: nick-fields/retry@v4
+        with:
+          max_attempts: 10
+          timeout_seconds: 20
+          retry_wait_seconds: 3
+          command: |
+            git fetch origin assets
+            git rebase origin/assets
+            git push origin assets
