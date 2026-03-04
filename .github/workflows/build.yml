@@ -32,6 +32,12 @@ jobs:
           mkdir -p $HOME/.local/share/OpenSCAD/libraries/BOSL
           tar -xzf /tmp/bosl.tar.gz --directory=$HOME/.local/share/OpenSCAD/libraries/BOSL --strip-components=1
 
+      - name: Install BOSL2
+        run: |
+          wget --output-document /tmp/bosl2.tar.gz https://github.com/BelfrySCAD/BOSL2/archive/refs/heads/master.tar.gz
+          mkdir -p $HOME/.local/share/OpenSCAD/libraries/BOSL2
+          tar -xzf /tmp/bosl2.tar.gz --directory=$HOME/.local/share/OpenSCAD/libraries/BOSL2 --strip-components=1
+
       - name: Build the model
         run: |
           make -C ${{ matrix.directory }}
