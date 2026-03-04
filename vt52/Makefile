@@ -2,7 +2,7 @@ include ../common/openscad.mk
 
 .SUFFIXES: .scad .stl
 
-TARGETS=body_xy.stl
+TARGETS=body.stl
 
 all: $(TARGETS)
 
