@@ -39,3 +39,10 @@ x = (kbd_front_x * tan(KBD_TOP_A) - KBD_FRONT_Y - SCR_TOP_X * cotan(SCR_FRONT_A)
 
 kbd_back_x = (kbd_front_x * tan(KBD_TOP_A) - KBD_FRONT_Y - SCR_TOP_X * cotan(SCR_FRONT_A) + BODY_Y) / (tan(KBD_TOP_A) - cotan(SCR_FRONT_A));
 kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_front_x * tan(KBD_TOP_A) + KBD_FRONT_Y;
+
+// VT50_FMPS, Sheet 3, Sheet 19
+// The YZ profile is slightly different for different X, see Figure 3 - Figure 16
+// TODO use separate YZ profile values for different X
+X182_TOP_HALF = 232.5 - 20; // Sheet 35, Data List #7, approx. Z value at Y = BODY_Y = 282; subtract X182_CORNER_R = 20
+X182_BOTTOM_HALF = 262.5; // Sheet 29, Data List #1, approx. Z value at X = SCR_TOP_X = 182
+X182_CORNER_R = 20; // Sheet 6, Section AA-AA
