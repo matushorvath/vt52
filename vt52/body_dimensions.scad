@@ -66,3 +66,9 @@ YZ_BOTTOM_HALF = [
     262.78, // X = 200
 ];
 
+// VT50_FMPS, Sheet 5
+ZX_FRONT_CORNER_R = 20; // Sheet 5, Bottom View H-H
+
+// Empirically tuned to match keyboard front rounded corners to the body sides
+KBD_FRONT_CORNER_ADJ_BOTTOM_Y = 0.55; // added to YZ_BOTTOM_HALF[0] when positioning bottom of the corner
+KBD_FRONT_CORNER_ADJ_TOP_Y = 0.2; // additional shift when positioning top of the corner

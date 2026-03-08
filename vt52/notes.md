@@ -32,3 +32,11 @@ VT50 Field Maintenance Print Set
 Digital Equipment Corporation, 1975-02-19
 https://manx-docs.org/details.php/1,21903
 md5 f75c52b84aa6dbe546e11d6d0cf669f5
+
+
+Design Notes
+------------
+
+I could probably directly use curves from the data tables, with smoothing,
+instead of trying to model the curves analytically.
+ - body_yz_half_plane could return a smoothed path based on the data tables

@@ -1,5 +1,6 @@
 include <common.scad>
 include <body_planes.scad>
+include <body_details.scad>
 
 include <BOSL2/std.scad>
 
@@ -13,7 +14,6 @@ module body_xy() {
 }
 
 module body_yz_half() {
-    // TODO use separate YZ profile values for different X, using BOSL2 skin()
     profiles = [
         body_yz_half_plane(YZ_TOP_HALF[0], YZ_BOTTOM_HALF[0], BODY_Y, YZ_TOP_CORNER_R),
         body_yz_half_plane(YZ_TOP_HALF[1], YZ_BOTTOM_HALF[1], BODY_Y, YZ_TOP_CORNER_R),
@@ -37,8 +37,11 @@ module body_yz() {
     }
 }
 
-intersection() {
-    body_xy();
-    body_yz();
-    // TODO body_zx();
+difference() {
+    intersection() {
+        body_xy();
+        body_yz();
+    };
+
+    kbd_front_corners_mask();
 };
