@@ -6,7 +6,7 @@ include <BOSL2/std.scad>
 module body_xy() {
     linear_sweep(
         body_xy_plane(),
-        height = 2 * X182_BOTTOM_HALF,
+        height = 2 * max(YZ_BOTTOM_HALF),
         orient = UP,
         center = true
     );
@@ -14,9 +14,18 @@ module body_xy() {
 
 module body_yz_half() {
     // TODO use separate YZ profile values for different X, using BOSL2 skin()
-    linear_sweep(
-        body_yz_half_plane(X182_TOP_HALF, X182_BOTTOM_HALF, BODY_Y, X182_CORNER_R),
-        height = 2 * X182_BOTTOM_HALF,
+    profiles = [
+        body_yz_half_plane(YZ_TOP_HALF[0], YZ_BOTTOM_HALF[0], BODY_Y, YZ_TOP_CORNER_R),
+        body_yz_half_plane(YZ_TOP_HALF[1], YZ_BOTTOM_HALF[1], BODY_Y, YZ_TOP_CORNER_R),
+        body_yz_half_plane(YZ_TOP_HALF[2], YZ_BOTTOM_HALF[2], BODY_Y, YZ_TOP_CORNER_R),
+        body_yz_half_plane(YZ_TOP_HALF[3], YZ_BOTTOM_HALF[3], BODY_Y, YZ_TOP_CORNER_R),
+        body_yz_half_plane(YZ_TOP_HALF[4], YZ_BOTTOM_HALF[4], BODY_Y, YZ_TOP_CORNER_R),
+    ];
+
+    skin(
+        profiles,
+        z = YZ_X,
+        slices = 10,
         orient = RIGHT
     );
 }

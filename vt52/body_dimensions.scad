@@ -42,6 +42,27 @@ kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_front_x * tan(KBD_TOP_A) + KBD_FR
 
 // VT50_FMPS, Sheet 3, Sheet 19
 // The YZ profile is slightly different for different X, see Figure 3 - Figure 16
-X182_TOP_HALF = 232.5 - 20; // Sheet 35, Data List #7, approx. Z value at Y = BODY_Y = 282; subtract X182_CORNER_R = 20
-X182_BOTTOM_HALF = 262.5; // Sheet 29, Data List #1, approx. Z value at X = SCR_TOP_X = 182
-X182_CORNER_R = 20; // Sheet 6, Section AA-AA
+
+YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
+
+// X values for YZ_* arrays below
+YZ_X = [0, 50, 100, 150, 200];
+
+// Approx. Z value at Y = BODY_Y ~= 285 including size of the rounded corner YZ_TOP_CORNER_R
+YZ_TOP_HALF = [
+    230.00, // X = 0; Sheet 31, Data List #3
+    230.57, // X = 50; Sheet 31, Data List #4
+    231.05, // X = 100; Sheet 31, Data List #5
+    231.43, // X = 150; Sheet 31, Data List #6
+    231.71, // X = 200; Sheet 31, Data List #7
+];
+
+// Approx. Z value at given X; Sheet 29, Data List #1
+YZ_BOTTOM_HALF = [
+    258.49, // X = 0
+    259.91, // X = 50
+    261.10, // X = 100
+    262.06, // X = 150
+    262.78, // X = 200
+];
+
