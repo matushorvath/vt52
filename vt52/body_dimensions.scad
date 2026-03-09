@@ -72,3 +72,13 @@ ZX_FRONT_CORNER_R = 20; // Sheet 5, Bottom View H-H
 // Empirically tuned to match keyboard front rounded corners to the body sides
 KBD_FRONT_CORNER_ADJ_BOTTOM_Y = 0.55; // added to YZ_BOTTOM_HALF[0] when positioning bottom of the corner
 KBD_FRONT_CORNER_ADJ_TOP_Y = 0.2; // additional shift when positioning top of the corner
+
+// Decorative bezel on cerain edges
+// Sheet 2, Section AD-AD, Section AE-AE, Section AH-AH
+// TODO apply decorative bezel
+//  - front top edge of keyboard AD-AD
+//  - side edges of the keyboard !REF
+//  - front top edge of the body AE-AE
+//  - side edges of the body AH-AH
+DEC_BEZEL_HEIGHT = .75;
+DEC_BEZEL_R = 1.5;
