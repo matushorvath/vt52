@@ -31,6 +31,16 @@ SCR_BACK_SCREEN_X = 218;
 SCR_BACK_SCREEN_Y = 148;
 
 // TODO define the step, is it 3 deep (tangential to the surface)? not clear in K-K
+// update: it's probably the grey keyboard 
 SCR_BOTTOM_STEP_X = 142;
 
 // TODO louvres on top of screen bezel, Sheet 4, View G-G
+
+// TODO pattern on bottom of screen bezel, Sheet 8
+//  - indentation right after keyboard starts Section CI-CI
+//    - round corners 2.5R 2 places View I-I
+//    - indentation depth .5 tangential, length 20 X, Section CG-CG
+//  - ribs, 6 pieces, tangential to the complex shape
+//    - defined in Section CF-CF (back) Section CH-CH (front, including the step for indentation)
+//    - parallel with X
+//      - try either BOSL2 placement, or maybe extrude a 2d shape without the side angles which makes it parallel with X
