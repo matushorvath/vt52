@@ -2,10 +2,10 @@ include <common.scad>
 include <body_dimensions.scad>
 
 // Sheet 2, View E-E
-SCR_FRONT_TL_A = 12;
-SCR_FRONT_TR_A = 5;
-SCR_FRONT_BL_A = 5;
-SCR_FRONT_BR_A = 5;
+SCR_FRONT_TL_R = 12;
+SCR_FRONT_TR_R = 5;
+SCR_FRONT_BL_R = 5;
+SCR_FRONT_BR_R = 5;
 
 SCR_BACK_CORNER_A = 10;
 
