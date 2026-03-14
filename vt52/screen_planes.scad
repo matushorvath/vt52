@@ -21,9 +21,9 @@ function screen_front_plane() =
             SCR_FRONT_BR_R,
         ]
     )
-    // $fn must match between screen_front_plane and screen_back_plane
+    // $fn must match between screen_front_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
-    round_corners(shape, radius=radii, $fn=200);
+    round_corners(shape, radius=radii);
 
 function screen_back_plane() =
     let(
@@ -46,9 +46,9 @@ function screen_back_plane() =
         ]
     )
     // TODO add a rounded CRT screen effect to the sides, but number of vertices must match screen_front_plane
-    // $fn must match between screen_front_plane and screen_back_plane
+    // $fn must match between screen_front_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
-    round_corners(shape, radius=radii, $fn=200);
+    round_corners(shape, radius=radii);
 
 //polygon(screen_front_plane());
 //polygon(screen_back_plane());

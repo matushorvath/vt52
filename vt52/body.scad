@@ -1,7 +1,7 @@
 include <common.scad>
 include <body_details.scad>
+include <body_dimensions.scad>
 include <body_planes.scad>
-include <body_tables.scad>
 include <BOSL2/std.scad>
 
 // TODO texture = "rough" for both body shapes?
@@ -22,13 +22,17 @@ module body_yz_half() {
         body_yz_half_plane(YZ_TOP_HALF[2], YZ_BOTTOM_HALF[2], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X100),
         body_yz_half_plane(YZ_TOP_HALF[3], YZ_BOTTOM_HALF[3], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X150),
         body_yz_half_plane(YZ_TOP_HALF[4], YZ_BOTTOM_HALF[4], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X200),
-        // TODO add 250 and 300 at least
+        body_yz_half_plane(YZ_TOP_HALF[5], YZ_BOTTOM_HALF[5], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X250),
+        body_yz_half_plane(YZ_TOP_HALF[6], YZ_BOTTOM_HALF[6], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X300),
+        body_yz_half_plane(YZ_TOP_HALF[7], YZ_BOTTOM_HALF[7], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X350),
+        body_yz_half_plane(YZ_TOP_HALF[8], YZ_BOTTOM_HALF[8], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X400),
+        // TODO decide depth of the model
     ];
 
     skin(
         profiles,
         z = YZ_X,
-        slices = 10,
+        slices = 20,
         orient = RIGHT
     );
 }

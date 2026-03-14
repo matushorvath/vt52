@@ -1,4 +1,5 @@
 include <common.scad>
+include <body_tables.scad>
 include <BOSL2/std.scad>
 
 // VT50_FMPS, Sheet 1
@@ -13,7 +14,7 @@ SCR_TOP_X = 182;
 BODY_Y = 282; // Section AF-AF
 
 // Depth of the model
-BODY_BACK_X = 300; // custom
+BODY_BACK_X = 400; // custom
 
 // Calculate missing coordinates
 kbd_front_x = adj_ang_to_opp(KBD_FRONT_Y, KBD_FRONT_A);
@@ -45,24 +46,32 @@ kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_front_x * tan(KBD_TOP_A) + KBD_FR
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 
 // X values for YZ_* arrays below
-YZ_X = [0, 50, 100, 150, 200];
+YZ_X = [0, 50, 100, 150, 200, 250, 300, 350, 400];
 
 // Approx. Z value at Y = BODY_Y ~= 285 including size of the rounded corner YZ_TOP_CORNER_R
 YZ_TOP_HALF = [
-    230.00, // X = 0; Sheet 31, Data List #3
-    230.57, // X = 50; Sheet 31, Data List #4
-    231.05, // X = 100; Sheet 31, Data List #5
-    231.43, // X = 150; Sheet 31, Data List #6
-    231.71, // X = 200; Sheet 31, Data List #7
+    YZ_CURVE_X000[0][1],    // X = 0; Sheet 31, Data List #3
+    YZ_CURVE_X050[0][1],    // X = 50; Sheet 32, Data List #4
+    YZ_CURVE_X100[0][1],    // X = 100; Sheet 33, Data List #5
+    YZ_CURVE_X150[0][1],    // X = 150; Sheet 34, Data List #6
+    YZ_CURVE_X200[0][1],    // X = 200; Sheet 35, Data List #7
+    YZ_CURVE_X250[0][1],    // X = 250; Sheet 36, Data List #8
+    YZ_CURVE_X300[0][1],    // X = 300; Sheet 37, Data List #9
+    YZ_CURVE_X350[0][1],    // X = 350; Sheet 38, Data List #10
+    YZ_CURVE_X400[0][1],    // X = 400; Sheet 39, Data List #11
 ];
 
 // Approx. Z value at given X; Sheet 29, Data List #1
 YZ_BOTTOM_HALF = [
-    258.49, // X = 0
-    259.91, // X = 50
-    261.10, // X = 100
-    262.06, // X = 150
-    262.78, // X = 200
+    258.50000,  // X = 0
+    259.92857,  // X = 50
+    261.11905,  // X = 100
+    262.07143,  // X = 150
+    262.78571,  // X = 200
+    263.26191,  // X = 250
+    263.50000,  // X = 300
+    263.50000,  // X = 350
+    263.29190,  // X = 400
 ];
 
 // VT50_FMPS, Sheet 5
