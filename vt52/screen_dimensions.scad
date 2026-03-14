@@ -13,10 +13,6 @@ SCR_FRONT_LEFT_Z = 222;
 SCR_FRONT_RIGHT_Z = -48;
 SCR_FRONT_CENTER_Z = 87;
 
-SCR_BUG_WIDTH_Z = 4;
-SCR_BUG_FAR_END_X = 194;
-SCR_BUG_HEIGHT = 3; // height tangential to the surface, which is angled at SCR_BOTTOM_A
-
 // Sheet 2, View K-K
 SCR_FRONT_TOP_Y = 264;
 // SCR_FRONT_BOTTOM_Y is defined by kbd_back_x, kbd_back_y
@@ -45,6 +41,10 @@ SCR_PANEL_MARGIN = SCR_PANEL_UNSC_MARGIN / SCALE;
 // TODO define the step, is it 3 deep (tangential to the surface)? not clear in K-K
 // update: it's probably the grey keyboard bezel
 SCR_BOTTOM_STEP_X = 142;
+
+SCR_BUG_WIDTH_Z = 4;
+SCR_BUG_FAR_END_X = 194;
+SCR_BUG_HEIGHT = 3; // height tangential to the surface, which is angled at SCR_BOTTOM_A
 
 // TODO louvres on top of screen bezel, Sheet 4, View G-G
 

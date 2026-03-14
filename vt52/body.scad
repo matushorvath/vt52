@@ -41,12 +41,16 @@ module body_yz() {
     }
 }
 
-xrot(90) // orient the model for easy viewing in OpenSCAD
-difference() {
-    intersection() {
-        body_xy();
-        body_yz();
-    };
+module body() {
+    difference() {
+        intersection() {
+            body_xy();
+            body_yz();
+        };
 
-    kbd_front_corners_mask();
-};
+        kbd_front_corners_mask();
+    };
+}
+
+//xrot(90) // orient the model for easy viewing in OpenSCAD
+//    body();
