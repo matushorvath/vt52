@@ -1,5 +1,4 @@
 include <common.scad>
-include <body.scad> // TODO remove
 include <screen_dimensions.scad>
 include <screen_planes.scad>
 include <BOSL2/std.scad>
@@ -46,10 +45,4 @@ module screen_mask() {
 // TODO add small features - cutout, bug, ribs
 // TODO add front bezel border ? if it exists
 
-// TODO temp
-difference() {
-     body();
-
-     left(DELTA)
-        screen_mask();
-}
+//screen_mask();
