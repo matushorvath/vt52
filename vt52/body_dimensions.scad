@@ -1,6 +1,5 @@
 include <common.scad>
 include <BOSL2/std.scad>
-include <BOSL2/trigonometry.scad>
 
 // VT50_FMPS, Sheet 1
 KBD_FRONT_Y = 13.5;
@@ -13,8 +12,8 @@ SCR_TOP_X = 182;
 // VT50_FMPS, Sheet 2
 BODY_Y = 282; // Section AF-AF
 
-// Customizations
-BODY_BACK_X = 300;
+// Depth of the model
+BODY_BACK_X = 300; // custom
 
 // Calculate missing coordinates
 kbd_front_x = adj_ang_to_opp(KBD_FRONT_Y, KBD_FRONT_A);

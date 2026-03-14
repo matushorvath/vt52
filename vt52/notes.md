@@ -40,3 +40,19 @@ Design Notes
 I could probably directly use curves from the data tables, with smoothing,
 instead of trying to model the curves analytically.
  - body_yz_half_plane could return a smoothed path based on the data tables
+
+
+Keyboard and Display
+--------------------
+
+60% keyboard is around 310mm
+8" LCD panel is around 165mm x 120mm
+
+terminal keyboard width is at least 235mm * 2 = 470mm (Sheet 5)
+terminal screen width is at least 222+48 - ~2*10 = ~250mm (Sheet 2)
+terminal screen height is at least (264 - ~30) - ~50 = ~235 - 50 = ~180mm (Sheet 2)
+
+with a 2:3 scale, it's
+470*2/3 = 313, enough for the keyboard
+250*2/3 = 167, enough for the panel
+180*2/3 = 120, enough for the panel

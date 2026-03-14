@@ -1,11 +1,7 @@
 include <common.scad>
 include <body_dimensions.scad>
 include <body_tables.scad>
-
 include <BOSL2/std.scad>
-include <BOSL2/rounding.scad>
-include <BOSL2/shapes2d.scad>
-include <BOSL2/trigonometry.scad>
 
 function body_xy_plane() =
     let(

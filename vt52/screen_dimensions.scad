@@ -30,8 +30,20 @@ SCR_BACK_SCREEN_A = 16;
 SCR_BACK_SCREEN_X = 218;
 SCR_BACK_SCREEN_Y = 148;
 
+// These refer to the actual LCD panel, without scaling
+SCR_PANEL_UNSC_X = 165; // custom
+SCR_PANEL_UNSC_Y = 120; // custom
+
+// Margin for glue around the panel
+SCR_PANEL_UNSC_MARGIN = 2.5; // custom
+
+// Same values scaled up, so they get to the proper size when scaled down with the whole model
+SCR_PANEL_X = SCR_PANEL_UNSC_X / SCALE;
+SCR_PANEL_Y = SCR_PANEL_UNSC_Y / SCALE;
+SCR_PANEL_MARGIN = SCR_PANEL_UNSC_MARGIN / SCALE;
+
 // TODO define the step, is it 3 deep (tangential to the surface)? not clear in K-K
-// update: it's probably the grey keyboard 
+// update: it's probably the grey keyboard bezel
 SCR_BOTTOM_STEP_X = 142;
 
 // TODO louvres on top of screen bezel, Sheet 4, View G-G

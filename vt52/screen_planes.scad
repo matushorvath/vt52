@@ -1,5 +1,6 @@
 include <common.scad>
 include <screen_dimensions.scad>
+include <BOSL2/std.scad>
 
 function screen_front_plane() =
     let(
@@ -22,20 +23,17 @@ function screen_front_plane() =
     )
     round_corners(shape, radius=radii);
 
-// TODO proper screen shape based on real screen
-// given are: width and height of the screen, angles of the bezel, angle of the screen
-// based on that we should calculate how deep the screen will be in the bezel
-// in the real terminal this is controlled by SCR_BACK_SCREEN_X, SCR_BACK_SCREEN_Y
 function screen_back_plane() =
     let(
-        scr_height = SCR_FRONT_TOP_Y - kbd_back_y,
-        scr_width = SCR_FRONT_LEFT_Z - SCR_FRONT_RIGHT_Z,
+        // Make the bezel slightly smaller than the panel
+        width = SCR_PANEL_X - 2 * SCR_PANEL_MARGIN,
+        height = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN,
 
         shape = [
             [0, 0],                     // bottom left
-            [0, scr_height],            // top left
-            [scr_width, scr_height],    // top right
-            [scr_width, 0],             // bottom right
+            [0, height],                // top left
+            [width, height],            // top right
+            [width, 0],                 // bottom right
         ],
 
         radii = [
@@ -45,7 +43,8 @@ function screen_back_plane() =
             SCR_BACK_CORNER_A,
         ]
     )
+    // TODO add a rounded CRT screen effect to the sides
     round_corners(shape, radius=radii);
 
 //polygon(screen_front_plane());
-polygon(screen_back_plane());
+//polygon(screen_back_plane());

@@ -5,12 +5,14 @@ include <body_tables.scad>
 
 include <BOSL2/std.scad>
 
+// TODO texture = "rough" for both body shapes?
+
 module body_xy() {
     linear_sweep(
         body_xy_plane(),
+        center = true,
         height = 2 * max(YZ_BOTTOM_HALF),
-        orient = UP,
-        center = true
+        orient = UP
     );
 }
 
@@ -21,6 +23,7 @@ module body_yz_half() {
         body_yz_half_plane(YZ_TOP_HALF[2], YZ_BOTTOM_HALF[2], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X100),
         body_yz_half_plane(YZ_TOP_HALF[3], YZ_BOTTOM_HALF[3], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X150),
         body_yz_half_plane(YZ_TOP_HALF[4], YZ_BOTTOM_HALF[4], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X200),
+        // TODO add 250 and 300 at least
     ];
 
     skin(
