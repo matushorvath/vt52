@@ -14,9 +14,18 @@ SCR_FWD_RIGHT_Z = -48;
 scr_fwd_center_z = (SCR_FWD_LEFT_Z + SCR_FWD_RIGHT_Z) / 2;
 
 // Sheet 2, View K-K
-SCR_FWD_TOP_Y = 264;
 scr_fwd_bottom_x = kbd_back_x;
 scr_fwd_bottom_y = kbd_back_y;
+
+SCR_FWD_TOP_Y = 264;
+scr_fwd_top_x = scr_fwd_bottom_x + tan(SCR_FWD_A) * (SCR_FWD_TOP_Y - scr_fwd_bottom_y);
+
+scr_fwd_center_x = (scr_fwd_bottom_x + scr_fwd_top_x) / 2;
+//scr_fwd_center_y = (scr_fwd_bottom_y + SCR_FWD_TOP_Y) / 2;
+
+// Calculate forward plane dimensions
+scr_fwd_height = SCR_FWD_TOP_Y - scr_fwd_bottom_y;
+scr_fwd_width = SCR_FWD_LEFT_Z - SCR_FWD_RIGHT_Z;
 
 // Screen viewport sides
 
@@ -33,7 +42,7 @@ SCR_BACK_CORNER_A = 10;
 // Sheet 2, View K-K
 SCR_BACK_A = 16;
 SCR_BACK_CENTER_X = 218; // can be customized to move the screen in or out
-// SCR_BACK_CENTER_Y = 148; // unused, constrained by other coordinates (see calculation below)
+// SCR_BACK_CENTER_Y = 148; // unused, constrained by other coordinates (see scr_back_center_y)
 
 // These refer to the actual LCD panel, without scaling
 SCR_PANEL_UNSC_X = 165; // custom
@@ -58,6 +67,20 @@ scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A);
 // The Y coordinate of the back surface bottom point is defined by the bottom screen bezel.
 // tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_fwd_bottom_y) / (scr_back_bottom_x - scr_fwd_bottom_x)
 scr_back_bottom_y = tan(SCR_BOTTOM_A) * (scr_back_bottom_x - scr_fwd_bottom_x) + scr_fwd_bottom_y;
+
+scr_back_center_y = scr_back_bottom_y + cotan(SCR_BACK_A) * (SCR_BACK_CENTER_X - scr_back_bottom_x);
+
+// Screen viewport extra surface (for clearing the keyboard/screen fillet)
+
+// Calculate how to extend the forward plane more to front, to mask the keyboard/screen fillet
+scr_extra_dist_x = KBD_BACK_R * 2; // double the fillet to make sure we clear it, the fillet is at an angle, so slightly wider in X than KBD_BACK_R
+scr_extra_ratio = scr_extra_dist_x / (SCR_BACK_CENTER_X - scr_fwd_center_x); // TODO separate top/bottom ratios, at least for radiuses?
+
+scr_extra_width = scr_fwd_width + (scr_fwd_width - SCR_BACK_WIDTH) * scr_extra_ratio;
+scr_extra_height = scr_fwd_height + (scr_fwd_height - SCR_BACK_HEIGHT) * scr_extra_ratio;
+
+scr_extra_bottom_x = scr_fwd_bottom_x - scr_extra_dist_x;
+scr_extra_bottom_y = scr_fwd_bottom_y + (scr_fwd_bottom_y - scr_back_bottom_y) * scr_extra_ratio;
 
 // Screen viewport details
 

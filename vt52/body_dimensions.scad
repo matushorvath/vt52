@@ -7,6 +7,7 @@ KBD_FWD_Y = 13.5;
 KBD_FWD_A = 30;
 KBD_TOP_A = 13;
 KBD_BACK_R = 14;
+
 SCR_FWD_A = 12;
 SCR_TOP_X = 182;
 

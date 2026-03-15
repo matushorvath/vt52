@@ -4,6 +4,20 @@ include <screen_planes.scad>
 include <BOSL2/std.scad>
 
 module screen_mask() {
+    // In Z, align center of the extra face with center of the forward face
+    extra_shift_z = scr_fwd_center_z + scr_extra_width / 2;
+
+    // Position the extra face (for clearing the keyboard/screen fillet)
+    extra_face = apply(
+        IDENT
+            * move([scr_extra_bottom_x, scr_extra_bottom_y, -extra_shift_z]) // move to position relative to the model
+            * rot(a = -SCR_FWD_A, v = [0, 0, 1]) // angle relative to the model
+            * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
+        path3d(screen_extra_plane())
+    );
+
+    //stroke(extra_face, closed=true);
+
     // Position the forward face
     fwd_face = apply(
         // Transformations are applied last to first
@@ -31,10 +45,10 @@ module screen_mask() {
 
     //stroke(back_face, closed=true);
 
-    skin([fwd_face, back_face], slices = 10);
+    move([0, DELTA, 0]) // avoid artifacts on the keyboard surface
+        skin([extra_face, fwd_face, back_face], slices = 10);
 }
 
-// TODO extend the mask above the keyboard, because we need to cut off the filled behind the keyboard
 // TODO add small features - cutout, bug, ribs
 // TODO add front bezel border ? if it exists
 

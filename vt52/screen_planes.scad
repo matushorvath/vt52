@@ -4,17 +4,34 @@ include <BOSL2/std.scad>
 
 function screen_fwd_plane() =
     let(
-        scr_height = SCR_FWD_TOP_Y - scr_fwd_bottom_y,
-        scr_width = SCR_FWD_LEFT_Z - SCR_FWD_RIGHT_Z,
-
         shape = [
-            [0, 0],                     // bottom left
-            [0, scr_height],            // top left
-            [scr_width, scr_height],    // top right
-            [scr_width, 0],             // bottom right
+            [0, 0],                             // bottom left
+            [0, scr_fwd_height],                // top left
+            [scr_fwd_width, scr_fwd_height],    // top right
+            [scr_fwd_width, 0],                 // bottom right
         ],
 
         radii = [
+            SCR_FWD_BL_R,
+            SCR_FWD_TL_R,
+            SCR_FWD_TR_R,
+            SCR_FWD_BR_R,
+        ]
+    )
+    // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
+    // otherwise skin() will produce artifacts
+    round_corners(shape, radius=radii);
+
+function screen_extra_plane() =
+    let(
+        shape = [
+            [0, 0],                                 // bottom left
+            [0, scr_extra_height],                  // top left
+            [scr_extra_width, scr_extra_height],    // top right
+            [scr_extra_width, 0],                   // bottom right
+        ],
+
+        radii = [ // TODO adjust with coefficient
             SCR_FWD_BL_R,
             SCR_FWD_TL_R,
             SCR_FWD_TR_R,
@@ -47,4 +64,5 @@ function screen_back_plane() =
     round_corners(shape, radius=radii);
 
 //polygon(screen_fwd_plane());
+//polygon(screen_extra_plane());
 //polygon(screen_back_plane());
