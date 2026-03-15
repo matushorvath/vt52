@@ -22,6 +22,7 @@ Links
 -----
 
 https://terminals-wiki.org/wiki/index.php/DEC_VT52
+https://www.youtube.com/watch?v=bAafRXddfxc
 
 
 References

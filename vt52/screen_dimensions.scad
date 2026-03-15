@@ -84,21 +84,33 @@ scr_extra_bottom_y = scr_fwd_bottom_y + (scr_fwd_bottom_y - scr_back_bottom_y) *
 
 // Screen viewport details
 
-// TODO define the step, is it 3 deep (tangential to the surface)? not clear in K-K
-// update: it's probably the grey keyboard bezel
-SCR_BOTTOM_STEP_X = 142;
-
+// Bug
 SCR_BUG_WIDTH_Z = 4;
 SCR_BUG_FAR_END_X = 194;
 SCR_BUG_HEIGHT = 3; // height tangential to the surface, which is angled at SCR_BOTTOM_A
 
-// TODO louvres on top of screen bezel, Sheet 4, View G-G
+// Indent; Sheet 8, View I-I
+SCR_INDENT_LEFT_Z = 229.9 - 4.77 - 12;
+SCR_INDENT_WIDTH_Z = 219;
+scr_indent_right_z = SCR_INDENT_LEFT_Z + SCR_INDENT_WIDTH_Z;
 
-// TODO pattern on bottom of screen bezel, Sheet 8
-//  - indentation right after keyboard starts Section CI-CI
-//    - round corners 2.5R 2 places View I-I
-//    - indentation depth .5 tangential, length 20 X, Section CG-CG
-//  - ribs, 6 pieces, tangential to the complex shape
-//    - defined in Section CF-CF (back) Section CH-CH (forward, including the step for indentation)
-//    - parallel with X
-//      - try either BOSL2 placement, or maybe extrude a 2d shape without the side angles which makes it parallel with X
+SCR_INDENT_BACK_X = 26.86 + 99.27 + 20;
+SCR_INDENT_DEPTH = 0.5; // Sheet 8, Section CG-CG
+
+SCR_INDENT_CORNER_R = 2.5;
+
+// Ribs
+
+// Offsets from SCR_INDENT_LEFT_Z; Sheet 8, View I-I
+SCR_RIB_1_OFFSET_Z = 19.05;
+SCR_RIB_2_OFFSET_Z = SCR_RIB_1_OFFSET_Z + 38.1;
+SCR_RIB_3_OFFSET_Z = SCR_RIB_2_OFFSET_Z + 38.1;
+SCR_RIB_4_OFFSET_Z = SCR_RIB_3_OFFSET_Z + 38.1;
+SCR_RIB_5_OFFSET_Z = SCR_RIB_4_OFFSET_Z + 38.1;
+SCR_RIB_6_OFFSET_Z = SCR_RIB_5_OFFSET_Z + 38.1;
+
+// Sheet 8, Section CF-CF, Section CH-CH
+SCR_RIB_CORNER_R = 0.25;
+SCR_RIB_DEPTH = 1.0;
+SCR_RIB_WIDTH = 1.0;
+// Ribs in the indent have additional depth of SCR_INDENT_DEPTH

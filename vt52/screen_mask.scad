@@ -49,7 +49,4 @@ module screen_mask() {
         skin([extra_face, fwd_face, back_face], slices = 10);
 }
 
-// TODO add small features - cutout, bug, ribs
-// TODO add front bezel border ? if it exists
-
 //screen_mask();
