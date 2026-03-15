@@ -1,29 +1,29 @@
 include <common.scad>
 include <body_dimensions.scad>
 
-// Screen viewport front surface
+// Screen viewport forward surface
 
 // Sheet 2, View E-E
-SCR_FRONT_TL_R = 12;
-SCR_FRONT_TR_R = 5;
-SCR_FRONT_BL_R = 5;
-SCR_FRONT_BR_R = 5;
+SCR_FWD_TL_R = 12;
+SCR_FWD_TR_R = 5;
+SCR_FWD_BL_R = 5;
+SCR_FWD_BR_R = 5;
 
-SCR_FRONT_LEFT_Z = 222;
-SCR_FRONT_RIGHT_Z = -48;
-scr_front_center_z = (SCR_FRONT_LEFT_Z + SCR_FRONT_RIGHT_Z) / 2;
+SCR_FWD_LEFT_Z = 222;
+SCR_FWD_RIGHT_Z = -48;
+scr_fwd_center_z = (SCR_FWD_LEFT_Z + SCR_FWD_RIGHT_Z) / 2;
 
 // Sheet 2, View K-K
-SCR_FRONT_TOP_Y = 264;
-scr_front_bottom_x = kbd_back_x;
-scr_front_bottom_y = kbd_back_y;
+SCR_FWD_TOP_Y = 264;
+scr_fwd_bottom_x = kbd_back_x;
+scr_fwd_bottom_y = kbd_back_y;
 
 // Screen viewport sides
 
 // Bezel side angles
-// SCR_TOP_A = 22; // unused, defined by front and back surfaces
+// SCR_TOP_A = 22; // unused, defined by forward and back surfaces
 SCR_BOTTOM_A = KBD_TOP_A; // bottom bezel side just continues at the keyboard angle
-// SCR_SIDE_A = 6; // Section AG-AG // unused, defined by front and back surfaces
+// SCR_SIDE_A = 6; // Section AG-AG // unused, defined by forward and back surfaces
 
 // Screen viewport back surface
 
@@ -56,8 +56,8 @@ SCR_BACK_HEIGHT = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN;
 scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A);
 
 // The Y coordinate of the back surface bottom point is defined by the bottom screen bezel.
-// tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_front_bottom_y) / (scr_back_bottom_x - scr_front_bottom_x)
-scr_back_bottom_y = tan(SCR_BOTTOM_A) * (scr_back_bottom_x - scr_front_bottom_x) + scr_front_bottom_y;
+// tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_fwd_bottom_y) / (scr_back_bottom_x - scr_fwd_bottom_x)
+scr_back_bottom_y = tan(SCR_BOTTOM_A) * (scr_back_bottom_x - scr_fwd_bottom_x) + scr_fwd_bottom_y;
 
 // Screen viewport details
 
@@ -76,6 +76,6 @@ SCR_BUG_HEIGHT = 3; // height tangential to the surface, which is angled at SCR_
 //    - round corners 2.5R 2 places View I-I
 //    - indentation depth .5 tangential, length 20 X, Section CG-CG
 //  - ribs, 6 pieces, tangential to the complex shape
-//    - defined in Section CF-CF (back) Section CH-CH (front, including the step for indentation)
+//    - defined in Section CF-CF (back) Section CH-CH (forward, including the step for indentation)
 //    - parallel with X
 //      - try either BOSL2 placement, or maybe extrude a 2d shape without the side angles which makes it parallel with X

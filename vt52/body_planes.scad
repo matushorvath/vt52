@@ -5,10 +5,10 @@ include <BOSL2/std.scad>
 function body_xy_plane() =
     let(
         shape = [
-            [0, 0],                             // keyboard front bottom
-            [kbd_front_x, KBD_FRONT_Y],         // keyboard front top
+            [0, 0],                             // keyboard forward bottom
+            [kbd_fwd_x, KBD_FWD_Y],             // keyboard forward top
             [kbd_back_x, kbd_back_y],           // keyboard back top
-            [SCR_TOP_X, BODY_Y],                // body front top
+            [SCR_TOP_X, BODY_Y],                // body forward top
             [BODY_BACK_X, BODY_Y],              // body back top
             [BODY_BACK_X, 0]                    // body back bottom
         ],

@@ -2,10 +2,10 @@ include <common.scad>
 include <screen_dimensions.scad>
 include <BOSL2/std.scad>
 
-function screen_front_plane() =
+function screen_fwd_plane() =
     let(
-        scr_height = SCR_FRONT_TOP_Y - scr_front_bottom_y,
-        scr_width = SCR_FRONT_LEFT_Z - SCR_FRONT_RIGHT_Z,
+        scr_height = SCR_FWD_TOP_Y - scr_fwd_bottom_y,
+        scr_width = SCR_FWD_LEFT_Z - SCR_FWD_RIGHT_Z,
 
         shape = [
             [0, 0],                     // bottom left
@@ -15,13 +15,13 @@ function screen_front_plane() =
         ],
 
         radii = [
-            SCR_FRONT_BL_R,
-            SCR_FRONT_TL_R,
-            SCR_FRONT_TR_R,
-            SCR_FRONT_BR_R,
+            SCR_FWD_BL_R,
+            SCR_FWD_TL_R,
+            SCR_FWD_TR_R,
+            SCR_FWD_BR_R,
         ]
     )
-    // $fn must match between screen_front_plane and screen_back_plane (set in common.scad)
+    // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
     round_corners(shape, radius=radii);
 
@@ -41,10 +41,10 @@ function screen_back_plane() =
             SCR_BACK_CORNER_A,
         ]
     )
-    // TODO add a rounded CRT screen effect to the sides, but number of vertices must match screen_front_plane
-    // $fn must match between screen_front_plane and screen_back_plane (set in common.scad)
+    // TODO add a rounded CRT screen effect to the sides, but number of vertices must match screen_fwd_plane
+    // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
     round_corners(shape, radius=radii);
 
-//polygon(screen_front_plane());
+//polygon(screen_fwd_plane());
 //polygon(screen_back_plane());
