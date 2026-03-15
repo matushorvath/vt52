@@ -19,7 +19,7 @@ BODY_BACK_X = 400; // custom
 // Calculate missing coordinates
 kbd_front_x = adj_ang_to_opp(KBD_FRONT_Y, KBD_FRONT_A);
 
-/*
+/* Top back point of the keyboard
 kbd_back_x and kbd_back_y are only defined by KBD_FRONT_A and KBD_TOP_A
 
 tan(KBD_TOP_A) = (y - KBD_FRONT_Y) / (x - kbd_front_x)

@@ -4,7 +4,7 @@ include <BOSL2/std.scad>
 
 function screen_front_plane() =
     let(
-        scr_height = SCR_FRONT_TOP_Y - kbd_back_y,
+        scr_height = SCR_FRONT_TOP_Y - scr_front_bottom_y,
         scr_width = SCR_FRONT_LEFT_Z - SCR_FRONT_RIGHT_Z,
 
         shape = [
@@ -27,15 +27,11 @@ function screen_front_plane() =
 
 function screen_back_plane() =
     let(
-        // Make the bezel slightly smaller than the panel
-        width = SCR_PANEL_X - 2 * SCR_PANEL_MARGIN,
-        height = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN,
-
         shape = [
-            [0, 0],                     // bottom left
-            [0, height],                // top left
-            [width, height],            // top right
-            [width, 0],                 // bottom right
+            [0, 0],                             // bottom left
+            [0, SCR_BACK_HEIGHT],               // top left
+            [SCR_BACK_WIDTH, SCR_BACK_HEIGHT],  // top right
+            [SCR_BACK_WIDTH, 0],                // bottom right
         ],
 
         radii = [

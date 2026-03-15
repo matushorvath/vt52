@@ -1,30 +1,39 @@
 include <common.scad>
 include <body_dimensions.scad>
 
+// Screen viewport front surface
+
 // Sheet 2, View E-E
 SCR_FRONT_TL_R = 12;
 SCR_FRONT_TR_R = 5;
 SCR_FRONT_BL_R = 5;
 SCR_FRONT_BR_R = 5;
 
-SCR_BACK_CORNER_A = 10;
-
 SCR_FRONT_LEFT_Z = 222;
 SCR_FRONT_RIGHT_Z = -48;
-SCR_FRONT_CENTER_Z = 87;
+scr_front_center_z = (SCR_FRONT_LEFT_Z + SCR_FRONT_RIGHT_Z) / 2;
 
 // Sheet 2, View K-K
 SCR_FRONT_TOP_Y = 264;
-// SCR_FRONT_BOTTOM_Y is defined by kbd_back_x, kbd_back_y
+scr_front_bottom_x = kbd_back_x;
+scr_front_bottom_y = kbd_back_y;
 
-SCR_TOP_A = 22;
-SCR_BOTTOM_A = KBD_TOP_A;
-SCR_SIDE_A = 6; // Section AG-AG
+// Screen viewport sides
 
-// These refer to the midpoint of the screen
-SCR_BACK_SCREEN_A = 16;
-SCR_BACK_SCREEN_X = 218;
-SCR_BACK_SCREEN_Y = 148;
+// Bezel side angles
+// SCR_TOP_A = 22; // unused, defined by front and back surfaces
+SCR_BOTTOM_A = KBD_TOP_A; // bottom bezel side just continues at the keyboard angle
+// SCR_SIDE_A = 6; // Section AG-AG // unused, defined by front and back surfaces
+
+// Screen viewport back surface
+
+// Sheet 2, View E-E
+SCR_BACK_CORNER_A = 10;
+
+// Sheet 2, View K-K
+SCR_BACK_A = 16;
+SCR_BACK_CENTER_X = 218; // can be customized to move the screen in or out
+// SCR_BACK_CENTER_Y = 148; // unused, constrained by other coordinates (see calculation below)
 
 // These refer to the actual LCD panel, without scaling
 SCR_PANEL_UNSC_X = 165; // custom
@@ -37,6 +46,20 @@ SCR_PANEL_UNSC_MARGIN = 2.5; // custom
 SCR_PANEL_X = SCR_PANEL_UNSC_X / SCALE;
 SCR_PANEL_Y = SCR_PANEL_UNSC_Y / SCALE;
 SCR_PANEL_MARGIN = SCR_PANEL_UNSC_MARGIN / SCALE;
+
+// Make the back surface slightly smaller than the panel
+SCR_BACK_WIDTH = SCR_PANEL_X - 2 * SCR_PANEL_MARGIN;
+SCR_BACK_HEIGHT = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN;
+
+// The X coordinate of the back surface center plus the angle and height of the back surface
+// fully define the X coordinate of the back surface bottom point.
+scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A);
+
+// The Y coordinate of the back surface bottom point is defined by the bottom screen bezel.
+// tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_front_bottom_y) / (scr_back_bottom_x - scr_front_bottom_x)
+scr_back_bottom_y = tan(SCR_BOTTOM_A) * (scr_back_bottom_x - scr_front_bottom_x) + scr_front_bottom_y;
+
+// Screen viewport details
 
 // TODO define the step, is it 3 deep (tangential to the surface)? not clear in K-K
 // update: it's probably the grey keyboard bezel
