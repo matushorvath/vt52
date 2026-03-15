@@ -20,13 +20,13 @@ module kbd_fwd_one_corner_mask() {
 
 module kbd_fwd_corners_mask() {
     // Near side
-    up(YZ_BOTTOM_HALF[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y)
+    move([-DELTA, -DELTA, YZ_BOTTOM_HALF[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y])
         kbd_fwd_one_corner_mask();
 
 
     // Far side
     zflip()
-        up(YZ_BOTTOM_HALF[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y)
+        move([-DELTA, -DELTA, YZ_BOTTOM_HALF[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y])
             kbd_fwd_one_corner_mask();
 }
 
