@@ -94,7 +94,8 @@ SCR_INDENT_LEFT_Z = 229.9 - 4.77 - 12;
 SCR_INDENT_WIDTH_Z = 219;
 scr_indent_right_z = SCR_INDENT_LEFT_Z + SCR_INDENT_WIDTH_Z;
 
-SCR_INDENT_BACK_X = 26.86 + 99.27 + 20;
+SCR_INDENT_FWD_X = 26.86 + 99.27;
+SCR_INDENT_LENGTH_X = 20;
 SCR_INDENT_DEPTH = 0.5; // Sheet 8, Section CG-CG
 
 SCR_INDENT_CORNER_R = 2.5;
@@ -113,4 +114,7 @@ SCR_RIB_6_OFFSET_Z = SCR_RIB_5_OFFSET_Z + 38.1;
 SCR_RIB_CORNER_R = 0.25;
 SCR_RIB_DEPTH = 1.0;
 SCR_RIB_WIDTH = 1.0;
-// Ribs in the indent have additional depth of SCR_INDENT_DEPTH
+
+// Extend the ribs a bit beyond the bezel to make sure we clear them
+// 2 * SCR_RIB_DEPTH is just a convenient value that's in scale
+scr_rib_back_x = scr_back_bottom_x + 2 * SCR_RIB_DEPTH;

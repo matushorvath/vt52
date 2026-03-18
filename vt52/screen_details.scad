@@ -2,20 +2,49 @@ include <common.scad>
 include <screen_dimensions.scad>
 include <BOSL2/std.scad>
 
-// TODO add small features - cutout, bug, ribs
 // TODO add front bezel border ? if it exists
-
 // TODO louvres on top of screen bezel, Sheet 4, View G-G
 
-// TODO pattern on bottom of screen bezel, Sheet 8
-//  - indentation right after keyboard starts Section CI-CI
-//    - round corners 2.5R 2 places View I-I
-//    - indentation depth .5 tangential, length 20 X, Section CG-CG
-//  - ribs, 6 pieces, tangential to the complex shape
-//    - defined in Section CF-CF (back) Section CH-CH (forward, including the step for indentation)
-//    - parallel with X
-//      - try either BOSL2 placement, or maybe extrude a 2d shape without the side angles which makes it parallel with X
-
-module screen_bottom_bezel_flat() {
-    // Bottom bezel features referenced from
+module rib(length) {
+    // TODO edge rounding
+    xrot(90)
+        prismoid(
+            size1 = [length, SCR_RIB_WIDTH],
+            size2 = [length, 0],
+            h = SCR_RIB_DEPTH,
+            anchor = LEFT + BOTTOM
+        );
 }
+
+module six_ribs(length) {
+    zmove(SCR_RIB_1_OFFSET_Z) rib(length);
+    zmove(SCR_RIB_2_OFFSET_Z) rib(length);
+    zmove(SCR_RIB_3_OFFSET_Z) rib(length);
+    zmove(SCR_RIB_4_OFFSET_Z) rib(length);
+    zmove(SCR_RIB_5_OFFSET_Z) rib(length);
+    zmove(SCR_RIB_6_OFFSET_Z) rib(length);
+}
+
+module screen_bottom_bezel_mask_flat() {
+    // Bottom bezel features referenced from SCR_INDENT_FWD_X, SCR_INDENT_LEFT_Z (forward left corner of the indent)
+
+    // Indent
+    cuboid(
+        [SCR_INDENT_LENGTH_X, SCR_INDENT_DEPTH, SCR_INDENT_WIDTH_Z],
+        anchor = BACK + LEFT + BOTTOM,
+        edges = [TOP + RIGHT, BOTTOM + RIGHT],
+        rounding = SCR_INDENT_CORNER_R
+    );
+
+    // Ribs through the indent
+    ymove(-SCR_INDENT_DEPTH + DELTA)
+        six_ribs(SCR_INDENT_LENGTH_X);
+
+    // Ribs beyond the indent
+    xmove(SCR_INDENT_LENGTH_X - DELTA)
+        six_ribs(scr_rib_back_x - SCR_INDENT_FWD_X - SCR_INDENT_LENGTH_X);
+
+    // TODO add the bug
+}
+
+screen_bottom_bezel_mask_flat();
