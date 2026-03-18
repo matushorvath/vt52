@@ -46,6 +46,9 @@ module screen_opening() {
 
     //stroke(back_face, closed=true);
 
+    // TODO Sheet 2, View K-K: back face is 635 R spherical cut off; SCR_BACK_CENTER_X is touch point to the sphere
+    // extend the mask further back since back corners are further inside than now, mask off back face with a 635 R sphere
+
     move([0, DELTA, 0]) // avoid artifacts on the keyboard surface
         skin([extra_face, fwd_face, back_face], slices = 10);
 }
