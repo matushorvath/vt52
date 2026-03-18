@@ -1,9 +1,10 @@
 include <common.scad>
+include <screen_details.scad>
 include <screen_dimensions.scad>
 include <screen_planes.scad>
 include <BOSL2/std.scad>
 
-module screen_mask() {
+module screen_opening() {
     // In Z, align center of the extra face with center of the forward face
     extra_shift_z = scr_fwd_center_z + scr_extra_width / 2;
 
@@ -47,6 +48,17 @@ module screen_mask() {
 
     move([0, DELTA, 0]) // avoid artifacts on the keyboard surface
         skin([extra_face, fwd_face, back_face], slices = 10);
+}
+
+module screen_bottom_bezel_mask() {
+    move([SCR_INDENT_FWD_X, scr_indent_fwd_y + DELTA, -SCR_INDENT_LEFT_Z]) // move to position relative to the model
+        zrot(KBD_TOP_A)
+            screen_bottom_bezel_mask_flat();
+}
+
+module screen_mask() {
+    screen_opening();
+    screen_bottom_bezel_mask();
 }
 
 //screen_mask();

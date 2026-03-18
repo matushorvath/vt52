@@ -4,7 +4,7 @@ include <BOSL2/std.scad>
 
 module kbd_fwd_one_corner_mask() {
     // X offset of the forward top edge of the keyboard, in relation to bottom forward
-    fwd_corner_shift_x = KBD_FWD_Y * tan(KBD_FWD_A);
+    fwd_corner_shift_x = KBD_FWD_Y * tan(KBD_FWD_A); // TODO adj_ang_to_opp
 
     // Make the mask high enough to cover the sloped keyboard section, this also affects the shift
     height_multiplier = 2;

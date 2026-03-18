@@ -47,4 +47,4 @@ module screen_bottom_bezel_mask_flat() {
     // TODO add the bug
 }
 
-screen_bottom_bezel_mask_flat();
+//screen_bottom_bezel_mask_flat();

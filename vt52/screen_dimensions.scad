@@ -18,7 +18,7 @@ scr_fwd_bottom_x = kbd_back_x;
 scr_fwd_bottom_y = kbd_back_y;
 
 SCR_FWD_TOP_Y = 264;
-scr_fwd_top_x = scr_fwd_bottom_x + tan(SCR_FWD_A) * (SCR_FWD_TOP_Y - scr_fwd_bottom_y);
+scr_fwd_top_x = scr_fwd_bottom_x + tan(SCR_FWD_A) * (SCR_FWD_TOP_Y - scr_fwd_bottom_y); // TODO adj_ang_to_opp
 
 scr_fwd_center_x = (scr_fwd_bottom_x + scr_fwd_top_x) / 2;
 //scr_fwd_center_y = (scr_fwd_bottom_y + SCR_FWD_TOP_Y) / 2;
@@ -95,6 +95,8 @@ SCR_INDENT_WIDTH_Z = 219;
 scr_indent_right_z = SCR_INDENT_LEFT_Z + SCR_INDENT_WIDTH_Z;
 
 SCR_INDENT_FWD_X = 26.86 + 99.27;
+scr_indent_fwd_y = KBD_FWD_Y + adj_ang_to_opp(SCR_INDENT_FWD_X - kbd_fwd_x, KBD_TOP_A);
+
 SCR_INDENT_LENGTH_X = 20;
 SCR_INDENT_DEPTH = 0.5; // Sheet 8, Section CG-CG
 
