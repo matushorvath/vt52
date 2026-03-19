@@ -2,6 +2,7 @@ include <common.scad>
 include <screen_bottom_details.scad>
 include <screen_dimensions.scad>
 include <screen_planes.scad>
+include <screen_top_details.scad>
 include <BOSL2/std.scad>
 
 module screen_opening() {
@@ -16,7 +17,6 @@ module screen_opening() {
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
         path3d(screen_extra_plane())
     );
-
     //stroke(extra_face, closed=true);
 
     // Position the forward face
@@ -28,7 +28,6 @@ module screen_opening() {
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
         path3d(screen_fwd_plane())
     );
-
     //stroke(fwd_face, closed=true);
 
     // In Z, align center of the back face with center of the forward face
@@ -43,7 +42,6 @@ module screen_opening() {
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
         path3d(screen_back_plane())
     );
-
     //stroke(back_face, closed=true);
 
     // TODO Sheet 2, View K-K: back face is 635 R spherical cut off; SCR_BACK_CENTER_X is touch point to the sphere
@@ -65,6 +63,12 @@ module screen_bug_move() {
             children();
 }
 
+module screen_louvres_move() {
+    move([scr_fwd_top_x, SCR_FWD_TOP_Y, -scr_fwd_center_z])
+        zrot(-scr_top_a)
+            children();
+}
+
 module screen_mask() {
     difference() {
         union() {
@@ -75,6 +79,9 @@ module screen_mask() {
 
             screen_bug_move() ymove(DELTA)
                 bug_negative();
+
+            screen_louvres_move() ymove(-DELTA)
+                louvres();
         }
 
         screen_bug_move() ymove(-DELTA)

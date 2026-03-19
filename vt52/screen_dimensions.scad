@@ -24,13 +24,13 @@ scr_fwd_center_x = (scr_fwd_bottom_x + scr_fwd_top_x) / 2;
 //scr_fwd_center_y = (scr_fwd_bottom_y + SCR_FWD_TOP_Y) / 2;
 
 // Calculate forward plane dimensions
-scr_fwd_height = SCR_FWD_TOP_Y - scr_fwd_bottom_y;
+scr_fwd_height = adj_ang_to_hyp(SCR_FWD_TOP_Y - scr_fwd_bottom_y, SCR_FWD_A);
 scr_fwd_width = SCR_FWD_LEFT_Z - SCR_FWD_RIGHT_Z;
 
 // Screen viewport sides
 
 // Bezel side angles
-// SCR_TOP_A = 22; // unused, defined by forward and back surfaces
+// SCR_TOP_A = 22; // unused, defined by forward and back surfaces, see calculated scr_top_a
 SCR_BOTTOM_A = KBD_TOP_A; // bottom bezel side just continues at the keyboard angle
 // SCR_SIDE_A = 6; // Section AG-AG // unused, defined by forward and back surfaces
 
@@ -63,12 +63,17 @@ SCR_BACK_HEIGHT = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN;
 // The X coordinate of the back surface center plus the angle and height of the back surface
 // fully define the X coordinate of the back surface bottom point.
 scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A); // TODO use BOSL2 trigonometry
+scr_back_top_x = SCR_BACK_CENTER_X + (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A); // TODO use BOSL2 trigonometry
 
 // The Y coordinate of the back surface bottom point is defined by the bottom screen bezel.
 // tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_fwd_bottom_y) / (scr_back_bottom_x - scr_fwd_bottom_x)
 scr_back_bottom_y = tan(SCR_BOTTOM_A) * (scr_back_bottom_x - scr_fwd_bottom_x) + scr_fwd_bottom_y;
 
 scr_back_center_y = scr_back_bottom_y + cotan(SCR_BACK_A) * (SCR_BACK_CENTER_X - scr_back_bottom_x);
+scr_back_top_y = scr_back_bottom_y + cotan(SCR_BACK_A) * (scr_back_top_x - scr_back_bottom_x);
+
+// Angle of the screen top bezel
+scr_top_a = adj_opp_to_ang(scr_back_top_x - scr_fwd_top_x, SCR_FWD_TOP_Y - scr_back_top_y);
 
 // Screen viewport extra surface (for clearing the keyboard/screen fillet)
 
@@ -137,7 +142,7 @@ scr_rib_back_x = scr_back_bottom_x + 2 * SCR_RIB_DEPTH;
 
 // Bezel louvres
 
-// Louvre positions measured from SCR_TOP_X, scr_fwd_center_z
+// Louvre positions measured from scr_fwd_top_x, scr_fwd_center_z
 // Sheet 4, View G-G
 SCR_LVR1_FWD_X = 13;
 SCR_LVR1_LENGTH_X = 20;
