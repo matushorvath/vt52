@@ -2,7 +2,7 @@ include <common.scad>
 include <body_tables.scad>
 include <BOSL2/std.scad>
 
-// VT50_FMPS, Sheet 1
+// Sheet 1
 KBD_FWD_Y = 13.5;
 KBD_FWD_A = 30;
 KBD_TOP_A = 13;
@@ -11,7 +11,7 @@ KBD_BACK_R = 14;
 SCR_FWD_A = 12;
 SCR_TOP_X = 182;
 
-// VT50_FMPS, Sheet 2
+// Sheet 2
 BODY_Y = 282; // Section AF-AF
 
 // Depth of the model
@@ -41,7 +41,7 @@ x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + BOD
 kbd_back_x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + BODY_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A));
 kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y;
 
-// VT50_FMPS, Sheet 3, Sheet 19
+// Sheet 3, Sheet 19
 // The YZ profile is slightly different for different X, see Figure 3 - Figure 16
 
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
@@ -75,7 +75,7 @@ YZ_BOTTOM_HALF = [
     263.29190,  // X = 400
 ];
 
-// VT50_FMPS, Sheet 5
+// Sheet 5
 ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H
 
 // Empirically tuned to match keyboard forward rounded corners to the body sides

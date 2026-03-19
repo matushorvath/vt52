@@ -28,7 +28,7 @@ https://www.youtube.com/watch?v=bAafRXddfxc
 References
 ----------
 
-VT50_FMPS
+Where not explicitly mentioned, Sheet comments refer to:
 VT50 Field Maintenance Print Set
 Digital Equipment Corporation, 1975-02-19
 https://manx-docs.org/details.php/1,21903
