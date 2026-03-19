@@ -20,7 +20,6 @@ function body_xy_plane() =
     round_corners(shape, radius=radii);
 
 function body_yz_half_plane(top_half_x, bottom_half_x, height_y, corner_r, side_curve) =
-    // TODO make the side rounded, not straight
     let(
         // Approximate shape without the rounded side
         shape = [

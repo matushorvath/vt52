@@ -31,7 +31,8 @@ function screen_extra_plane() =
             [scr_extra_width, 0],                   // bottom right
         ],
 
-        radii = [ // TODO adjust with coefficient
+        // TODO corner radius should also be adjusted to form a continuous curve
+        radii = [
             SCR_FWD_BL_R,
             SCR_FWD_TL_R,
             SCR_FWD_TR_R,
@@ -58,7 +59,6 @@ function screen_back_plane() =
             SCR_BACK_CORNER_A,
         ]
     )
-    // TODO add a rounded CRT screen effect to the sides, but number of vertices must match screen_fwd_plane
     // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
     round_corners(shape, radius=radii);
