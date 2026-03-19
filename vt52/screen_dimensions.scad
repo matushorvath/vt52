@@ -62,7 +62,7 @@ SCR_BACK_HEIGHT = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN;
 
 // The X coordinate of the back surface center plus the angle and height of the back surface
 // fully define the X coordinate of the back surface bottom point.
-scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A);
+scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A); // TODO use BOSL2 trigonometry
 
 // The Y coordinate of the back surface bottom point is defined by the bottom screen bezel.
 // tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_fwd_bottom_y) / (scr_back_bottom_x - scr_fwd_bottom_x)
@@ -84,10 +84,23 @@ scr_extra_bottom_y = scr_fwd_bottom_y + (scr_fwd_bottom_y - scr_back_bottom_y) *
 
 // Screen viewport details
 
-// Bug
+// Bug; Sheet 2, View E-E, View K-K
 SCR_BUG_WIDTH_Z = 4;
-SCR_BUG_FAR_END_X = 194;
 SCR_BUG_HEIGHT = 3; // height tangential to the surface, which is angled at SCR_BOTTOM_A
+SCR_BUG_LENGTH = 10; // estimated, didn't find this in VT50 Field Maintenance Print Set
+SCR_BUG_BACK_A = 0.5;
+
+// Far end of the bug only works for spherical screens
+// With a flat screen, there is no space between the bug and the bottom of the screen
+// We need about 4 mm of space for the hole behind the bug
+// TODO adjust if we have spherical screen viewport back
+//SCR_BUG_BACK_X = 194; // original value from docs is 194
+SCR_BUG_BACK_X = 190; // custom, remove 4 mm for hole behind the bug
+scr_bug_back_y = KBD_FWD_Y + adj_ang_to_opp(SCR_BUG_BACK_X - kbd_fwd_x, KBD_TOP_A);
+
+// This should be a hole through the shell, so we need more than shell wall size
+SCR_BUG_HOLE_DEPTH = 10;
+SCR_BUG_HOLE_EXTRA_X = 5; // make sure we punch through below the screen bottom edge
 
 // Indent; Sheet 8, View I-I
 SCR_INDENT_LEFT_Z = 229.9 - 4.77 - 12;

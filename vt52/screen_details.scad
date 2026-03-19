@@ -2,7 +2,6 @@ include <common.scad>
 include <screen_dimensions.scad>
 include <BOSL2/std.scad>
 
-// TODO add front bezel border ? if it exists
 // TODO louvres on top of screen bezel, Sheet 4, View G-G
 
 module rib(length) {
@@ -25,6 +24,34 @@ module six_ribs(length) {
     zmove(SCR_RIB_6_OFFSET_Z) rib(length);
 }
 
+module bug_positive() {
+    // Bug shape to remove from the screen mask, referenced from SCR_BUG_BACK_X
+
+    // Calculate how much to shift the peak for the SCR_BUG_BACK_A angle
+    add_shift_x = adj_ang_to_opp(SCR_BUG_HEIGHT, SCR_BOTTOM_A - SCR_BUG_BACK_A);
+
+    xrot(-90)
+        prismoid(
+            size1 = [SCR_BUG_LENGTH, SCR_BUG_WIDTH_Z],
+            size2 = [0, SCR_BUG_WIDTH_Z],
+            shift = [SCR_BUG_LENGTH / 2 + add_shift_x, 0],
+            h = SCR_BUG_HEIGHT,
+            anchor = RIGHT + BOTTOM
+        );
+}
+
+module bug_negative() {
+    // Hole behind the bug to add to the screen mask, referenced from SCR_BUG_BACK_X
+    xrot(-90)
+        cuboid([
+                scr_back_bottom_x - SCR_BUG_BACK_X + SCR_BUG_HOLE_EXTRA_X,     // from back end of the bug to screen bottom
+                SCR_BUG_WIDTH_Z,                                // same width as the bug
+                SCR_BUG_HOLE_DEPTH                              // punch through shell wall
+            ],
+            anchor = LEFT + TOP
+        );
+}
+
 module screen_bottom_bezel_mask_flat() {
     // Bottom bezel features referenced from SCR_INDENT_FWD_X, SCR_INDENT_LEFT_Z (forward left corner of the indent)
 
@@ -43,8 +70,6 @@ module screen_bottom_bezel_mask_flat() {
     // Ribs beyond the indent
     xmove(SCR_INDENT_LENGTH_X - DELTA)
         six_ribs(scr_rib_back_x - SCR_INDENT_FWD_X - SCR_INDENT_LENGTH_X);
-
-    // TODO add the bug
 }
 
 //screen_bottom_bezel_mask_flat();

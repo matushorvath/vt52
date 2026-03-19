@@ -53,15 +53,33 @@ module screen_opening() {
         skin([extra_face, fwd_face, back_face], slices = 10);
 }
 
-module screen_bottom_bezel_mask() {
-    move([SCR_INDENT_FWD_X, scr_indent_fwd_y + DELTA, -SCR_INDENT_LEFT_Z]) // move to position relative to the model
+module screen_bottom_bezel_move() {
+    move([SCR_INDENT_FWD_X, scr_indent_fwd_y, -SCR_INDENT_LEFT_Z]) // move to position relative to the model
         zrot(KBD_TOP_A)
-            screen_bottom_bezel_mask_flat();
+            children();
+}
+
+module screen_bug_move() {
+    move([SCR_BUG_BACK_X, scr_bug_back_y, -scr_fwd_center_z])
+        zrot(KBD_TOP_A)
+            children();
 }
 
 module screen_mask() {
-    screen_opening();
-    screen_bottom_bezel_mask();
+    difference() {
+        union() {
+            screen_opening();
+
+            screen_bottom_bezel_move() ymove(DELTA)
+                screen_bottom_bezel_mask_flat();
+
+            screen_bug_move() ymove(DELTA)
+                bug_negative();
+        }
+
+        screen_bug_move() ymove(-DELTA)
+            bug_positive();
+    }
 }
 
 //screen_mask();
