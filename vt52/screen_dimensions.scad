@@ -107,10 +107,11 @@ SCR_INDENT_LEFT_Z = 229.9 - 4.77 - 12;
 SCR_INDENT_WIDTH_Z = 219;
 scr_indent_right_z = SCR_INDENT_LEFT_Z + SCR_INDENT_WIDTH_Z;
 
-SCR_INDENT_FWD_X = 26.86 + 99.27;
+SCR_INDENT_FWD_EXTRA_X = scr_extra_dist_x; // custom, the ribs go all the way to keyboard, wherever that is
+SCR_INDENT_FWD_X = 26.86 + 99.27 - SCR_INDENT_FWD_EXTRA_X;
 scr_indent_fwd_y = KBD_FWD_Y + adj_ang_to_opp(SCR_INDENT_FWD_X - kbd_fwd_x, KBD_TOP_A);
 
-SCR_INDENT_LENGTH_X = 20;
+SCR_INDENT_LENGTH_X = 20 + SCR_INDENT_FWD_EXTRA_X;
 SCR_INDENT_DEPTH = 0.5; // Sheet 8, Section CG-CG
 
 SCR_INDENT_CORNER_R = 2.5;
