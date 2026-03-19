@@ -1,5 +1,5 @@
 include <common.scad>
-include <screen_details.scad>
+include <screen_bottom_details.scad>
 include <screen_dimensions.scad>
 include <screen_planes.scad>
 include <BOSL2/std.scad>

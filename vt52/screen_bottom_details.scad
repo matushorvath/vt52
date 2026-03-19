@@ -2,8 +2,6 @@ include <common.scad>
 include <screen_dimensions.scad>
 include <BOSL2/std.scad>
 
-// TODO louvres on top of screen bezel, Sheet 4, View G-G
-
 module rib(length) {
     // TODO edge rounding
     xrot(90)
@@ -42,11 +40,14 @@ module bug_positive() {
 
 module bug_negative() {
     // Hole behind the bug to add to the screen mask, referenced from SCR_BUG_BACK_X
+
+    length_x = scr_back_bottom_x - SCR_BUG_BACK_X + SCR_BUG_HOLE_EXTRA_X;
+
     xrot(-90)
         cuboid([
-                scr_back_bottom_x - SCR_BUG_BACK_X + SCR_BUG_HOLE_EXTRA_X,     // from back end of the bug to screen bottom
-                SCR_BUG_WIDTH_Z,                                // same width as the bug
-                SCR_BUG_HOLE_DEPTH                              // punch through shell wall
+                length_x,               // from back end of the bug to screen bottom
+                SCR_BUG_WIDTH_Z,        // same width as the bug
+                SCR_BUG_HOLE_DEPTH      // punch through shell wall
             ],
             anchor = LEFT + TOP
         );

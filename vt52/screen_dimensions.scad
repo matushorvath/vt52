@@ -107,7 +107,7 @@ SCR_INDENT_LEFT_Z = 229.9 - 4.77 - 12;
 SCR_INDENT_WIDTH_Z = 219;
 scr_indent_right_z = SCR_INDENT_LEFT_Z + SCR_INDENT_WIDTH_Z;
 
-SCR_INDENT_FWD_EXTRA_X = scr_extra_dist_x; // custom, the ribs go all the way to keyboard, wherever that is
+SCR_INDENT_FWD_EXTRA_X = scr_extra_dist_x; // custom, the ribs extend forward to the keyboard, wherever that is
 SCR_INDENT_FWD_X = 26.86 + 99.27 - SCR_INDENT_FWD_EXTRA_X;
 scr_indent_fwd_y = KBD_FWD_Y + adj_ang_to_opp(SCR_INDENT_FWD_X - kbd_fwd_x, KBD_TOP_A);
 
@@ -131,6 +131,22 @@ SCR_RIB_CORNER_R = 0.25;
 SCR_RIB_DEPTH = 1.0;
 SCR_RIB_WIDTH = 1.0;
 
-// Extend the ribs a bit beyond the bezel to make sure we clear them
+// Extend the ribs a bit beyond the bezel to make sure we clear it
 // 2 * SCR_RIB_DEPTH is just a convenient value that's in scale
 scr_rib_back_x = scr_back_bottom_x + 2 * SCR_RIB_DEPTH;
+
+// Bezel louvres
+
+// Louvre positions measured from SCR_TOP_X, scr_fwd_center_z
+// Sheet 4, View G-G
+SCR_LVR1_FWD_X = 13;
+SCR_LVR1_LENGTH_X = 20;
+SCR_LVR1_WIDTH_Z = 5;
+SCR_LVR1_GAP_Z = 5;
+
+SCR_LVR2_FWD_X = SCR_LVR1_FWD_X + SCR_LVR1_LENGTH_X + 5;
+SCR_LVR2_LENGTH_X = 4;
+SCR_LVR2_WIDTH_Z = 15;
+SCR_LVR2_POS_Z = 102.5;
+
+SCR_LVR_DEPTH = 10; // deep enough to punch through shell wall
