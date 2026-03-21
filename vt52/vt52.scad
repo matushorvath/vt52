@@ -14,7 +14,9 @@ include <BOSL2/std.scad>
 // TODO texture
 
 xrot(90) // orient the model for easy viewing in OpenSCAD
-    difference() {
-        body();
-        screen_mask();
+    diff() {
+        body(true);
+        tag("remove") body(false);
+
+        tag("remove") screen_mask();
     }
