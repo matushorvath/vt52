@@ -46,13 +46,13 @@ module body_yz(outside) {
 }
 
 module body(outside) {
-    difference() {
-        intersection() {
+    difference() { // TODO diff()
+        intersection() { // TODO intersect()
             body_xy(outside);
             body_yz(outside);
         };
 
-        kbd_fwd_corners_mask();
+        kbd_fwd_corners_mask(outside);
     };
 }
 

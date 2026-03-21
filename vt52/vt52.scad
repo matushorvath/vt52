@@ -16,7 +16,7 @@ include <BOSL2/std.scad>
 xrot(90) // orient the model for easy viewing in OpenSCAD
     diff() {
         body(true);
-        tag("remove") body(false);
+        tag("remove") body(false); // TODO maybe move the tag inside body()?
 
         tag("remove") screen_mask();
     }
