@@ -18,7 +18,7 @@ scr_fwd_bottom_x = kbd_back_x;
 scr_fwd_bottom_y = kbd_back_y;
 
 SCR_FWD_TOP_Y = 264;
-scr_fwd_top_x = scr_fwd_bottom_x + tan(SCR_FWD_A) * (SCR_FWD_TOP_Y - scr_fwd_bottom_y); // TODO adj_ang_to_opp
+scr_fwd_top_x = scr_fwd_bottom_x + adj_ang_to_opp(SCR_FWD_TOP_Y - scr_fwd_bottom_y, SCR_FWD_A);
 
 scr_fwd_center_x = (scr_fwd_bottom_x + scr_fwd_top_x) / 2;
 //scr_fwd_center_y = (scr_fwd_bottom_y + SCR_FWD_TOP_Y) / 2;

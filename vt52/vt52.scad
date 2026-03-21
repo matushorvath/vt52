@@ -9,7 +9,6 @@ include <BOSL2/std.scad>
 // TODO keyboard plate
 // TODO decorative bezel around
 // TODO spherical cutout of viewport back
-// TODO hollow out
 // TODO trim terminal depth
 // TODO texture
 
