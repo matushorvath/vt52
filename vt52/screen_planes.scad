@@ -2,6 +2,8 @@ include <common.scad>
 include <screen_dimensions.scad>
 include <BOSL2/std.scad>
 
+// $fa and $fn must match between these planes, to map their vertices 1:1
+
 function screen_fwd_plane() =
     let(
         shape = [
@@ -18,7 +20,6 @@ function screen_fwd_plane() =
             SCR_FWD_BR_R,
         ]
     )
-    // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
     round_corners(shape, radius=radii);
 
@@ -39,7 +40,6 @@ function screen_extra_plane() =
             SCR_FWD_BR_R,
         ]
     )
-    // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
     round_corners(shape, radius=radii);
 
@@ -59,7 +59,6 @@ function screen_back_plane() =
             SCR_BACK_CORNER_A,
         ]
     )
-    // $fn must match between screen_fwd_plane and screen_back_plane (set in common.scad)
     // otherwise skin() will produce artifacts
     round_corners(shape, radius=radii);
 

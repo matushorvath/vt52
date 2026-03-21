@@ -1,7 +1,6 @@
 include <../common/constants.scad>
 
-$fa = 1;
-$fn = 50;
+$fa = $preview ? 24 : 6;
 
 function cotan(angle) = 1 / tan(angle);
 

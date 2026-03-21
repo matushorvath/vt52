@@ -41,7 +41,7 @@ module body_yz_half(outside) {
 module body_yz(outside) {
     union() {
         body_yz_half(outside);
-        zflip() body_yz_half(outside);
+        zflip() body_yz_half(outside); // TODO I think we need to move them together by DELTA, otherwise there is an artifact in the middle
     }
 }
 

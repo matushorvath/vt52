@@ -57,3 +57,18 @@ with a 2:3 scale, it's
 470*2/3 = 313, enough for the keyboard
 250*2/3 = 167, enough for the panel
 180*2/3 = 120, enough for the panel
+
+
+Performance
+-----------
+
+- use $fa instead of $fn since it scales with size
+- use render() around nested set operations
+- lower $fn during modeling, e.g. to 16
+- simple models for preview, e.g. simplfy the table based curves
+
+
+TODOs
+-----
+
+TODO instead of vector[1] use vector.y, etc

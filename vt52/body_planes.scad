@@ -2,6 +2,8 @@ include <common.scad>
 include <body_dimensions.scad>
 include <BOSL2/std.scad>
 
+PREVIEW_TABLE_SKIP = 20;
+
 // How much is inner corner offset from the outer corner
 // given wall thickness and two edge angles measured from vertical and horizontal axis
 function offset_corner(owall, fwd_a, top_a) =
@@ -44,11 +46,17 @@ function body_yz_half_plane(outside, top_half_x, bottom_half_x, height_y, corner
         owall = outside ? 0 : BODY_WALL,
         oclear = outside ? 0 : DELTA,
 
+        // Skip most points if we are in preview mode
+        optimized_side_curve =
+            $preview ?
+            [for (i = [0 : PREVIEW_TABLE_SKIP : len(side_curve) - 1]) side_curve[i]] :
+            side_curve,
+
         shape = [
             [0, 0 - oclear],                                            // center bottom
             [0, height_y - owall],                                      // center top
             [top_half_x - owall, height_y - owall],                     // side top
-            for (p = side_curve)
+            for (p = optimized_side_curve)
                 if (p[0] <= BODY_Y - corner_r)
                     [p[1] - owall, p[0]],   // side top to side bottom curve; wall is approximate
             [bottom_half_x - owall, 0 - oclear]
