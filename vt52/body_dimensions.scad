@@ -17,6 +17,9 @@ BODY_Y = 282; // Section AF-AF
 // Depth of the model
 BODY_BACK_X = 400; // custom
 
+// Default wall thickness
+BODY_WALL = 4; // custom
+
 // Calculate missing coordinates
 kbd_fwd_x = adj_ang_to_opp(KBD_FWD_Y, KBD_FWD_A);
 

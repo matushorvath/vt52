@@ -2,19 +2,39 @@ include <common.scad>
 include <body_dimensions.scad>
 include <BOSL2/std.scad>
 
-function body_xy_plane() =
+// How much is inner corner offset from the outer corner
+// given wall thickness and two edge angles measured from vertical and horizontal axis
+function offset_corner(owall, fwd_a, top_a) =
     let(
+        d = fwd_a + top_a,
+        k = tan(d) - 1/cos(d)
+    )
+    [
+        owall * (cos(fwd_a) + k * sin(fwd_a)),
+        owall * (sin(fwd_a) - k * cos(fwd_a))
+    ];
+
+function body_xy_plane(outside = true) =
+    let(
+        // If inside, leave a wall around, and add a DELTA in the back
+        owall = outside ? 0 : BODY_WALL,
+        oback = outside ? 0 : DELTA,
+
+        //ofwd_bot_x = owall * tan(KBD_FWD_A) + owall / cos(KBD_FWD_A),
+        ofwd_bot_x = owall / cos(KBD_FWD_A),
+        ofwd_top = offset_corner(owall, KBD_FWD_A, KBD_TOP_A),
+
         shape = [
-            [0, 0],                             // keyboard forward bottom
-            [kbd_fwd_x, KBD_FWD_Y],             // keyboard forward top
-            [kbd_back_x, kbd_back_y],           // keyboard back top
-            [SCR_TOP_X, BODY_Y],                // body forward top
-            [BODY_BACK_X, BODY_Y],              // body back top
-            [BODY_BACK_X, 0]                    // body back bottom
+            [0 + ofwd_bot_x, 0 - oback],   // keyboard forward bottom
+            [kbd_fwd_x + ofwd_top[0], KBD_FWD_Y - ofwd_top[1]],                             // keyboard forward top
+            [kbd_back_x + owall, kbd_back_y - owall],                           // keyboard back top
+            [SCR_TOP_X + owall, BODY_Y - owall],                                // body forward top
+            [BODY_BACK_X + oback, BODY_Y - owall],                              // body back top
+            [BODY_BACK_X + oback, 0 - oback]                                    // body back bottom
         ],
 
         radii = [
-            0, 0, KBD_BACK_R, 0, 0, 0
+            0, 0, KBD_BACK_R + owall, 0, 0, 0
         ]
     )
     round_corners(shape, radius=radii);
@@ -38,7 +58,9 @@ function body_yz_half_plane(top_half_x, bottom_half_x, height_y, corner_r, side_
     )
     round_corners(shape, radius=radii);
 
-// polygon(body_xy_plane());
+%polygon(body_xy_plane(true));
+polygon(body_xy_plane(false));
+
 // polygon(body_yz_half_plane(YZ_CURVE_X000[0][1], YZ_BOTTOM_HALF[0], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X000));
 // polygon(body_yz_half_plane(YZ_CURVE_X050[0][1], YZ_BOTTOM_HALF[1], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X050));
 // polygon(body_yz_half_plane(YZ_CURVE_X100[0][1], YZ_BOTTOM_HALF[2], BODY_Y, YZ_TOP_CORNER_R, YZ_CURVE_X100));

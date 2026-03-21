@@ -6,9 +6,9 @@ include <BOSL2/std.scad>
 
 // TODO texture = "rough" for both body shapes?
 
-module body_xy() {
+module body_xy(outside = true) {
     linear_sweep(
-        body_xy_plane(),
+        body_xy_plane(outside),
         center = true,
         height = 2 * max(YZ_BOTTOM_HALF),
         orient = UP
@@ -44,10 +44,10 @@ module body_yz() {
     }
 }
 
-module body() {
+module body(outside = true) {
     difference() {
         intersection() {
-            body_xy();
+            body_xy(outside);
             body_yz();
         };
 
