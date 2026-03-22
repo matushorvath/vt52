@@ -22,7 +22,6 @@ module six_ribs(length) {
     zmove(SCR_RIB_6_OFFSET_Z) rib(length);
 }
 
-// TODO instead of bug_positive and bug_negative, use tag("remove") tag("keep") and BOSL2 diff()
 module bug_positive() {
     // Bug shape to remove from the screen mask, referenced from SCR_BUG_BACK_X
 

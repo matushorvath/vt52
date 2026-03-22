@@ -44,8 +44,8 @@ module body_yz(outside) {
 }
 
 module body(outside) {
-    difference() { // TODO diff()
-        intersection() { // TODO intersect()
+    difference() {
+        intersection() {
             body_xy(outside);
             body_yz(outside);
         };

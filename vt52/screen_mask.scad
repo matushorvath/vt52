@@ -70,7 +70,7 @@ module screen_louvres_move() {
 }
 
 module screen_mask() {
-    difference() { // TODO diff()
+    difference() {
         union() {
             screen_opening();
 
