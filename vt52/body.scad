@@ -39,10 +39,8 @@ module body_yz_half(outside) {
 }
 
 module body_yz(outside) {
-    union() {
+    zflip_copy()
         body_yz_half(outside);
-        zflip() body_yz_half(outside);
-    }
 }
 
 module body(outside) {
