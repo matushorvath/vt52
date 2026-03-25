@@ -104,8 +104,8 @@ SCR_BUG_BACK_X = 190; // custom, remove 4 mm for hole behind the bug
 scr_bug_back_y = KBD_FWD_Y + adj_ang_to_opp(SCR_BUG_BACK_X - kbd_fwd_x, KBD_TOP_A);
 
 // This should be a hole through the shell, so we need more than shell wall size
-SCR_BUG_HOLE_DEPTH = 10;
-SCR_BUG_HOLE_EXTRA_X = 5; // make sure we punch through below the screen bottom edge
+SCR_BUG_HOLE_DEPTH = BODY_WALL + 1;
+SCR_BUG_HOLE_EXTRA_X = 1; // make sure we punch through below the screen bottom edge
 
 // Indent; Sheet 8, View I-I
 SCR_INDENT_LEFT_Z = 229.9 - 4.77 - 12;
@@ -154,4 +154,4 @@ SCR_LVR2_LENGTH_X = 4;
 SCR_LVR2_WIDTH_Z = 15;
 SCR_LVR2_POS_Z = 102.5;
 
-SCR_LVR_DEPTH = 10; // deep enough to punch through shell wall
+SCR_LVR_DEPTH = BODY_WALL + 1; // deep enough to punch through shell wall

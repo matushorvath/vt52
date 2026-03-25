@@ -5,18 +5,21 @@ include <screen_planes.scad>
 include <screen_top_details.scad>
 include <BOSL2/std.scad>
 
-module screen_opening() {
+module screen_object(mask) {
+    // Mask extends in front of the screen area to clear the keyboard/screen fillet
+
     // In Z, align center of the extra face with center of the forward face
     extra_shift_z = scr_fwd_center_z + scr_extra_width / 2;
 
-    // Position the extra face (for clearing the keyboard/screen fillet)
-    extra_face = apply(
+    // Position the extra face
+    extra_face = mask ? apply(
+        // Transformations are applied last to first
         IDENT
             * move([scr_extra_bottom_x, scr_extra_bottom_y, -extra_shift_z]) // move to position relative to the model
             * rot(a = -SCR_FWD_A, v = [0, 0, 1]) // angle relative to the model
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
-        path3d(screen_extra_plane())
-    );
+        path3d(screen_extra_plane(mask))
+    ) : undef;
     //stroke(extra_face, closed=true);
 
     // Position the forward face
@@ -26,7 +29,7 @@ module screen_opening() {
             * move([scr_fwd_bottom_x, scr_fwd_bottom_y, -SCR_FWD_LEFT_Z]) // move to position relative to the model
             * rot(a = -SCR_FWD_A, v = [0, 0, 1]) // angle relative to the model
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
-        path3d(screen_fwd_plane())
+        path3d(screen_fwd_plane(mask))
     );
     //stroke(fwd_face, closed=true);
 
@@ -37,18 +40,19 @@ module screen_opening() {
     back_face = apply(
         // Transformations are applied last to first
         IDENT
+            * xmove(mask ? DELTA : 0) // punch the mask through the back face // TODO remove once we have spheric back face
             * move([scr_back_bottom_x, scr_back_bottom_y, -back_shift_z]) // move to position relative to the model
             * rot(a = -SCR_BACK_A, v = [0, 0, 1]) // angle relative to the model
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model
-        path3d(screen_back_plane())
+        path3d(screen_back_plane(mask))
     );
     //stroke(back_face, closed=true);
 
     // TODO Sheet 2, View K-K: back face is 635 R spherical cut off; SCR_BACK_CENTER_X is touch point to the sphere
     // extend the mask further back since back corners are further inside than now, mask off back face with a 635 R sphere
 
-    move([0, DELTA, 0]) // avoid artifacts on the keyboard surface
-        skin([extra_face, fwd_face, back_face], slices = 10);
+    faces = mask ? [extra_face, fwd_face, back_face] : [fwd_face, back_face];
+    skin(faces, slices = 10);
 }
 
 module screen_bottom_bezel_move() {
@@ -69,10 +73,19 @@ module screen_louvres_move() {
             children();
 }
 
+// screen_solid(true);
+// %screen_solid(false);
+
+// Solid part of the screen, which will form the bezels
+module screen_bezels() {
+    screen_object(false);
+}
+
+// Mask of the screen, which creates the viewport
 module screen_mask() {
     difference() {
         union() {
-            screen_opening();
+            screen_object(true);
 
             screen_bottom_bezel_move() ymove(DELTA)
                 screen_bottom_bezel_mask_flat();
@@ -89,4 +102,5 @@ module screen_mask() {
     }
 }
 
-//screen_mask();
+//screen_bezels();
+//%screen_mask();

@@ -66,3 +66,11 @@ Performance
 - use render() around nested set operations
 - lower $fn during modeling, e.g. to 16
 - simple models for preview, e.g. simplfy the table based curves
+
+
+TODOs
+-----
+
+- rename outside to !mask in body models
+- terminal top is an interference between the two body planes, you can see it if you color body_xy red
+- screen bezel interferes with body vertical front, move screen bezel back by DELTA

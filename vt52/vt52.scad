@@ -1,6 +1,6 @@
 include <common.scad>
 include <body.scad>
-include <screen_mask.scad>
+include <screen.scad>
 include <BOSL2/std.scad>
 
 // TODO top edge louvres
@@ -12,10 +12,20 @@ include <BOSL2/std.scad>
 // TODO trim terminal depth
 // TODO texture
 
-xrot(90) // orient the model for easy viewing in OpenSCAD
+// Orient the model for easy viewing in OpenSCAD
+xrot(90)
     difference() {
-        body(true);
+        union() {
+            // Body with a cavity
+            difference() {
+                body(true);
+                body(false);
+            }
 
-        body(false);
+            // Screen object without the cavity
+            screen_bezels();
+        }
+
+        // Mask the screen cavity and surrounding parts of the body
         screen_mask();
     }
