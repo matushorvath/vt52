@@ -131,15 +131,18 @@ module top_louvres_backing() {
     right_z = TOP_LVR_BLIND_R * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z); // TOP_LVR_BLIND_R-th louvre right
 
     move([
-        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X - DELTA, // bottom of the louvre
+        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X + TOP_LVR_BACK_WALL_X - DELTA, // bottom of the louvre
         TOP_LVR_BOT_Y, // top of the screen/bottom of the louvre box
         left_z
     ])
-        cube([
-            TOP_LVR_BACK_WALL_X,
-            TOP_LVR_TOP_Y - TOP_LVR_BOT_Y - BODY_WALL + DELTA,
-            right_z - left_z
-        ]);
+        prismoid(
+            size2 = [TOP_LVR_BACK_WALL_X, right_z - left_z],
+            h = TOP_LVR_TOP_Y - TOP_LVR_BOT_Y - BODY_WALL + DELTA,
+            xang = [90 - SCR_FWD_A, 90],
+            yang = [90, 90],
+            orient = BACK,
+            anchor = BOTTOM + RIGHT + BACK
+        );
 }
 
 //top_louvres_backing();
