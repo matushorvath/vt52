@@ -78,4 +78,3 @@ TODOs
   - comment out dimensions that are not yet used at all
 - Section AK-AK Sheet 10: Display top has 5 stiffening ribs
   - add stiffening ribs to other places as well
-- Top profile is wrong, should be Sheet 30, Data List #2

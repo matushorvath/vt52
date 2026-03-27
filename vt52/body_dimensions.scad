@@ -11,8 +11,9 @@ KBD_BACK_R = 14;
 SCR_FWD_A = 12;
 SCR_TOP_X = 182;
 
-// Sheet 2
-BODY_Y = 282; // Section AF-AF
+// Body height varies from 285.07 (X=182) to 283.64 (X=400),
+// but we simplify it a constant 285
+SCR_TOP_Y = 285; // custom; Sheet 30, Data List #2 for X=182
 
 // Depth of the model
 BODY_BACK_X = 400; // custom
@@ -29,19 +30,19 @@ kbd_back_x and kbd_back_y are only defined by KBD_FWD_A and KBD_TOP_A
 tan(KBD_TOP_A) = (y - KBD_FWD_Y) / (x - kbd_fwd_x)
 x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y = y
 
-cotan(SCR_FWD_A) = (y - BODY_Y) / (x - SCR_TOP_X)
-x * cotan(SCR_FWD_A) - SCR_TOP_X * cotan(SCR_FWD_A) + BODY_Y = y
+cotan(SCR_FWD_A) = (y - SCR_TOP_Y) / (x - SCR_TOP_X)
+x * cotan(SCR_FWD_A) - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y = y
 
 x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y =
-    x * cotan(SCR_FWD_A) - SCR_TOP_X * cotan(SCR_FWD_A) + BODY_Y
+    x * cotan(SCR_FWD_A) - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y
 
 x * tan(KBD_TOP_A) - x * cotan(SCR_FWD_A) =
-    kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + BODY_Y
+    kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y
 
-x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + BODY_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A))
+x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A))
 */
 
-kbd_back_x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + BODY_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A));
+kbd_back_x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A));
 kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y;
 
 // Sheet 3, Sheet 19
@@ -52,20 +53,22 @@ YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 // X values for YZ_* arrays below
 YZ_X = [0, 50, 100, 150, 200, 250, 300, 350, 400];
 
-// Approx. Z value at Y = BODY_Y ~= 285 including size of the rounded corner YZ_TOP_CORNER_R
+// Approx. Z value at maximum Y, given X
+// including size of the rounded corner YZ_TOP_CORNER_R
 YZ_TOP_HALF = [
-    YZ_CURVE_X000[0].y,     // X = 0; Sheet 31, Data List #3
-    YZ_CURVE_X050[0].y,     // X = 50; Sheet 32, Data List #4
-    YZ_CURVE_X100[0].y,     // X = 100; Sheet 33, Data List #5
-    YZ_CURVE_X150[0].y,     // X = 150; Sheet 34, Data List #6
-    YZ_CURVE_X200[0].y,     // X = 200; Sheet 35, Data List #7
-    YZ_CURVE_X250[0].y,     // X = 250; Sheet 36, Data List #8
-    YZ_CURVE_X300[0].y,     // X = 300; Sheet 37, Data List #9
-    YZ_CURVE_X350[0].y,     // X = 350; Sheet 38, Data List #10
-    YZ_CURVE_X400[0].y,     // X = 400; Sheet 39, Data List #11
+    YZ_CURVE_X000[0][1],     // X = 0; Sheet 31, Data List #3
+    YZ_CURVE_X050[0][1],     // X = 50; Sheet 32, Data List #4
+    YZ_CURVE_X100[0][1],     // X = 100; Sheet 33, Data List #5
+    YZ_CURVE_X150[0][1],     // X = 150; Sheet 34, Data List #6
+    YZ_CURVE_X200[0][1],     // X = 200; Sheet 35, Data List #7
+    YZ_CURVE_X250[0][1],     // X = 250; Sheet 36, Data List #8
+    YZ_CURVE_X300[0][1],     // X = 300; Sheet 37, Data List #9
+    YZ_CURVE_X350[0][1],     // X = 350; Sheet 38, Data List #10
+    YZ_CURVE_X400[0][1],     // X = 400; Sheet 39, Data List #11
 ];
 
-// Approx. Z value at given X; Sheet 29, Data List #1
+// Approx. Z value at Y = 0, given X; Sheet 29, Data List #1
+// TODO parse the table and reference it here; even better use the YZ_CURVE_* (but they don't all have values for Y=0)
 YZ_BOTTOM_HALF = [
     258.50000,  // X = 0
     259.92857,  // X = 50
