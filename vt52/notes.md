@@ -72,7 +72,7 @@ TODOs
 -----
 
 - rename outside to !mask in body models
-- terminal top is an interference between the two body planes, you can see it if you color body_xy red
+- terminal top and bottom are an interference between the two body planes, you can see it if you color body_xy red
 - screen bezel interferes with body vertical front, move screen bezel back by DELTA
 - move some of the _dimensions that are not shared between files into the .scad file that uses them
   - comment out dimensions that are not yet used at all

@@ -29,7 +29,9 @@ TOP_LVR_TOP_Y = SCR_TOP_Y; // 285
 // Forward bottom edge of the louvres, including the gap
 TOP_LVR_BOT_Y = SCR_FWD_TOP_Y; // 264
 
-// TODO right side louvres are just holes through, left side have a backing
+// Louvres should be cored through between Z=63 and Z=222.5; Sheet 2, View E-E
+TOP_LVR_BLIND_L = 28; // number of blind louvres to the left; all of them
+TOP_LVR_BLIND_R = 8; // number of blind louvres to the right
 
 top_lvr_height_y = TOP_LVR_TOP_Y - 2 * TOP_LVR_TOP_BOT_WALL_Y - TOP_LVR_BOT_Y;
 
@@ -90,7 +92,7 @@ module one_top_louvre_arc_left(center_z) {
 
 //one_top_louvre_arc_left(0);
 
-module top_louvres() {
+module top_louvres_mask() {
     for (i = [0:26]) {
         offset_z = TOP_LVR_MID_OFFSET_Z
             + TOP_LVR_GAP_Z / 2
@@ -110,4 +112,29 @@ module top_louvres() {
         one_top_louvre_arc_left(-offset_z);
 }
 
-//top_louvres();
+//#top_louvres();
+
+module top_louvres_backing() {
+    // We add a backing to the louvres that should not be cored through
+    // No need to add the whole top wall, since the shell is already there
+    // (and we can avoid having to model a round shape in the corners)
+
+    left_z = -TOP_LVR_BLIND_L * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z); // TOP_LVR_BLIND_L-th louvre left
+    right_z = TOP_LVR_BLIND_R * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z); // TOP_LVR_BLIND_R-th louvre right
+
+    move([
+        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X, // bottom of the louvre
+        TOP_LVR_BOT_Y + DELTA, // top of the screen/bottom of the louvre box
+        left_z
+    ])
+        cube([
+            TOP_LVR_BACK_WALL_X,
+            TOP_LVR_TOP_Y - TOP_LVR_BOT_Y - BODY_WALL + DELTA,
+            right_z - left_z
+        ]);
+}
+
+//top_louvres_backing();
+
+// include <body.scad>
+// %body(true);
