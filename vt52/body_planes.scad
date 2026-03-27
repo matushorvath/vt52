@@ -16,6 +16,9 @@ function offset_corner(owall, fwd_a, top_a) =
         owall * (sin(fwd_a) - k * cos(fwd_a))
     ];
 
+// TODO this is wrong, BODY_Y is not the body height (it's completely something else)
+// TODO real height is closer to 285.065 based on tables
+// TODO instead use Sheet 30, Data List #2 where X >= 182
 function body_xy_plane(outside) =
     let(
         // If inside, leave a wall around, and add a DELTA where there is no wall
@@ -38,7 +41,7 @@ function body_xy_plane(outside) =
             0, 0, KBD_BACK_R + owall, 0, 0, 0
         ]
     )
-    round_corners(shape, radius=radii);
+    round_corners(shape, radius = radii);
 
 function body_yz_half_plane(outside, top_half_x, bottom_half_x, height_y, corner_r, side_curve) =
     let(
@@ -66,7 +69,7 @@ function body_yz_half_plane(outside, top_half_x, bottom_half_x, height_y, corner
             for (i = [4 : len(shape)]) 0
         ]
     )
-    round_corners(shape, radius=radii);
+    round_corners(shape, radius = radii);
 
 // %polygon(body_xy_plane(true));
 // polygon(body_xy_plane(false));

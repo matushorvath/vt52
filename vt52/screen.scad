@@ -94,7 +94,7 @@ module screen_mask() {
                 bug_negative();
 
             screen_louvres_move() ymove(-DELTA)
-                louvres();
+                screen_louvres();
         }
 
         screen_bug_move() ymove(-DELTA)

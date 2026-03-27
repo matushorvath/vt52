@@ -140,7 +140,7 @@ SCR_RIB_WIDTH = 1.0;
 // 2 * SCR_RIB_DEPTH is just a convenient value that's in scale
 scr_rib_back_x = scr_back_bottom_x + 2 * SCR_RIB_DEPTH;
 
-// Bezel louvres
+// Screen bezel louvres
 
 // Louvre positions measured from scr_fwd_top_x, scr_fwd_center_z
 // Sheet 4, View G-G
