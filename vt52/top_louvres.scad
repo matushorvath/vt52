@@ -13,7 +13,7 @@ TOP_LVR_GAP_Z = 4;
 TOP_LVR_R = 6.5;
 
 // The louvres are offset from the terminal midline
-TOP_LVR_MID_OFFSET_Z = -0.25;
+TOP_LVR_MID_OFFSET_Z = 0.25;
 
 // Sheet 2, Section AF-AF
 TOP_LVR_TOP_BOT_WALL_Y = 4;
@@ -52,7 +52,7 @@ module one_top_louvre_rect(center_z) {
 
 //one_top_louvre_rect(0);
 
-module one_top_louvre_circ_left(center_z) {
+module one_top_louvre_arc_left(center_z) {
     // The exact shape isn't very clear. View E-E says 6.5R, however that would not create a 4mm wide 10mm tall shape.
     //
     // The options are:
@@ -88,41 +88,26 @@ module one_top_louvre_circ_left(center_z) {
             }
 }
 
-//one_top_louvre_circ_left(0);
+//one_top_louvre_arc_left(0);
 
-// TODO remove
-//include <body.scad>
-//%body(true);
+module top_louvres() {
+    for (i = [0:26]) {
+        offset_z = TOP_LVR_MID_OFFSET_Z
+            + TOP_LVR_GAP_Z / 2
+            + i * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z)
+            + TOP_LVR_WIDTH_Z / 2;
 
-// module one_top_louvre_arc(center_z) {
-//     move([SCR_LVR2_FWD_X, 0, center_z])
-//         cuboid(
-//             [SCR_LVR2_LENGTH_X, SCR_LVR_DEPTH, SCR_LVR2_WIDTH_Z],
-//             anchor = LEFT + FRONT
-//         );
-// }
+        zflip_copy(z = TOP_LVR_MID_OFFSET_Z)
+            one_top_louvre_rect(offset_z);
+    }
 
-// module top_louvres() {
-//     // Forward center
-//     one_top_louvre_fwd(0);
+    offset_z = TOP_LVR_MID_OFFSET_Z
+        + TOP_LVR_GAP_Z / 2
+        + 27 * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z)
+        + TOP_LVR_WIDTH_Z / 2;
 
-//     for (i = [1:7]) {
-//         offset_z = i * (SCR_LVR1_GAP_Z + SCR_LVR1_WIDTH_Z);
-//         one_top_louvre_fwd(offset_z);
-//         one_top_louvre_fwd(-offset_z);
-//     }
+    zflip_copy(z = TOP_LVR_MID_OFFSET_Z)
+        one_top_louvre_arc_left(-offset_z);
+}
 
-//     // Forward sides
-//     for (i = [0:1]) {
-//         offset_z = SCR_LVR2_POS_Z + SCR_LVR1_WIDTH_Z / 2 + i * (SCR_LVR1_GAP_Z + SCR_LVR1_WIDTH_Z);
-//         one_top_louvre_fwd(offset_z);
-//         one_top_louvre_fwd(-offset_z);
-//     }
-
-//     // Back sides
-//     offset_z = SCR_LVR2_POS_Z + SCR_LVR2_WIDTH_Z / 2;
-//     one_top_louvre_back(offset_z);
-//     one_top_louvre_back(-offset_z);
-// }
-
-// top_louvres();
+//top_louvres();

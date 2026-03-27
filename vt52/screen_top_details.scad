@@ -24,21 +24,21 @@ module screen_louvres() {
 
     for (i = [1:7]) {
         offset_z = i * (SCR_LVR1_GAP_Z + SCR_LVR1_WIDTH_Z);
-        one_screen_louvre_fwd(offset_z);
-        one_screen_louvre_fwd(-offset_z);
+        zflip_copy()
+            one_screen_louvre_fwd(offset_z);
     }
 
     // Forward sides
     for (i = [0:1]) {
         offset_z = SCR_LVR2_POS_Z + SCR_LVR1_WIDTH_Z / 2 + i * (SCR_LVR1_GAP_Z + SCR_LVR1_WIDTH_Z);
-        one_screen_louvre_fwd(offset_z);
-        one_screen_louvre_fwd(-offset_z);
+        zflip_copy()
+            one_screen_louvre_fwd(offset_z);
     }
 
     // Back sides
     offset_z = SCR_LVR2_POS_Z + SCR_LVR2_WIDTH_Z / 2;
-    one_screen_louvre_back(offset_z);
-    one_screen_louvre_back(-offset_z);
+    zflip_copy()
+            one_screen_louvre_back(offset_z);
 }
 
 //screen_louvres();
