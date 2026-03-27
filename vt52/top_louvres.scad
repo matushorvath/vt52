@@ -21,6 +21,7 @@ TOP_LVR_BACK_HOLE_X = 2; // offset from TOP_LVR_TOP_X, along X axis
 TOP_LVR_BACK_WALL_X = 2; // offset from TOP_LVR_BACK_HOLE_X
 
 TOP_LVR_DEPTH = 8; // custom, deep enough to punch through the front face
+TOP_LVR_EXTRA_CORE_X = 4; // extra X depth for louvres without the backing
 
 // Forward top edge of the louvres, including the gap
 TOP_LVR_TOP_X = SCR_TOP_X; // 182
@@ -35,15 +36,18 @@ TOP_LVR_BLIND_R = 8; // number of blind louvres to the right
 
 top_lvr_height_y = TOP_LVR_TOP_Y - 2 * TOP_LVR_TOP_BOT_WALL_Y - TOP_LVR_BOT_Y;
 
-module one_top_louvre_rect(center_z) {
+module one_top_louvre_rect(center_z, core) {
+    // Louvres that go through need to go deeper than TOP_LVR_BACK_HOLE_Xs
+    extra_x = core ? TOP_LVR_EXTRA_CORE_X : 0;
+
     bot_back = [
-        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X,
+        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X + extra_x,
         TOP_LVR_BOT_Y + TOP_LVR_TOP_BOT_WALL_Y,
         center_z
     ];
 
     size = [
-        TOP_LVR_DEPTH,
+        TOP_LVR_DEPTH + extra_x,
         top_lvr_height_y,
         TOP_LVR_WIDTH_Z
     ];
@@ -54,7 +58,7 @@ module one_top_louvre_rect(center_z) {
 
 //one_top_louvre_rect(0);
 
-module one_top_louvre_arc_left(center_z) {
+module one_top_louvre_arc_left(center_z, core) {
     // The exact shape isn't very clear. View E-E says 6.5R, however that would not create a 4mm wide 10mm tall shape.
     //
     // The options are:
@@ -67,10 +71,12 @@ module one_top_louvre_arc_left(center_z) {
     //
     // Left side of terminal (right side will be mirrored), model coordinates.
 
-    // Cylinder, radius TOP_LVR_R, width TOP_LVR_WIDTH_Z, cut off from side to TOP_LVR_WIDTH_Z
+    // Louvres that go through need to go deeper than TOP_LVR_BACK_HOLE_Xs
+    extra_x = core ? TOP_LVR_EXTRA_CORE_X : 0;
 
+    // Cylinder, radius TOP_LVR_R, width TOP_LVR_WIDTH_Z, cut off from side to TOP_LVR_WIDTH_Z
     mid_back = [
-        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X,
+        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X + extra_x,
         (TOP_LVR_TOP_Y + TOP_LVR_BOT_Y) / 2,
         center_z
     ];
@@ -78,12 +84,12 @@ module one_top_louvre_arc_left(center_z) {
     move(mid_back) // move to place
         zmove(TOP_LVR_R - TOP_LVR_WIDTH_Z / 2) // center the cylinder section
             difference() {
-                cylinder(h = TOP_LVR_DEPTH, r = TOP_LVR_R, orient = LEFT);
+                cylinder(h = TOP_LVR_DEPTH + extra_x, r = TOP_LVR_R, orient = LEFT);
 
                 // Cut of everything except a TOP_LVR_WIDTH_Z wide section
                 move([DELTA, DELTA, TOP_LVR_WIDTH_Z])
                     cube([
-                        TOP_LVR_DEPTH + 2 * DELTA,
+                        TOP_LVR_DEPTH + 2 * DELTA + extra_x,
                         2 * TOP_LVR_R + 2 * DELTA,
                         2 * TOP_LVR_R + 2 * DELTA
                     ], anchor = RIGHT);
@@ -99,8 +105,8 @@ module top_louvres_mask() {
             + i * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z)
             + TOP_LVR_WIDTH_Z / 2;
 
-        zflip_copy(z = TOP_LVR_MID_OFFSET_Z)
-            one_top_louvre_rect(offset_z);
+        one_top_louvre_rect(-offset_z, i >= TOP_LVR_BLIND_L);
+        one_top_louvre_rect(offset_z, i >= TOP_LVR_BLIND_R);
     }
 
     offset_z = TOP_LVR_MID_OFFSET_Z
@@ -108,8 +114,10 @@ module top_louvres_mask() {
         + 27 * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z)
         + TOP_LVR_WIDTH_Z / 2;
 
-    zflip_copy(z = TOP_LVR_MID_OFFSET_Z)
-        one_top_louvre_arc_left(-offset_z);
+    one_top_louvre_arc_left(-offset_z, false);
+
+    zflip(z = TOP_LVR_MID_OFFSET_Z)
+        one_top_louvre_arc_left(-offset_z, true);
 }
 
 //#top_louvres();
@@ -123,8 +131,8 @@ module top_louvres_backing() {
     right_z = TOP_LVR_BLIND_R * (TOP_LVR_GAP_Z + TOP_LVR_WIDTH_Z); // TOP_LVR_BLIND_R-th louvre right
 
     move([
-        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X, // bottom of the louvre
-        TOP_LVR_BOT_Y + DELTA, // top of the screen/bottom of the louvre box
+        TOP_LVR_TOP_X + TOP_LVR_BACK_HOLE_X - DELTA, // bottom of the louvre
+        TOP_LVR_BOT_Y, // top of the screen/bottom of the louvre box
         left_z
     ])
         cube([
