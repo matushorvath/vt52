@@ -62,15 +62,15 @@ SCR_BACK_HEIGHT = SCR_PANEL_Y - 2 * SCR_PANEL_MARGIN;
 
 // The X coordinate of the back surface center plus the angle and height of the back surface
 // fully define the X coordinate of the back surface bottom point.
-scr_back_bottom_x = SCR_BACK_CENTER_X - (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A); // TODO use BOSL2 trigonometry
-scr_back_top_x = SCR_BACK_CENTER_X + (SCR_BACK_HEIGHT / 2) * sin(SCR_BACK_A); // TODO use BOSL2 trigonometry
+scr_back_bottom_x = SCR_BACK_CENTER_X - ang_hyp_to_opp(SCR_BACK_A, SCR_BACK_HEIGHT / 2);
+scr_back_top_x = SCR_BACK_CENTER_X + ang_hyp_to_opp(SCR_BACK_A, SCR_BACK_HEIGHT / 2);
 
 // The Y coordinate of the back surface bottom point is defined by the bottom screen bezel.
 // tan(SCR_BOTTOM_A) = (scr_back_bottom_y - scr_fwd_bottom_y) / (scr_back_bottom_x - scr_fwd_bottom_x)
-scr_back_bottom_y = tan(SCR_BOTTOM_A) * (scr_back_bottom_x - scr_fwd_bottom_x) + scr_fwd_bottom_y;
+scr_back_bottom_y = ang_adj_to_opp(SCR_BOTTOM_A, scr_back_bottom_x - scr_fwd_bottom_x) + scr_fwd_bottom_y;
 
-scr_back_center_y = scr_back_bottom_y + cotan(SCR_BACK_A) * (SCR_BACK_CENTER_X - scr_back_bottom_x);
-scr_back_top_y = scr_back_bottom_y + cotan(SCR_BACK_A) * (scr_back_top_x - scr_back_bottom_x);
+scr_back_center_y = scr_back_bottom_y + ang_opp_to_adj(SCR_BACK_A, SCR_BACK_CENTER_X - scr_back_bottom_x);
+scr_back_top_y = scr_back_bottom_y + ang_opp_to_adj(SCR_BACK_A, scr_back_top_x - scr_back_bottom_x);
 
 // Angle of the screen top bezel
 scr_top_a = adj_opp_to_ang(scr_back_top_x - scr_fwd_top_x, SCR_FWD_TOP_Y - scr_back_top_y);
