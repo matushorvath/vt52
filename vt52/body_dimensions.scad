@@ -50,26 +50,11 @@ kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_
 
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 
-// X values for YZ_* arrays below
+// X values for which we have YZ_CURVE_X* tables
 YZ_X = [0, 50, 100, 150, 200, 250, 300, 350, 400];
 
-// Approx. Z value at maximum Y, given X
-// including size of the rounded corner YZ_TOP_CORNER_R
-YZ_TOP_HALF = [
-    YZ_CURVE_X000[0][1],     // X = 0; Sheet 31, Data List #3
-    YZ_CURVE_X050[0][1],     // X = 50; Sheet 32, Data List #4
-    YZ_CURVE_X100[0][1],     // X = 100; Sheet 33, Data List #5
-    YZ_CURVE_X150[0][1],     // X = 150; Sheet 34, Data List #6
-    YZ_CURVE_X200[0][1],     // X = 200; Sheet 35, Data List #7
-    YZ_CURVE_X250[0][1],     // X = 250; Sheet 36, Data List #8
-    YZ_CURVE_X300[0][1],     // X = 300; Sheet 37, Data List #9
-    YZ_CURVE_X350[0][1],     // X = 350; Sheet 38, Data List #10
-    YZ_CURVE_X400[0][1],     // X = 400; Sheet 39, Data List #11
-];
-
-// Approx. Z value at Y = 0, given X; Sheet 29, Data List #1
-// TODO parse the table and reference it here; even better use the YZ_CURVE_* (but they don't all have values for Y=0)
-YZ_BOTTOM_HALF = [
+// Values from Sheet 29, Data List #1 for X values in YZ_X
+XZ_CURVE_Y000 = [
     258.50000,  // X = 0
     259.92857,  // X = 50
     261.11905,  // X = 100
@@ -85,7 +70,7 @@ YZ_BOTTOM_HALF = [
 ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H
 
 // Empirically tuned to match keyboard forward rounded corners to the body sides
-KBD_FWD_CORNER_ADJ_BOTTOM_Y = 0.55; // added to YZ_BOTTOM_HALF[0] when positioning bottom of the corner
+KBD_FWD_CORNER_ADJ_BOTTOM_Y = 0.55; // added to XZ_CURVE_Y000[0] when positioning bottom of the corner
 KBD_FWD_CORNER_ADJ_TOP_Y = 0.2; // additional shift when positioning top of the corner
 
 // Decorative bezel on cerain edges

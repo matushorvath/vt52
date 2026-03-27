@@ -24,12 +24,12 @@ module kbd_fwd_corners_mask(outside) {
     owall = outside ? 0 : BODY_WALL;
 
     // Near side
-    move([-DELTA + owall, -DELTA, YZ_BOTTOM_HALF[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall])
+    move([-DELTA + owall, -DELTA, XZ_CURVE_Y000[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall])
         kbd_fwd_one_corner_mask(outside);
 
     // Far side
     zflip()
-        move([-DELTA + owall, -DELTA, YZ_BOTTOM_HALF[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall])
+        move([-DELTA + owall, -DELTA, XZ_CURVE_Y000[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall])
             kbd_fwd_one_corner_mask(outside);
 }
 
