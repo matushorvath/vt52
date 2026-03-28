@@ -9,8 +9,8 @@ SCR_FWD_TR_R = 5;
 SCR_FWD_BL_R = 5;
 SCR_FWD_BR_R = 5;
 
-SCR_FWD_LEFT_Z = 222;
-SCR_FWD_RIGHT_Z = -48;
+SCR_FWD_LEFT_Z = -222;
+SCR_FWD_RIGHT_Z = 48;
 scr_fwd_center_z = (SCR_FWD_LEFT_Z + SCR_FWD_RIGHT_Z) / 2;
 
 // Sheet 2, View K-K
@@ -25,7 +25,7 @@ scr_fwd_center_x = (scr_fwd_bottom_x + scr_fwd_top_x) / 2;
 
 // Calculate forward plane dimensions
 scr_fwd_height = adj_ang_to_hyp(SCR_FWD_TOP_Y - scr_fwd_bottom_y, SCR_FWD_A);
-scr_fwd_width = SCR_FWD_LEFT_Z - SCR_FWD_RIGHT_Z;
+scr_fwd_width = SCR_FWD_RIGHT_Z - SCR_FWD_LEFT_Z;
 
 // Screen viewport sides
 
