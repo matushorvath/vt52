@@ -17,6 +17,9 @@ https://manx-docs.org/details.php/1,21903
 https://bitsavers.org/pdf/dec/terminal/vt50/VT50-print-set.pdf
 https://bitsavers.org/pdf/dec/terminal/vt50/MP00036_VT50_Maintenance_Drawings_Jan1976.pdf
 
+Color/finish:
+https://www.bitsavers.org/pdf/dec/standards/EL-00092-00-0_F_Finish_and_Color_Standard_Dec82.pdf
+
 
 Links
 -----
@@ -71,6 +74,8 @@ Performance
 TODOs
 -----
 
+- keyboard will need to be significantly deeper in X; prepare for that
+  - all X dimensions behind the keyboard should probably be relative to the back edge of the keyboard (from keyboard/screen edge)
 - rename outside to !mask in body models
 - terminal top and bottom are an interference between the two body planes, you can see it if you color body_xy red
 - screen bezel interferes with body vertical front, move screen bezel back by DELTA

@@ -48,8 +48,8 @@ module screen_object(mask) {
     );
     //stroke(back_face, closed=true);
 
-    // TODO Sheet 2, View K-K: back face is 635 R spherical cut off; SCR_BACK_CENTER_X is touch point to the sphere
-    // extend the mask further back since back corners are further inside than now, mask off back face with a 635 R sphere
+    // Sheet 2, View K-K: Back face is 635 R spherical cut off; SCR_BACK_CENTER_X is touch point to the sphere
+    // However, that doesn't work with a flat LCD, so we ignore that feature; custom
 
     faces = mask ? [extra_face, fwd_face, back_face] : [fwd_face, back_face];
     skin(faces, slices = 10);
@@ -104,3 +104,6 @@ module screen_mask() {
 
 //screen_bezels();
 //%screen_mask();
+
+//include <body.scad>
+//%body(true);
