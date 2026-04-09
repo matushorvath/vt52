@@ -24,6 +24,9 @@ BODY_WALL = 4; // custom
 // Calculate missing coordinates
 kbd_fwd_x = adj_ang_to_opp(KBD_FWD_Y, KBD_FWD_A);
 
+//echo("kbd_fwd_x", kbd_fwd_x);
+//echo("KBD_FWD_Y", KBD_FWD_Y);
+
 /* Top back point of the keyboard
 kbd_back_x and kbd_back_y are only defined by KBD_FWD_A and KBD_TOP_A
 
@@ -44,6 +47,9 @@ x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR
 
 kbd_back_x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A));
 kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y;
+
+//echo("kbd_back_x", kbd_back_x);
+//echo("kbd_back_y", kbd_back_y);
 
 // Sheet 3, Sheet 19
 // The YZ profile is slightly different for different X, see Figure 3 - Figure 16

@@ -62,6 +62,86 @@ with a 2:3 scale, it's
 180*2/3 = 120, enough for the panel
 
 
+Keyboard Depth
+--------------
+
+ECHO: "kbd_fwd_x", 7.79423
+ECHO: "KBD_FWD_Y", 13.5
+ECHO: "kbd_back_x", 130.303
+ECHO: "kbd_back_y", 41.7833
+
+KBD_TOP_A = 13;
+KBD_BACK_R = 14;
+
+dX = 122.5
+dY = 28.3
+dist = sqrt(dX^2 + dY^2) = 125.7
+
+dist_scale = dist * 2/3 = 83.8
+
+real keyboard depth rdist = 100 (keys only 95, +5 for front support)
+rdist_scale = rdist * 3/2 = 150
+
+delta = rdist_scale - dist_scale = 24.3
+
+-> we need to find extra 25 depth for keyboard
+plus front bezel, plus a bit if space behind keyboard, say 30
+
+issue: We can't just extend the space, it affects other parts as well.
+If we just extend it, we need to choose:
+1. the front edge gets shorter; or
+  - could be acceptable, need to calculate how much
+  - we need to extend the side curves, but we can probably just scale the spacing
+    between YZ planes them from 50 to a bit more in the keyboard part of the model
+2. the whole model gets taller; or
+  - could be acceptable, it's the same amount as option 1
+  - but we need to think about the side curves, they're defined for a specific model height
+    (they could be scaled in the bottom part of the model)
+3. the keyboard angle, which is also the bottom screen angle, gets smaller
+  - probably would make the model look funny unless it's very small
+
+Maybe the solution is a combination of multiple options.
+(e.g. angle from 13 to 12 and shorten the front edge)
+
+Also, the angle defines keyboard length, but other X lengths are absolute numbers
+and would have to be adjusted manually. It's not trivial to adjust the model.
+One option would be to extend the model to negative X (option 1) or negative Y (option 2)
+
+
+Calculations
+============
+
+Option 1:
+To get additional 30 on the hyp, adjust X and Y:
+
+sin(KBD_TOP_A) = adjY / hyp
+adjY = sin(13) * 30 = 6.7 (out of 13.5, a half)
+
+cos(KBD_TOP_A) = adjX / hyp
+adjX = cos(13) * 30 = 29.2
+
+For example, extend the model to -Y by 5, to -X by 29, make the front edge shorter by 1.7.
+=> adjX is 29, adjY is 5 + 1.7
+
+
+Implementation
+==============
+
+Try to keep the adjustments isolated as much as possible.
+That's why we extend to -X and -Y, so the rest of the model can be untouched.
+
+Rough plan:
+- Extend the XY plane to -X and -Y, making the front edge shorter.
+- Extend the YZ planes to -Y by scaling up the curves.
+  - Simplest is to take bottom KBD_FWD_Y = 13.5 and scale that up to KBD_FWD_Y + 5 = 18.5.
+  - Perhaps that will create a visible crease, check.
+  - If there is a crease, the next option is to do the same with bottom kbd_back_y = 41.8.
+    Probably not more of Y, since then it affects the shape of the terminal face.
+  - If there still is a crease, make the scaling gradual (don't multiply Y by a constant,
+    but by an increasing multiplier).
+- Keep the keyboard/bottom screen angle unchanged.
+
+
 Performance
 -----------
 
