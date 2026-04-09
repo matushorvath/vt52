@@ -26,7 +26,7 @@ endef
 	$(run-openscad)
 
 %.png: OPENSCAD_FLAGS = --autocenter --viewall --projection=p --camera=0,0,150,100,50,100 \
-	--imgsize=2880,2160 --colorscheme=Monotone --render=true
+	--imgsize=2880,2160 --colorscheme=Monotone --render
 %.png: %.scad
 	$(run-openscad)
 
