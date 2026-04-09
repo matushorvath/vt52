@@ -1,7 +1,3 @@
-include ../common/openscad.mk
-
-.SUFFIXES: .scad .stl
-
 TARGETS=vt52.stl
 PREVIEWS=$(TARGETS:.stl=.png)
 
@@ -34,7 +30,7 @@ endef
 %.png: %.scad
 	$(run-openscad)
 
-.PHONY: all preview clean
-
 clean:
 	rm -f $(TARGETS) $(PREVIEWS) *.deps
+
+.PHONY: all preview clean
