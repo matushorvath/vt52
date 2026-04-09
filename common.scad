@@ -1,4 +1,4 @@
-include <../common/constants.scad>
+DELTA = .01;
 
 $fa = $preview ? 24 : 6;
 fn_where_needed = $preview ? 12 : 64;

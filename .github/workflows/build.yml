@@ -13,11 +13,7 @@ permissions:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-22.04
-
-    strategy:
-      matrix:
-        directory: [vt52] # TODO remove the matrix
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout sources
@@ -26,21 +22,15 @@ jobs:
       - name: Install OpenSCAD
         run: sudo apt install openscad
 
-      - name: Install BOSL
-        run: |
-          wget --output-document /tmp/bosl.tar.gz https://github.com/revarbat/BOSL/archive/refs/tags/v1.0.3.tar.gz
-          mkdir -p $HOME/.local/share/OpenSCAD/libraries/BOSL
-          tar -xzf /tmp/bosl.tar.gz --directory=$HOME/.local/share/OpenSCAD/libraries/BOSL --strip-components=1
-
       - name: Install BOSL2
         run: |
-          wget --output-document /tmp/bosl2.tar.gz https://github.com/BelfrySCAD/BOSL2/archive/refs/heads/master.tar.gz
+          wget --output-document /tmp/bosl2.tar.gz https://github.com/BelfrySCAD/BOSL2/archive/refs/tags/v2.0.731.tar.gz
           mkdir -p $HOME/.local/share/OpenSCAD/libraries/BOSL2
           tar -xzf /tmp/bosl2.tar.gz --directory=$HOME/.local/share/OpenSCAD/libraries/BOSL2 --strip-components=1
 
       - name: Build the model
         run: |
-          make -C ${{ matrix.directory }}
+          make
 
       # Generating PNG doesn't work without X: https://github.com/openscad/openscad/issues/1798
       - name: Build the renders
@@ -48,7 +38,7 @@ jobs:
         run: |
           Xvfb :99 &
           export DISPLAY=:99
-          make -C ${{ matrix.directory }} preview
+          make preview
 
       - name: Commit the renders
         if: github.ref == 'refs/heads/main'
@@ -57,8 +47,8 @@ jobs:
           git config user.name "GitHub Actions"
           git fetch origin assets
           git checkout assets
-          git add ${{ matrix.directory }}
-          git commit -m "Update renders for ${{ matrix.directory }}" || true
+          git add .
+          git commit -m "Update renders" || true
 
       - name: Push the assets branch
         if: github.ref == 'refs/heads/main'
