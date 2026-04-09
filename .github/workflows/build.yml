@@ -43,15 +43,15 @@ jobs:
       - name: Commit and push the renders
         if: github.ref == 'refs/heads/main'
         run: |
-          ls -l
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git fetch origin assets
-          ls -l
-          git checkout assets
-          ls -l
-          git status
-          git add .
-          git status
+          git worktree add ../assets-worktree assets
+          cp *.png ../assets-worktree/
+          cd ../assets-worktree
+          git add *.png
           git commit -m "Update renders" || true
+          git log --stat --max-count=1
           git push origin assets
+          cd "$GITHUB_WORKSPACE"
+          git worktree remove ../assets-worktree
