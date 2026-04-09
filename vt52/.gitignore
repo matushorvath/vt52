@@ -1,2 +1,4 @@
-docs
-*.deps
+/docs
+/*.deps
+/*.png
+/*.stl
