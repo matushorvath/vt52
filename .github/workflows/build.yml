@@ -40,7 +40,7 @@ jobs:
           export DISPLAY=:99
           make preview
 
-      - name: Commit the renders
+      - name: Commit and push the renders
         if: github.ref == 'refs/heads/main'
         run: |
           git config user.email "actions@github.com"
@@ -49,15 +49,4 @@ jobs:
           git checkout assets
           git add .
           git commit -m "Update renders" || true
-
-      - name: Push the assets branch
-        if: github.ref == 'refs/heads/main'
-        uses: nick-fields/retry@v4
-        with:
-          max_attempts: 10
-          timeout_seconds: 20
-          retry_wait_seconds: 3
-          command: |
-            git fetch origin assets
-            git rebase origin/assets
-            git push origin assets
+          git push origin assets
