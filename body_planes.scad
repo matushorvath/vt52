@@ -28,24 +28,14 @@ function body_xy_plane(outside) =
         ofwd_bot_x = owall / cos(KBD_FWD_A),
         ofwd_top = offset_corner(owall, KBD_FWD_A, KBD_TOP_A),
 
-        // Extend forward top corner into -X and -Y:
-        // - extend model to -Y by EXTEND_Y, which makes keyboard top side extend to -X to keep the same front edge height
-        // - in addition, also decrease front edge height by EXTEND_KBD_FWD_Y to further extend the model into -X
-        adj_fwd_top_y = EXTEND_Y + EXTEND_KBD_FWD_Y,
-        adj_fwd_top_x = ang_opp_to_adj(KBD_TOP_A, adj_fwd_top_y),
-
-        // Adjust forward bottom corner to adapt, keeping all angles the same
-        adj_fwd_bot_y = EXTEND_Y,
-        adj_fwd_bot_x = adj_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_FWD_Y - EXTEND_KBD_FWD_Y),
-
         shape = [
             [                                                       // keyboard forward bottom
-                0 - adj_fwd_bot_x + ofwd_bot_x,
-                0 - adj_fwd_bot_y - oclear
+                0 - extend_fwd_bot_x + ofwd_bot_x,
+                0 - extend_fwd_bot_y - oclear
             ],
             [                                                       // keyboard forward top
-                kbd_fwd_x - adj_fwd_top_x + ofwd_top.x,
-                KBD_FWD_Y - adj_fwd_top_y - ofwd_top.y
+                kbd_fwd_x - extend_fwd_top_x + ofwd_top.x,
+                KBD_FWD_Y - extend_fwd_top_y - ofwd_top.y
             ],
             [kbd_back_x + owall, kbd_back_y - owall],               // keyboard back top
             [SCR_TOP_X + owall, SCR_TOP_Y - owall],                 // body forward top
