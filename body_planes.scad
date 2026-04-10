@@ -4,6 +4,9 @@ include <BOSL2/std.scad>
 
 PREVIEW_TABLE_SKIP = 20;
 
+// Both planes are extended to -X and -Y to fit a larger keyboard,
+// controlled by EXTEND_Y, EXTEND_KBD_FWD_Y
+
 // How much is inner corner offset from the outer corner
 // given wall thickness and two edge angles measured from vertical and horizontal axis
 function offset_corner(owall, fwd_a, top_a) =
@@ -26,12 +29,18 @@ function body_xy_plane(outside) =
         ofwd_top = offset_corner(owall, KBD_FWD_A, KBD_TOP_A),
 
         shape = [
-            [0 + ofwd_bot_x, 0 - oclear],                            // keyboard forward bottom
-            [kbd_fwd_x + ofwd_top.x, KBD_FWD_Y - ofwd_top.y],        // keyboard forward top
-            [kbd_back_x + owall, kbd_back_y - owall],                // keyboard back top
-            [SCR_TOP_X + owall, SCR_TOP_Y - owall],                  // body forward top
-            [BODY_BACK_X + oclear, SCR_TOP_Y - owall],               // body back top
-            [BODY_BACK_X + oclear, 0 - oclear]                       // body back bottom
+            [                                                       // keyboard forward bottom
+                0 - extend_fwd_bot_x + ofwd_bot_x,
+                0 - extend_fwd_bot_y - oclear
+            ],
+            [                                                       // keyboard forward top
+                kbd_fwd_x - extend_fwd_top_x + ofwd_top.x,
+                KBD_FWD_Y - extend_fwd_top_y - ofwd_top.y
+            ],
+            [kbd_back_x + owall, kbd_back_y - owall],               // keyboard back top
+            [SCR_TOP_X + owall, SCR_TOP_Y - owall],                 // body forward top
+            [BODY_BACK_X + oclear, SCR_TOP_Y - owall],              // body back top
+            [BODY_BACK_X + oclear, 0 - EXTEND_Y - oclear]           // body back bottom
         ],
 
         radii = [
@@ -40,6 +49,25 @@ function body_xy_plane(outside) =
     )
     round_corners(shape, radius = radii);
 
+// %polygon(body_xy_plane(true));
+// polygon(body_xy_plane(false));
+
+// Since we are making the model taller to fit a larger keyboard, we need to extend the side curves by EXTEND_Y.
+// We don't want to affect the whole shape, so we only extend the bottom part, where y < kbd_back_y.
+function stretch_side_curve(input, below_y, extend_y) =
+    // Return the input curve with all points y < below_y linearly stretched in Y direction by extend_y
+    // Careful, the curve point coordinates are swapped in relation to the plane coordinates ([Y, X])
+    [
+        for (p = input)
+            if (p.x < below_y)
+                [
+                    below_y - (below_y - p.x) * (below_y + extend_y) / below_y,
+                    p.y
+                ]
+            else
+                [p.x, p.y]
+    ];
+
 // Value bottom_z would ideally be read from side_curve where Y=0, but YZ_CURVE_X* does not always have a value for Y=0
 function body_yz_half_plane(outside, bottom_z, side_curve) =
     let(
@@ -47,20 +75,23 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
         owall = outside ? 0 : BODY_WALL,
         oclear = outside ? 0 : DELTA,
 
+        // Make the model taller to accomodate for EXTEND_Y
+        stretched_side_curve = stretch_side_curve(side_curve, kbd_back_y, EXTEND_Y),
+
         // Skip most points if we are in preview mode
         optimized_side_curve =
             $preview ?
-            [for (i = [0 : PREVIEW_TABLE_SKIP : len(side_curve) - 1]) side_curve[i]] :
-            side_curve,
+            [for (i = [0 : PREVIEW_TABLE_SKIP : len(stretched_side_curve) - 1]) stretched_side_curve[i]] :
+            stretched_side_curve,
 
         shape = [
-            [0, 0 - oclear],                                        // center bottom
+            [0, 0 - EXTEND_Y - oclear],                             // center bottom
             [0, SCR_TOP_Y - owall],                                 // center top
             [side_curve[0][1] - owall, SCR_TOP_Y - owall],          // side top
             for (p = optimized_side_curve)
                 if (p.x <= SCR_TOP_Y - YZ_TOP_CORNER_R)
                     [p.y - owall, p.x],   // side top to side bottom curve; wall is approximate
-            [bottom_z - owall, 0 - oclear]
+            [bottom_z - owall, 0 - EXTEND_Y - oclear]
         ],
         radii = [
             0, 0, YZ_TOP_CORNER_R - owall,
@@ -68,9 +99,6 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
         ]
     )
     round_corners(shape, radius = radii);
-
-// %polygon(body_xy_plane(true));
-// polygon(body_xy_plane(false));
 
 // %polygon(body_yz_half_plane(true, XZ_CURVE_Y000[0], YZ_CURVE_X000));
 // polygon(body_yz_half_plane(false, XZ_CURVE_Y000[0], YZ_CURVE_X000));

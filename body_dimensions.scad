@@ -24,6 +24,9 @@ BODY_WALL = 4; // custom
 // Calculate missing coordinates
 kbd_fwd_x = adj_ang_to_opp(KBD_FWD_Y, KBD_FWD_A);
 
+//echo("kbd_fwd_x", kbd_fwd_x);
+//echo("KBD_FWD_Y", KBD_FWD_Y);
+
 /* Top back point of the keyboard
 kbd_back_x and kbd_back_y are only defined by KBD_FWD_A and KBD_TOP_A
 
@@ -44,6 +47,23 @@ x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR
 
 kbd_back_x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A));
 kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y;
+
+//echo("kbd_back_x", kbd_back_x);
+//echo("kbd_back_y", kbd_back_y);
+
+// Extend the model to -Y and shorten the front edge to fit a larger keyboard; custom
+EXTEND_Y = 5;
+EXTEND_KBD_FWD_Y = 1.7;
+
+// Extend forward top corner into -X and -Y:
+// - extend model to -Y by EXTEND_Y, which makes keyboard top side extend to -X to keep the same front edge height
+// - in addition, also decrease front edge height by EXTEND_KBD_FWD_Y to further extend the model into -X
+extend_fwd_top_y = EXTEND_Y + EXTEND_KBD_FWD_Y;
+extend_fwd_top_x = ang_opp_to_adj(KBD_TOP_A, extend_fwd_top_y);
+
+// Adjust forward bottom corner to adapt, keeping all angles the same
+extend_fwd_bot_y = EXTEND_Y;
+extend_fwd_bot_x = extend_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_FWD_Y - EXTEND_KBD_FWD_Y);
 
 // Sheet 3, Sheet 19
 // The YZ profile is slightly different for different X, see Figure 3 - Figure 16

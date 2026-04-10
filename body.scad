@@ -29,14 +29,26 @@ module body_yz_half(outside) {
         // TODO decide depth of the model
     ];
 
+    // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area
+    // planes further from each other in X; keyboard area is x < kbd_back_x
+    stretched_yz_x = [
+        for (x = YZ_X)
+            if (x < kbd_back_x)
+                kbd_back_x - (kbd_back_x - x) * (kbd_back_x + extend_fwd_bot_x) / kbd_back_x
+            else
+                x
+    ];
+
     xmove(outside ? 0 : DELTA) // move inside plane to clear the back side of the terminal
         skin(
             profiles,
-            z = YZ_X,
+            z = stretched_yz_x,
             slices = 20,
             orient = RIGHT
         );
 }
+
+//body_yz_half(true);
 
 module body_yz(outside) {
     zflip_copy()
