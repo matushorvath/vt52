@@ -4,6 +4,9 @@ include <BOSL2/std.scad>
 
 PREVIEW_TABLE_SKIP = 20;
 
+// Both planes are extended to -X and -Y to fit a larger keyboard,
+// controlled by EXTEND_Y, EXTEND_KBD_FWD_Y
+
 // How much is inner corner offset from the outer corner
 // given wall thickness and two edge angles measured from vertical and horizontal axis
 function offset_corner(owall, fwd_a, top_a) =
@@ -25,13 +28,29 @@ function body_xy_plane(outside) =
         ofwd_bot_x = owall / cos(KBD_FWD_A),
         ofwd_top = offset_corner(owall, KBD_FWD_A, KBD_TOP_A),
 
+        // Extend forward top corner into -X and -Y:
+        // - extend model to -Y by EXTEND_Y, which makes keyboard top side extend to -X to keep the same front edge height
+        // - in addition, also decrease front edge height by EXTEND_KBD_FWD_Y to further extend the model into -X
+        adj_fwd_top_y = EXTEND_Y + EXTEND_KBD_FWD_Y,
+        adj_fwd_top_x = ang_opp_to_adj(KBD_TOP_A, adj_fwd_top_y),
+
+        // Adjust forward bottom corner to adapt, keeping all angles the same
+        adj_fwd_bot_y = EXTEND_Y,
+        adj_fwd_bot_x = adj_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_FWD_Y - EXTEND_KBD_FWD_Y),
+
         shape = [
-            [0 + ofwd_bot_x, 0 - oclear],                            // keyboard forward bottom
-            [kbd_fwd_x + ofwd_top.x, KBD_FWD_Y - ofwd_top.y],        // keyboard forward top
-            [kbd_back_x + owall, kbd_back_y - owall],                // keyboard back top
-            [SCR_TOP_X + owall, SCR_TOP_Y - owall],                  // body forward top
-            [BODY_BACK_X + oclear, SCR_TOP_Y - owall],               // body back top
-            [BODY_BACK_X + oclear, 0 - oclear]                       // body back bottom
+            [                                                       // keyboard forward bottom
+                0 - adj_fwd_bot_x + ofwd_bot_x,
+                0 - adj_fwd_bot_y - oclear
+            ],
+            [                                                       // keyboard forward top
+                kbd_fwd_x - adj_fwd_top_x + ofwd_top.x,
+                KBD_FWD_Y - adj_fwd_top_y - ofwd_top.y
+            ],
+            [kbd_back_x + owall, kbd_back_y - owall],               // keyboard back top
+            [SCR_TOP_X + owall, SCR_TOP_Y - owall],                 // body forward top
+            [BODY_BACK_X + oclear, SCR_TOP_Y - owall],              // body back top
+            [BODY_BACK_X + oclear, 0 - EXTEND_Y - oclear]           // body back bottom
         ],
 
         radii = [
@@ -39,6 +58,9 @@ function body_xy_plane(outside) =
         ]
     )
     round_corners(shape, radius = radii);
+
+// %polygon(body_xy_plane(true));
+// polygon(body_xy_plane(false));
 
 // Value bottom_z would ideally be read from side_curve where Y=0, but YZ_CURVE_X* does not always have a value for Y=0
 function body_yz_half_plane(outside, bottom_z, side_curve) =
@@ -68,9 +90,6 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
         ]
     )
     round_corners(shape, radius = radii);
-
-// %polygon(body_xy_plane(true));
-// polygon(body_xy_plane(false));
 
 // %polygon(body_yz_half_plane(true, XZ_CURVE_Y000[0], YZ_CURVE_X000));
 // polygon(body_yz_half_plane(false, XZ_CURVE_Y000[0], YZ_CURVE_X000));

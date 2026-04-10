@@ -88,3 +88,7 @@ KBD_FWD_CORNER_ADJ_TOP_Y = 0.2; // additional shift when positioning top of the 
 //  - side edges of the body AH-AH
 DEC_BEZEL_HEIGHT = .75;
 DEC_BEZEL_R = 1.5;
+
+// Extend the model to -Y and shorten the front edge to fit a larger keyboard; custom
+EXTEND_Y = 5;
+EXTEND_KBD_FWD_Y = 1.7;

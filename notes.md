@@ -79,10 +79,10 @@ dist = sqrt(dX^2 + dY^2) = 125.7
 
 dist_scale = dist * 2/3 = 83.8
 
-real keyboard depth rdist = 100 (keys only 95, +5 for front support)
-rdist_scale = rdist * 3/2 = 150
+real keyboard depth rdist_scale = 100 (keys only 95, +5 for front support)
+rdist = rdist_scale * 3/2 = 150
 
-delta = rdist_scale - dist_scale = 24.3
+delta = rdist - dist = 24.3
 
 -> we need to find extra 25 depth for keyboard
 plus front bezel, plus a bit if space behind keyboard, say 30
@@ -120,8 +120,9 @@ adjY = sin(13) * 30 = 6.7 (out of 13.5, a half)
 cos(KBD_TOP_A) = adjX / hyp
 adjX = cos(13) * 30 = 29.2
 
-For example, extend the model to -Y by 5, to -X by 29, make the front edge shorter by 1.7.
-=> adjX is 29, adjY is 5 + 1.7
+For example, extend the model to -Y by 5, make the front edge shorter by 1.7,
+which moves the front edge to -X by 29
+=> extendY is 29, adjEdgeY is 1.7
 
 
 Implementation
@@ -140,6 +141,7 @@ Rough plan:
   - If there still is a crease, make the scaling gradual (don't multiply Y by a constant,
     but by an increasing multiplier).
 - Keep the keyboard/bottom screen angle unchanged.
+- Move the front corners.
 
 
 Performance
