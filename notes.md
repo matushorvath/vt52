@@ -1,5 +1,5 @@
 Dimensions
-----------
+==========
 
 Dimensions              Millimeters Inches
 A. Height               360         14.1
@@ -22,14 +22,14 @@ https://www.bitsavers.org/pdf/dec/standards/EL-00092-00-0_F_Finish_and_Color_Sta
 
 
 Links
------
+=====
 
 https://terminals-wiki.org/wiki/index.php/DEC_VT52
 https://www.youtube.com/watch?v=bAafRXddfxc
 
 
 References
-----------
+==========
 
 Where not explicitly mentioned, Sheet comments refer to:
 VT50 Field Maintenance Print Set
@@ -39,7 +39,7 @@ md5 f75c52b84aa6dbe546e11d6d0cf669f5
 
 
 Design Notes
-------------
+============
 
 I could probably directly use curves from the data tables, with smoothing,
 instead of trying to model the curves analytically.
@@ -47,7 +47,7 @@ instead of trying to model the curves analytically.
 
 
 Keyboard and Display
---------------------
+====================
 
 60% keyboard is around 310mm
 8" LCD panel is around 165mm x 120mm
@@ -63,7 +63,7 @@ with a 2:3 scale, it's
 
 
 Keyboard Depth
---------------
+==============
 
 ECHO: "kbd_fwd_x", 7.79423
 ECHO: "KBD_FWD_Y", 13.5
@@ -109,7 +109,7 @@ One option would be to extend the model to negative X (option 1) or negative Y (
 
 
 Calculations
-============
+------------
 
 Option 1:
 To get additional 30 on the hyp, adjust X and Y:
@@ -126,7 +126,7 @@ which moves the front edge to -X by 29
 
 
 Implementation
-==============
+--------------
 
 Try to keep the adjustments isolated as much as possible.
 That's why we extend to -X and -Y, so the rest of the model can be untouched.
@@ -143,7 +143,7 @@ Rough plan:
 
 
 Performance
------------
+===========
 
 - use $fa instead of $fn since it scales with size
 - use render() around nested set operations
@@ -152,7 +152,7 @@ Performance
 
 
 TODOs
------
+=====
 
 - keyboard will need to be significantly deeper in X; prepare for that
   - all X dimensions behind the keyboard should probably be relative to the back edge of the keyboard (from keyboard/screen edge)
