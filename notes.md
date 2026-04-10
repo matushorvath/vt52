@@ -136,7 +136,7 @@ Rough plan:
 - DONE Extend the YZ planes to -Y by scaling up the curves.
   - Simplest is to take bottom kbd_back_y = 41.8 and scale that up to kbd_back_y + 5 = 18.5.
   - Perhaps that will create a visible crease, check.
-- Extend spaces between YZ planes where x < kbd_back_x by linearly scaling them.
+- DONE Extend spaces between YZ planes where x < kbd_back_x by linearly scaling them.
   - Perhaps that will create a visible crease, check.
 - Move the front corners.
 - Keep the keyboard/bottom screen angle unchanged.
