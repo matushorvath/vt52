@@ -62,6 +62,22 @@ function body_xy_plane(outside) =
 // %polygon(body_xy_plane(true));
 // polygon(body_xy_plane(false));
 
+// Since we are making the model taller to fit a larger keyboard, we need to extend the side curves by EXTEND_Y.
+// We don't want to affect the whole shape, so we only extend the bottom part, where y < kbd_back_y.
+function stretch_side_curve(input, below_y, extend_y) =
+    // Return the input curve with all points y < below_y linearly stretched in Y direction by extend_y
+    // Careful, the curve point coordinates are swapped in relation to the plane coordinates ([Y, X])
+    [
+        for (p = input)
+            if (p.x < below_y)
+                [
+                    below_y - (below_y - p.x) * (below_y + extend_y) / below_y,
+                    p.y
+                ]
+            else
+                [p.x, p.y]
+    ];
+
 // Value bottom_z would ideally be read from side_curve where Y=0, but YZ_CURVE_X* does not always have a value for Y=0
 function body_yz_half_plane(outside, bottom_z, side_curve) =
     let(
@@ -69,20 +85,23 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
         owall = outside ? 0 : BODY_WALL,
         oclear = outside ? 0 : DELTA,
 
+        // Make the model taller to accomodate for EXTEND_Y
+        stretched_side_curve = stretch_side_curve(side_curve, kbd_back_y, EXTEND_Y),
+
         // Skip most points if we are in preview mode
         optimized_side_curve =
             $preview ?
-            [for (i = [0 : PREVIEW_TABLE_SKIP : len(side_curve) - 1]) side_curve[i]] :
-            side_curve,
+            [for (i = [0 : PREVIEW_TABLE_SKIP : len(stretched_side_curve) - 1]) stretched_side_curve[i]] :
+            stretched_side_curve,
 
         shape = [
-            [0, 0 - oclear],                                        // center bottom
+            [0, 0 - EXTEND_Y - oclear],                             // center bottom
             [0, SCR_TOP_Y - owall],                                 // center top
             [side_curve[0][1] - owall, SCR_TOP_Y - owall],          // side top
             for (p = optimized_side_curve)
                 if (p.x <= SCR_TOP_Y - YZ_TOP_CORNER_R)
                     [p.y - owall, p.x],   // side top to side bottom curve; wall is approximate
-            [bottom_z - owall, 0 - oclear]
+            [bottom_z - owall, 0 - EXTEND_Y - oclear]
         ],
         radii = [
             0, 0, YZ_TOP_CORNER_R - owall,

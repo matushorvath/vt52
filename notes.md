@@ -132,16 +132,14 @@ Try to keep the adjustments isolated as much as possible.
 That's why we extend to -X and -Y, so the rest of the model can be untouched.
 
 Rough plan:
-- Extend the XY plane to -X and -Y, making the front edge shorter.
-- Extend the YZ planes to -Y by scaling up the curves.
-  - Simplest is to take bottom KBD_FWD_Y = 13.5 and scale that up to KBD_FWD_Y + 5 = 18.5.
+- DONE Extend the XY plane to -X and -Y, making the front edge shorter.
+- DONE Extend the YZ planes to -Y by scaling up the curves.
+  - Simplest is to take bottom kbd_back_y = 41.8 and scale that up to kbd_back_y + 5 = 18.5.
   - Perhaps that will create a visible crease, check.
-  - If there is a crease, the next option is to do the same with bottom kbd_back_y = 41.8.
-    Probably not more of Y, since then it affects the shape of the terminal face.
-  - If there still is a crease, make the scaling gradual (don't multiply Y by a constant,
-    but by an increasing multiplier).
-- Keep the keyboard/bottom screen angle unchanged.
+- Extend spaces between YZ planes where x < kbd_back_x by linearly scaling them.
+  - Perhaps that will create a visible crease, check.
 - Move the front corners.
+- Keep the keyboard/bottom screen angle unchanged.
 
 
 Performance
