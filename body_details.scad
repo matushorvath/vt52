@@ -23,13 +23,14 @@ module kbd_fwd_one_corner_mask(outside) {
 module kbd_fwd_corners_mask(outside) {
     owall = outside ? 0 : BODY_WALL;
 
-    // Near side
-    move([-DELTA + owall, -DELTA, XZ_CURVE_Y000[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall])
-        kbd_fwd_one_corner_mask(outside);
+    shift = [
+        -DELTA - extend_fwd_bot_x + owall,
+        -DELTA - extend_fwd_bot_y,
+        XZ_CURVE_Y000[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall
+    ];
 
-    // Far side
-    zflip()
-        move([-DELTA + owall, -DELTA, XZ_CURVE_Y000[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall])
+    zflip_copy()
+        move(shift)
             kbd_fwd_one_corner_mask(outside);
 }
 

@@ -138,7 +138,7 @@ Rough plan:
   - Perhaps that will create a visible crease, check.
 - DONE Extend spaces between YZ planes where x < kbd_back_x by linearly scaling them.
   - Perhaps that will create a visible crease, check.
-- Move the front corners.
+- DONE Move the front corners.
 - Keep the keyboard/bottom screen angle unchanged.
 
 
