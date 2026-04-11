@@ -106,8 +106,12 @@ module k65_board_mask() {
 module k65_mask() {
     k65_board_mask();
 
-    ymove(K65_BOARD_Y - DELTA)
-        k65_keys_mask();
+    move([
+        (K65_BOARD_X - k65_keys_mask_size.x) / 2,
+        K65_BOARD_Y - DELTA,
+        0
+        ])
+            k65_keys_mask();
 }
 
 // k65_mask();
