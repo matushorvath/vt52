@@ -53,3 +53,6 @@ K65_DAMPER_ATTACH_BSPC_Z = 120;
 
 // Space before the keyboard, in direction of KBD_TOP_A
 K65_FRONT_MARGIN = 4;
+
+// Position shift in Z, to place the keyboard off-center like the original
+K65_OFF_CENTER_Z = 12; // 10 is ALMOST aligned with the corner rounding, which looks strange
