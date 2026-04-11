@@ -5,11 +5,18 @@
 A scale model of the [DEC VT52 terminal](https://en.wikipedia.org/wiki/VT52), designed to be used with a [PiDP11](https://obsolescence.dev/pdp11).
 Work in progress — not ready to print yet.
 
-<figure>
-<img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52-wikipedia.png" width="45%" alt="DEC VT52 terminal" />
-<img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52.png" width="45%" alt="DEC VT52 model" />
-<figcaption>Left: photo of the original DEC VT52 terminal. Right: 3D render of this model.</figcaption>
-</figure>
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52-wikipedia.png" alt="DEC VT52 terminal" /><br/>
+      Photo of the original DEC VT52 terminal
+    </td>
+    <td align="center" width="50%">
+      <img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52.png" alt="DEC VT52 model" /><br/>
+      3D render of this model
+    </td>
+  </tr>
+</table>
 
 ## Design
 
