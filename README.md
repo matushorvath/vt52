@@ -3,7 +3,7 @@
 # DEC VT52 Terminal
 
 A scale model of the [DEC VT52 terminal](https://en.wikipedia.org/wiki/VT52), designed to be used with a [PiDP11](https://obsolescence.dev/pdp11).
-Work in progress — not ready to print yet.
+Work in progress - not ready to print yet.
 
 <table>
   <tr>
@@ -37,7 +37,7 @@ Because the keyboard is oversized relative to a true 2/3-scale model, the keyboa
 This model is designed for use with a 65% keyboard and an 8" LCD panel. It has been optimized for the following specific hardware:
 
 - **Royal Kludge R65 65% Wired Gaming Keyboard (QMK/VIA)**
-  - Only the internals of the keyboard are used — the case and volume knob are omitted.
+  - Only the internals of the keyboard are used - the case and volume knob are omitted.
   - A different 65% keyboard can likely be substituted, but will probably require adjustments to the keyboard mounting features in `keyboard.scad`.
 
 - **Innolux 8" IPS 1024×768 HJ080IA-01E Display Panel**
@@ -51,7 +51,7 @@ The model was created mostly by hand. That said, AI was used in a few specific w
 
 - **Geometric debugging:** I used Claude to help debug trigonometric calculations when I got completely lost.
 - **Data extraction:** Claude was used to read numeric data tables from low-quality scanned technical drawings (see `body_tables.scad`). The scans had too many numbers to copy manually, so Claude was used essentially as an OCR tool.
-- **This document:** Claude was used to improve the language. I wrote the original text by hand, but English is not my first language — trust me, you prefer this version.
+- **This document:** Claude was used to improve the language. I wrote the original text by hand, but English is not my first language - trust me, you prefer this version.
 
 No AI was used in any other part of creating this model.
 
