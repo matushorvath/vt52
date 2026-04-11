@@ -1,7 +1,10 @@
 include <common.scad>
+include <body_dimensions.scad>
 include <keyboard_dimensions.scad>
 include <keyboard.scad>
 include <BOSL2/std.scad>
+
+include <body.scad> // TODO remove
 
 // TODO
 // - angle the keyboard by KBD_TOP_A
@@ -22,3 +25,29 @@ include <BOSL2/std.scad>
 //     then connect it up when positioning keyboard in body
 //   - separate top and bottom features, since they will end up on two objects (body and base)
 //   - perhaps angle the plain bottom by KBD_TOP_A (but top actually can stay straight
+
+module k65_move() {
+    // Move and angle the keyboard relative to body
+    move([
+        0,
+        0,
+        0
+        ])
+            zrot(KBD_TOP_A)
+                children();
+}
+
+// Reverse scale the keyboard to make it match the model
+// It will get scaled back down to real size when the whole model is resized at the end
+module k65_rev_scale() {
+    scale(1 / SCALE)
+        children();
+}
+
+xrot(90) {
+    k65_move()
+        k65_rev_scale()
+            k65_mask();
+
+    %body();
+}
