@@ -4,24 +4,19 @@ include <BOSL2/std.scad>
 
 // TODO
 // - body of the keyboard
-//   - dampers
-//   - holes
-// - angle the masks
+//   - pin holes
+// - angle the keyboard by KBD_TOP_A
 // - design mounting hardware
 //   - pins for the holes, they will be fragile, stiffen them
-//   - rests for the dampers
+//   - rests for the dampers, top and bottom
 //   - perhaps brackets for the corners? but not too close
 // - locate the keyboard in body
-//   - add X space for the keyboard
 // - find if bottom needs to be adjusted to fit
 
 // - try to use the soft foam and silicon that was below the keyboard
 // - don't forget about the USB board
 //   - USB board connects between left shift and Z
 
-// TODO
-// - add mask for the mounting features on board
-//   - can be approximate
 // - add positive mounting features
 //   - but also, how mounting features will attach to the body depends on keyboard position
 //   - perhaps add the positive mounting features on a rail with plain bottom,
@@ -29,7 +24,7 @@ include <BOSL2/std.scad>
 //   - separate top and bottom features, since they will end up on two objects (body and base)
 //   - perhaps angle the plain bottom by KBD_TOP_A (but top actually can stay straight
 
-// TODO check docs how is the keycap hole finished (rounded corners/edges?)
+// - check docs how is the keycap hole finished (rounded corners/edges?)
 
 
 // Keyboard: Royal Kludge R65 (RK-R65-R14BKM)
@@ -71,7 +66,7 @@ K65_DAMPER_Z = 6.5;
 K65_TOTAL_X = 106;
 
 // Dampers are slightly embedded in the board in X, calculate how much
-k65_damper_center_to_center_x = K65_INCL_DAMPERS_X - 2 * K65_DAMPER_X / 2;
+k65_damper_center_to_center_x = K65_TOTAL_X - 2 * K65_DAMPER_X / 2;
 k65_damper_attach_x = (K65_BOARD_X - k65_damper_center_to_center_x) / 2;
 
 // Center of damper in Z is attached 0.75 from board top (K65_BOARD_Z)
@@ -84,31 +79,34 @@ K65_DAMPER_ATTACH_BSPC_Y = 120;
 
 // Shape of the key area
 function k65_keys_plane() =
-    difference([
-        rect(k65_keys_mask_size,
-            anchor = LEFT + TOP
-        ),
-        // Cutout next to backspace
-        move([
-            4 * K65_KEYCAP_SIZE,
-            -15 * K65_KEYCAP_SIZE
-        ], rect([
-                K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN + DELTA,
-                K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN + DELTA
-            ],
-            anchor = LEFT + TOP
-        )),
-        // Cutout next to cursor keys
-        move([
-            -K65_KEYCAP_MARGIN - DELTA,
-            -12.5 * K65_KEYCAP_SIZE
-        ], rect([
-                K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN + DELTA,
-                K65_KEYCAP_SIZE / 2
-            ],
-            anchor = LEFT + TOP
-        ))
-    ]);
+    // Front left corner is in [0, 0] for building the mask, then ymove centers the mask in Y
+    ymove(k65_keys_mask_size.y / 2,
+        difference([
+            rect(k65_keys_mask_size,
+                anchor = LEFT + TOP
+            ),
+            // Cutout next to backspace
+            move([
+                4 * K65_KEYCAP_SIZE,
+                -15 * K65_KEYCAP_SIZE
+            ], rect([
+                    K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN + DELTA,
+                    K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN + DELTA
+                ],
+                anchor = LEFT + TOP
+            )),
+            // Cutout next to cursor keys
+            move([
+                -K65_KEYCAP_MARGIN - DELTA,
+                -12.5 * K65_KEYCAP_SIZE
+            ], rect([
+                    K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN + DELTA,
+                    K65_KEYCAP_SIZE / 2
+                ],
+                anchor = LEFT + TOP
+            ))
+        ])
+    );
 
 // Mask for the keyboard top plane, to make space for the keycaps
 module k65_keys_mask() {
@@ -127,55 +125,59 @@ module k65_damper() {
     );
 }
 
-k65_damper();
+// k65_damper();
 
 // Mask to cut out space for the keyboard inside the body
 module k65_board_mask() {
     // Space for the board
     cuboid(
         [K65_BOARD_X, K65_BOARD_Y, K65_BOARD_Z],
-        anchor = LEFT + BACK + BOTTOM
+        anchor = LEFT + BOTTOM
     );
+
+    // Inside dampers
+    xflip_copy(x = K65_BOARD_X / 2) // front -> back
+        yflip_copy() { // left -> right
+            move([
+                k65_damper_attach_x,
+                K65_DAMPER_ATTACH_IN_Y,
+                K65_BOARD_Z - K65_DAMPER_ATTACH_Z
+            ])
+                k65_damper();
+        }
+
+    // Outside front dampers
+    yflip_copy() { // left -> right
+        move([
+            k65_damper_attach_x,
+            K65_DAMPER_ATTACH_OUT_Y,
+            K65_BOARD_Z - K65_DAMPER_ATTACH_Z
+        ])
+            k65_damper();
+    }
+
+    // Outside back left damper
+    move([
+        K65_BOARD_X - k65_damper_attach_x,
+        K65_DAMPER_ATTACH_OUT_Y,
+        K65_BOARD_Z - K65_DAMPER_ATTACH_Z
+    ])
+        k65_damper();
+
+    // Outside back right damper, this one is not symmetrical
+    move([
+        K65_BOARD_X - k65_damper_attach_x,
+        -K65_DAMPER_ATTACH_BSPC_Y,
+        K65_BOARD_Z - K65_DAMPER_ATTACH_Z
+    ])
+        k65_damper();
 }
-
-
-// // Dampers are slightly embedded in the board in X, calculate how much
-// k65_damper_attach_x = (K65_BOARD_X - k65_damper_center_to_center_x) / 2;
-
-// // Center of damper in Z is attached 0.75 from board top (K65_BOARD_Z)
-// K65_DAMPER_ATTACH_Z = 0.75;
-
-// // Centers of dampers in Y measured from board center, symmetrical except the one near backspace
-// K65_DAMPER_ATTACH_IN_Y = 43.5;
-// K65_DAMPER_ATTACH_OUT_Y = 130;
-// K65_DAMPER_ATTACH_BSPC_Y = 120;
-
-
 
 module k65_mask() {
     k65_board_mask();
 
-    keys_mask_shift = [
-        (K65_BOARD_X - k65_keys_mask_size.x) / 2,
-        -(K65_BOARD_Y - k65_keys_mask_size.y) / 2,
-    ];
-
-    move([keys_mask_shift.x, keys_mask_shift.y, K65_BOARD_Z - DELTA])
+    zmove(K65_BOARD_Z - DELTA)
         k65_keys_mask();
 }
 
 k65_mask();
-
-
-//   - tlmice:
-//     - nielen tlmice vycuhuju hore a dole, po celej sirke by malo byt miesto na veci vycuhujuce z dosky
-//     - samotne tlmice vpravo a vlavo su dlhe 12 mm
-//     - nezabudnut ze klavesnica ma byt pod uhlom
-//     - v originalnom case drzi klavesnica:
-//       - 4 piny, jeden na kazdej strane, R2.95, vyska 8mm od spodu dosky (to je vyska po vrch dosky)
-//       - vpravo a vlavo nie su piny na stred, su 40 mm od spodu spodnych tlmicov
-//       - hore a dole su piny na stred
-//       - diery su vzdialene 97.8 mm od seba (predne vs zadne, stred dier)
-//         - stred dier je zarovnany s hranami
-//       - vpravo a vlavo su diery ovalne, dovoluju pohyb vpravo vlavo
-//       - pod tlmicmi su nosniky, co su 3 zvisle rebra, 1 mm hrube (co je asi cost cutting)
