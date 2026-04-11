@@ -52,7 +52,7 @@ kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_
 //echo("kbd_back_y", kbd_back_y);
 
 // Extend the model to -Y and shorten the front edge to fit a larger keyboard; custom
-EXTEND_Y = 5;
+EXTEND_Y = 6;
 EXTEND_KBD_FWD_Y = 1.7;
 
 // Extend forward top corner into -X and -Y:

@@ -11,6 +11,7 @@ include <BOSL2/std.scad>
 // TODO spherical cutout of viewport back
 // TODO trim terminal depth
 // TODO texture
+// TODO try to put "DIGITAL decscope" near the backspace
 
 // Orient the model for easy viewing in OpenSCAD
 xrot(90)
