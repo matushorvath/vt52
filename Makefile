@@ -25,8 +25,9 @@ endef
 %.stl: %.scad
 	$(run-openscad)
 
-%.png: OPENSCAD_FLAGS = --autocenter --viewall --projection=p --camera=0,0,150,100,50,100 \
-	--imgsize=2880,2160 --colorscheme=Monotone --render
+# Aspect ratio and camera position matches vt52-wikipedia.png
+%.png: OPENSCAD_FLAGS = --projection=p --camera=170,0,110,70,0,-115,1400 \
+	--imgsize=1452,1080 --colorscheme=Monotone --render
 %.png: %.scad
 	$(run-openscad)
 

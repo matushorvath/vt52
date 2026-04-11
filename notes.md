@@ -151,6 +151,15 @@ Performance
 - simple models for preview, e.g. simplfy the table based curves
 
 
+README Notes
+============
+
+- extended for keyboard to -X, -Y, same angles and curves, except curves in keyboard area
+- which keyboard to use, how to mount it
+- which display to use, how to mount it
+- how to adjust the model (dimensions, "custom", link to DEC diagrams)
+
+
 TODOs
 =====
 

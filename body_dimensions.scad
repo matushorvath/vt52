@@ -52,7 +52,7 @@ kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_
 //echo("kbd_back_y", kbd_back_y);
 
 // Extend the model to -Y and shorten the front edge to fit a larger keyboard; custom
-EXTEND_Y = 5;
+EXTEND_Y = 6;
 EXTEND_KBD_FWD_Y = 1.7;
 
 // Extend forward top corner into -X and -Y:
@@ -93,7 +93,7 @@ ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H
 KBD_FWD_CORNER_ADJ_BOTTOM_Y = 0.55; // added to XZ_CURVE_Y000[0] when positioning bottom of the corner
 KBD_FWD_CORNER_ADJ_TOP_Y = 0.2; // additional shift when positioning top of the corner
 
-// Decorative bezel on cerain edges
+// Decorative bezel on certain edges
 // Sheet 2, Section AD-AD, Section AE-AE, Section AH-AH
 // TODO apply decorative bezel
 //  - forward top edge of keyboard AD-AD
