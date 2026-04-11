@@ -30,7 +30,20 @@ jobs:
 
       - name: Build the model
         run: |
-          make
+          make -C model
+
+      - name: Prepare artifacts
+        run: |
+          mkdir -p artifacts
+          cp model/*.stl artifacts
+          cp docs/README.txt artifacts
+
+      - name: Upload the artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: vt52
+          if-no-files-found: error
+          path: artifacts/*
 
       # Generating PNG doesn't work without X: https://github.com/openscad/openscad/issues/1798
       - name: Build the renders
@@ -38,7 +51,7 @@ jobs:
         run: |
           Xvfb :99 &
           export DISPLAY=:99
-          make preview
+          make -C model preview
 
       - name: Commit and push the renders
         if: github.ref == 'refs/heads/main'
@@ -47,7 +60,7 @@ jobs:
           git config user.name "GitHub Actions"
           git fetch origin assets
           git worktree add ../assets-worktree assets
-          cp *.png ../assets-worktree/
+          cp model/*.png ../assets-worktree/
           cd ../assets-worktree
           git add *.png
           git commit -m "Update renders" || true

@@ -148,7 +148,7 @@ Performance
 - use $fa instead of $fn since it scales with size
 - use render() around nested set operations
 - lower $fn during modeling, e.g. to 16
-- simple models for preview, e.g. simplfy the table based curves
+- simple models for preview, e.g. simplify the table based curves
 
 
 README Notes
@@ -163,8 +163,6 @@ README Notes
 TODOs
 =====
 
-- keyboard will need to be significantly deeper in X; prepare for that
-  - all X dimensions behind the keyboard should probably be relative to the back edge of the keyboard (from keyboard/screen edge)
 - rename outside to !mask in body models
 - terminal top and bottom are an interference between the two body planes, you can see it if you color body_xy red
 - screen bezel interferes with body vertical front, move screen bezel back by DELTA

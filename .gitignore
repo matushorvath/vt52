@@ -1,4 +1,4 @@
 /.vscode
-/*.deps
-/*.png
-/*.stl
+/model/*.deps
+/model/*.png
+/model/*.stl
