@@ -7,8 +7,7 @@ Work in progress — not ready to print yet.
 
 <figure>
 <img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52-wikipedia.png" width="45%" alt="DEC VT52 terminal" />
-<!-- <img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52.png" width="45%" alt="DEC VT52 model" /> -->
-<img src="vt52.png" width="45%" alt="DEC VT52 model" />
+<img src="https://raw.githubusercontent.com/matushorvath/vt52/assets/vt52.png" width="45%" alt="DEC VT52 model" />
 <figcaption>Left: photo of the original DEC VT52 terminal. Right: 3D render of this model.</figcaption>
 </figure>
 
