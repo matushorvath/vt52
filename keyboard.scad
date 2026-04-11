@@ -6,14 +6,9 @@ include <BOSL2/std.scad>
 // one key width: 19 mm
 
 // TODO
-// - top mask for the keys
-//   - LEDs
-//   - space top right
-//   - space left of arrow keys
 // - body of the keyboard
 //   - dampers
 //   - holes
-//   - space for components on board reverse
 // - angle the masks
 // - design mounting hardware
 //   - pins for the holes, they will be fragile, stiffen them
@@ -24,11 +19,6 @@ include <BOSL2/std.scad>
 // - find if bottom needs to be adjusted to fit
 
 // - klavesnica rozmery
-//   - 14.2 mm odspodu dosky po spodnu hranu klaves
-//   - 23 mm (dole) - 25.5 mm (hore) odspodu dosky po vrch klaves
-//   - spodna strana tlmicov je 9.5 mm od spodnej strany klaves
-//     - inak povedane, klavesnica ma byt uchytena hore a dole 9.5 mm pod spodnou hranicou klaves
-//     - pod tym uchytom este bude treba cca 5mm miesta na dosku
 //   - medzi left shift a Z je konektor na USB, vpravo od backspace je konektor na volume
 //   - tlmice:
 //     - 4 hore 4 dole, symetricky
@@ -49,6 +39,15 @@ include <BOSL2/std.scad>
 //       - vpravo a vlavo su diery ovalne, dovoluju pohyb vpravo vlavo
 //       - pod tlmicmi su nosniky, co su 3 zvisle rebra, 1 mm hrube (co je asi cost cutting)
 
+// TODO
+// - add mask for the mounting features on board
+//   - can be approximate
+// - add positive mounting features
+//   - but also, how mounting features will attach to the body depends on keyboard position
+//   - perhaps add the positive mounting features on a rail with plain bottom,
+//     then connect it up when positioning keyboard in body
+//   - separate top and bottom features, since they will end up on two objects (body and base)
+//   - perhaps angle the plain bottom by KBD_TOP_A (but top actually can stay straight
 
 
 // Model coordinates (operator is looking at the keyboard in X direction)
@@ -60,28 +59,32 @@ K65_Y = 308;
 // Keyboad bottom to top of the board; at least 9.5; board w/o connectors is 6.5
 K65_BOARD_Z = 10;
 
+// Top of the board to bottom of key caps + about 1 mm extra
+// = how much above K65_BOARD_Z is inside the body
+K65_HIDDEN_Z = 6.5;
+
+// Extra height above K65_HIDDEN_Z, to clear the keyboard top plane; custom
+K65_MASK_EXTRA_Z = 10;
+
 // One keycap size (including space between keys)
 K65_KEYCAP_SIZE = 19;
 // Extra margin around the keycap area
 K65_KEYCAP_MARGIN = 2;
 
-// Keyboard bottom to bottom of key caps + about 1 mm extra; how much of the keyboard is inside the body
-//K65_HIDDEN_Z = 13 + 3.5;
-
-// Height of the keys mas, to cut through the keyboard top plane; custom
-K65_KEYS_MASK_Z = 10;
+// Key mask size
+k65_keys_mask_size = [
+    5 * K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN,
+    16 * K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN
+];
 
 //K65_DAMPER_X = 0.4; // one damper X
 
 // TODO check docs how is the keycap hole finished (rounded corners/edges?)
 
 // Shape of the key area
-function keys_plane() =
+function k65_keys_plane() =
     difference([
-        rect([
-                5 * K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN,
-                16 * K65_KEYCAP_SIZE + K65_KEYCAP_MARGIN
-            ],
+        rect(k65_keys_mask_size,
             anchor = LEFT + TOP
         ),
         // Cutout next to backspace
@@ -107,17 +110,15 @@ function keys_plane() =
     ]);
 
 // Mask for the keyboard top plane, to make space for the keycaps
-module keys_mask() {
+module k65_keys_mask() {
     linear_sweep(
-        keys_plane(),
-        height = K65_KEYS_MASK_Z // TODO
+        k65_keys_plane(),
+        height = K65_HIDDEN_Z + K65_MASK_EXTRA_Z
     );
 }
 
-// keys_mask();
-
 // Mask to cut out space for the keyboard inside the body
-module keyboard_mask() {
+module k65_board_mask() {
     // Space for the board
     cuboid(
         [K65_X, K65_Y, K65_BOARD_Z],
@@ -125,4 +126,16 @@ module keyboard_mask() {
     );
 }
 
-// keyboard_mask();
+module k65_mask() {
+    k65_board_mask();
+
+    keys_mask_shift = [
+        (K65_X - k65_keys_mask_size.x) / 2,
+        -(K65_Y - k65_keys_mask_size.y) / 2,
+    ];
+
+    move([keys_mask_shift.x, keys_mask_shift.y, K65_BOARD_Z - DELTA])
+        k65_keys_mask();
+}
+
+k65_mask();
