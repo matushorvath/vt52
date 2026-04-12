@@ -14,19 +14,16 @@ include <BOSL2/std.scad>
 // TODO we can then make the hole all the way to the bottom and have cover rest on the kbd surface extension,
 // that's how they did it, I can see now, no need to cut off the bottom of cover mask
 
-// // Depth of the cover above screen plane
-// CC_VISIBLE_DEPTH = 2;
-
-// // Space left and right of the handle
+// Space left and right of the handle
 // CC_HANDLE_MARGIN_Z = 4;
 
-// // Top of the cover to bottom of the handle
+// Top of the cover to bottom of the handle
 // CC_HANDLE_POS = 205;
 
-// // Actual visible handle depth, without depth of the cover
-// cc_handle_depth = CC_HANDLE_TOTAL_DEPTH - 4; // estimated cover depth, 4 = CC_VISIBLE_DEPTH(=2) + 2
+// Actual visible handle depth, without depth of the cover
+// cc_handle_depth = CC_HANDLE_TOTAL_DEPTH - 4;
 
-// CC_HANDLE_HEIGHT = 2; // estimated
+// CC_HANDLE_HEIGHT = 2;
 
 
 // Cover plane, same height as forward screen plane + margin except at the bottom
@@ -51,9 +48,10 @@ function cc_cover_plane() =
     )
     round_corners(shape, radius = radii);
 
-// Cover hole, same height as forward screen plane, except bottom is cut off
+// Cover hole, same height as forward screen plane
 function cc_hole_plane() =
     let(
+        // TODO the hole should go all the way to kbd surface, with correct bottom angle, similar to screen.scr
         shape = [
             [0, 0 + CC_B_R],                                                        // bottom left
             [0, scr_fwd_height],                                                    // top left
