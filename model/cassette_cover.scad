@@ -3,13 +3,20 @@ include <common.scad>
 include <cassette_dimensions.scad>
 include <BOSL2/std.scad>
 
+
 // TODO
+
+// do not move the notches up to KBD_BACK_R, it looks very wrong
+// keep them at CC_B_R and make the notches perpendicular
+// solve rounding on the back side and number of vertices between the sides
+// mask off top part of the R14 fillet to make space for the corner
+
 // locating features on cover
 // mounting tabs on cover
 // build cover as a separate object, also body as separate object, also whole terminal for the render, with colors
 
-// Space left and right of the handle
-// CC_HANDLE_MARGIN_Z = 4;
+// Space left and right of the handle; estimated from photos
+// CC_HANDLE_MARGIN_Z = 1;
 
 // Top of the cover to bottom of the handle
 // CC_HANDLE_POS = 205;

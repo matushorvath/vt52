@@ -27,16 +27,34 @@ include <BOSL2/std.scad>
 // The space at the bottom of the louvres (Section AF-AF) is 4 mm,
 // and the cover looks like it hides about one quarter of that.
 //
-// Bottom cover edge is complicated. It rests on the extended kbd top surface,
-// drawings show the bottom edge is definitely angled, and the notches in Item #1
-// suggest they are the cover margins and the bottom rounded parts fit the rounded mask.
-//
 // Decision: Cover mask has the exact vertical location of the screen viewport.
 // Cover itself is 1 mm larger than the mask in every direction except bottom (CC_COVER_MARGIN).
 // Cover corners are same as screen corners, do NOT add 1 mm to their radius.
-// Bottom of the cover mask is the kbd top plane, with rounded corners, similar to the screen.
-// The geometry is quite complex, since the rounded corners need to match the mask and the kbd top surface.
 // Cover is supported by the mask on all sides, with four tabs holding it in.
+
+// Cover bottom discussion:
+//
+// Based on YouTube videos, the cover very slightly overlaps the hole and it rises perhaps
+// 1 mm over the screen surface. It is not completely embedded in the body.
+// Based on the videos and on higher res pictures, there is something strange going on with
+// borders of the body hole at the bottom, where it touches the kbd/scr fillet.
+// There is a discontinuity.
+//
+// The rounded corners at the bottom are R5 and match the R5 hole in the body.
+// The kbd/scr fillet is R14, which means the corners interfere with top of the fillet.
+// This is solved by masking of the part of the fillet that interferes with the back side
+// of the corners, which is the "something strange" in the pictures.
+//
+// Specifically, what interferes is the back side of the outside corners of the bottom notches.
+// The fillet is already moving away from the screen plane here. Also, the outside corners are
+// definitely 90 degrees to the rest of the cover in all directions.
+//
+// Decision:
+// The notches at the bottom of the cover are creating an overlap over screen plane,
+// 1 mm wide on all sides except bottom. Cover bottom sits on keyboard top plane.
+// In order to solve the interference between R5 and R14 shapes, top of the R14 fillet
+// will be masked off to be in screen plane, allowing space for outside bottom corners
+// of the cover.
 
 // Page 6, Sheet 1, Cassette Cover
 
@@ -45,15 +63,15 @@ include <BOSL2/std.scad>
 // CC_WIDTH_Z = 166;
 
 // Depth of the cover above screen plane
-CC_VISIBLE_DEPTH = 2;
+CC_VISIBLE_DEPTH = 1; // estimated
 
 // Difference between cover size and mask size; custom
 CC_COVER_MARGIN = 1;
 
 // Handle
 
-// Space left and right of the handle
-CC_HANDLE_MARGIN_Z = 4;
+// Space left and right of the handle; estimated from photos
+CC_HANDLE_MARGIN_Z = 1;
 
 // Top of the cover to bottom of the handle
 CC_HANDLE_POS = 205;
@@ -61,7 +79,7 @@ CC_HANDLE_POS = 205;
 // Forward of the handle to back of the cover, since that's defined by the drawings
 CC_HANDLE_TOTAL_DEPTH = 20;
 // Actual visible handle depth, without depth of the cover
-cc_handle_depth = CC_HANDLE_TOTAL_DEPTH - 4; // estimated cover depth, 4 = CC_VISIBLE_DEPTH(=2) + 2
+cc_handle_depth = CC_HANDLE_TOTAL_DEPTH - 4; // estimated cover depth, 4 = CC_VISIBLE_DEPTH(=1) + 3
 
 CC_HANDLE_HEIGHT = 2; // estimated
 
