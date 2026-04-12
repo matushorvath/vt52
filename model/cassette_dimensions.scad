@@ -12,25 +12,29 @@ include <BOSL2/std.scad>
 
 // Cover height discussion:
 //
-// Bottom edge of the cover (and screen) is at Y = kbd_back_y = 41.78.
+// Bottom back edge of the cover is at Y = kbd_back_y = 41.78.
 // Cover height is CC_HEIGHT = 230.5, angled at SCR_FWD_A = 12.
 // Cover height in Y is CC_HEIGHT * cos(SCR_FWD_A) = 225,46.
 // Top edge of the cover is then at Y = kbd_back_y + 225,46 = 267.24.
 // Top edge of the screen is defined as SCR_FWD_TOP_Y = 264, which is 3.2 mm lower.
-// The bottom edge of the cover is angled (Page 6, Item #2), that explains about 0.4 mm in Y direction.
-// That still makes the cover about 2.5 mm larger than the screen viewport.
-// Also, CC_HEIGHT is defined as REF, so it's not exact.
+// The bottom edge of the cover is angled (Page 6, Item #2), that explains about 0.8 mm in Y direction.
+// That makes the cover about 2.4 mm larger than the screen viewport,
+// suggesting the margins (CC_COVER_MARGIN) are about 1.2 mm.
 //
 // The photos seem to show the cover slightly taller than the screen viewport.
 // Even photos taken from above, where parallax is not an issue.
 // The space at the bottom of the louvres (Section AF-AF) is 4 mm,
 // and the cover looks like it hides about one quarter of that.
 //
+// Bottom cover edge is complicated. It rests on the extended kbd top surface,
+// drawings show the bottom edge is definitely angled, and the notches in Item #1
+// suggest they are the cover margins and the bottom rounded parts fit the rounded hole.
+//
 // Decision: Cover hole has the exact vertical location of the screen viewport.
 // Cover itself is 1 mm larger than the hole in every direction except bottom (CC_COVER_MARGIN).
 // Cover corners are same as screen corners, do NOT add 1 mm to their radius.
-// Bottom of the cover hole is flat, no rounded corners, matching the position of the
-// bottom two notches on the cover, which are CC_B_R = 5 mm from the bottom.
+// Bottom of the cover hole is the kbd top plane, with rounded corners, similar to the screen.
+// The geometry is quite complex, since the rounded corners need to match the hole and the kbd top surface.
 // Cover is supported by the hole on all sides, with four tabs holding it in.
 
 // Page 6, Sheet 1, Cassette Cover
