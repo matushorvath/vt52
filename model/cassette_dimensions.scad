@@ -1,3 +1,4 @@
+// include
 include <common.scad>
 include <body_dimensions.scad>
 include <screen_dimensions.scad>
@@ -28,14 +29,14 @@ include <BOSL2/std.scad>
 //
 // Bottom cover edge is complicated. It rests on the extended kbd top surface,
 // drawings show the bottom edge is definitely angled, and the notches in Item #1
-// suggest they are the cover margins and the bottom rounded parts fit the rounded hole.
+// suggest they are the cover margins and the bottom rounded parts fit the rounded mask.
 //
-// Decision: Cover hole has the exact vertical location of the screen viewport.
-// Cover itself is 1 mm larger than the hole in every direction except bottom (CC_COVER_MARGIN).
+// Decision: Cover mask has the exact vertical location of the screen viewport.
+// Cover itself is 1 mm larger than the mask in every direction except bottom (CC_COVER_MARGIN).
 // Cover corners are same as screen corners, do NOT add 1 mm to their radius.
-// Bottom of the cover hole is the kbd top plane, with rounded corners, similar to the screen.
-// The geometry is quite complex, since the rounded corners need to match the hole and the kbd top surface.
-// Cover is supported by the hole on all sides, with four tabs holding it in.
+// Bottom of the cover mask is the kbd top plane, with rounded corners, similar to the screen.
+// The geometry is quite complex, since the rounded corners need to match the mask and the kbd top surface.
+// Cover is supported by the mask on all sides, with four tabs holding it in.
 
 // Page 6, Sheet 1, Cassette Cover
 
@@ -46,7 +47,7 @@ include <BOSL2/std.scad>
 // Depth of the cover above screen plane
 CC_VISIBLE_DEPTH = 2;
 
-// Difference between cover size and hole size; custom
+// Difference between cover size and mask size; custom
 CC_COVER_MARGIN = 1;
 
 // Handle
@@ -72,13 +73,7 @@ CC_TL_R = SCR_FWD_TR_R;
 CC_B_R = SCR_FWD_BR_R;
 
 // This does not match CC_WIDTH_Z, the difference is 6.5 mm, that's why we don't use CC_WIDTH_Z
-CC_HOLE_LEFT_Z = 63;
-CC_HOLE_RIGHT_Z = 222.5;
-//cc_hole_center_z = (CC_HOLE_LEFT_Z + CC_HOLE_RIGHT_Z) / 2; TODO uncomment or delete
-cc_hole_width = CC_HOLE_RIGHT_Z - CC_HOLE_LEFT_Z;
-
-// Hole top is be the same as screen viewport top; estimated
-// See discussion above
-// TODO use scr directly, delete this
-// cc_top_x = scr_fwd_top_x;
-// CC_TOP_Y = SCR_FWD_TOP_Y;
+CC_MASK_LEFT_Z = 63;
+CC_MASK_RIGHT_Z = 222.5;
+//cc_mask_center_z = (CC_MASK_LEFT_Z + CC_MASK_RIGHT_Z) / 2; TODO uncomment or delete
+cc_mask_width = CC_MASK_RIGHT_Z - CC_MASK_LEFT_Z;

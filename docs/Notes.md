@@ -165,8 +165,9 @@ TODOs
 
 - rename outside to !mask in body models
 - terminal top and bottom are an interference between the two body planes, you can see it if you color body_xy red
-- screen bezel interferes with body vertical front, move screen bezel back by DELTA
+- screen bezel and cassette mask interfere with keyboard surface, move screen bezel/cassette mask back by DELTA?
 - move some of the _dimensions that are not shared between files into the .scad file that uses them
   - comment out dimensions that are not yet used at all
 - Section AK-AK Sheet 10: Display top has 5 stiffening ribs
   - add stiffening ribs to other places as well
+- rotate the model for easy viewing (needs also adjusting make preview)
