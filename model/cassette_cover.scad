@@ -7,9 +7,6 @@ include <BOSL2/std.scad>
 // locating features on cover
 // mounting tabs on cover
 // build cover as a separate object, also body as separate object, also whole terminal for the render, with colors
-// fwd and back faces have different vertex count because of the notch shift
-// and anyway the cover doesn't fit, fillet is R14 and interferes with cover back face
-// should I just mask the fillet off the cover? or move the notch to 14 to match the fillet, that's it
 
 // Space left and right of the handle
 // CC_HANDLE_MARGIN_Z = 4;
@@ -31,16 +28,18 @@ function cc_cover_plane(dist) =
 
         shape = [
             [0, 0 - extra_bot],                                                     // bottom left
-            [0, CC_B_R],                                                            // left notch inner corner
-            [0 - CC_COVER_MARGIN, CC_B_R],                                          // left notch outer corner
+            [0, CC_B_R - extra_bot],                                                // left notch end of rounding
+            [0, KBD_BACK_R],                                                        // left notch inner corner
+            [0 - CC_COVER_MARGIN, KBD_BACK_R],                                      // left notch outer corner
             [0 - CC_COVER_MARGIN, scr_fwd_height + CC_COVER_MARGIN],                // top left
             [cc_mask_width + CC_COVER_MARGIN, scr_fwd_height + CC_COVER_MARGIN],    // top right
-            [cc_mask_width + CC_COVER_MARGIN, CC_B_R],                              // right notch outer corner
-            [cc_mask_width, CC_B_R],                                                // right notch inner corner
+            [cc_mask_width + CC_COVER_MARGIN, KBD_BACK_R],                          // right notch outer corner
+            [cc_mask_width, KBD_BACK_R],                                            // right notch inner corner
+            [cc_mask_width, CC_B_R - extra_bot],                                    // right notch end of rounding
             [cc_mask_width, 0 - extra_bot],                                         // bottom right
         ],
 
-        radii = [CC_B_R, 0, 0, CC_TL_R, CC_TR_R, 0, 0, CC_B_R]
+        radii = [CC_B_R, 0, 0, 0, CC_TL_R, CC_TR_R, 0, 0, 0, CC_B_R]
     )
     round_corners(shape, radius = radii);
 
