@@ -6,12 +6,10 @@ include <BOSL2/std.scad>
 // TODO
 // locating features on cover
 // mounting tabs on cover
-// fix cover bottom corners, see below in cc_cover90
-// build cover as a separate object, also body, also whole terminal for the render, with colors
-
-// create a mask to cut out the kbd/scr fillet with R = CC_B_R = 5 and correct bottom angle KBD_TOP_A
-// TODO we can then make the hole all the way to the bottom and have cover rest on the kbd surface extension,
-// that's how they did it, I can see now, no need to cut off the bottom of cover mask
+// build cover as a separate object, also body as separate object, also whole terminal for the render, with colors
+// fwd and back faces have different vertex count because of the notch shift
+// and anyway the cover doesn't fit, fillet is R14 and interferes with cover back face
+// should I just mask the fillet off the cover? or move the notch to 14 to match the fillet, that's it
 
 // Space left and right of the handle
 // CC_HANDLE_MARGIN_Z = 4;
@@ -26,21 +24,20 @@ include <BOSL2/std.scad>
 
 
 // Cover plane, same height as forward screen plane + margin except at the bottom
-function cc_cover_plane() =
+function cc_cover_plane(dist) =
+    // Generate plane for given distance from the screen plane
     let(
-        // Extend the bottom edge down to make up for KBD_TOP_A and SCR_FWD_A
-        // We than mask off the back side of that extension in cc_cover()
-        extend_bottom = ang_adj_to_opp(KBD_TOP_A + SCR_FWD_A, CC_VISIBLE_DEPTH),
+        extra_bot = sign(dist) * ang_adj_to_opp(KBD_TOP_A + SCR_FWD_A, abs(dist)),
 
         shape = [
-            [0, 0 - extend_bottom],                                                 // bottom left
-            [0, CC_B_R - extend_bottom],                                            // left notch inner corner
-            [0 - CC_COVER_MARGIN, CC_B_R - extend_bottom],                          // left notch outer corner
+            [0, 0 - extra_bot],                                                     // bottom left
+            [0, CC_B_R],                                                            // left notch inner corner
+            [0 - CC_COVER_MARGIN, CC_B_R],                                          // left notch outer corner
             [0 - CC_COVER_MARGIN, scr_fwd_height + CC_COVER_MARGIN],                // top left
-            [cc_hole_width + CC_COVER_MARGIN, scr_fwd_height + CC_COVER_MARGIN],    // top right
-            [cc_hole_width + CC_COVER_MARGIN, CC_B_R - extend_bottom],              // right notch outer corner
-            [cc_hole_width, CC_B_R - extend_bottom],                                // right notch inner corner
-            [cc_hole_width, 0 - extend_bottom],                                     // bottom right
+            [cc_mask_width + CC_COVER_MARGIN, scr_fwd_height + CC_COVER_MARGIN],    // top right
+            [cc_mask_width + CC_COVER_MARGIN, CC_B_R],                              // right notch outer corner
+            [cc_mask_width, CC_B_R],                                                // right notch inner corner
+            [cc_mask_width, 0 - extra_bot],                                         // bottom right
         ],
 
         radii = [CC_B_R, 0, 0, CC_TL_R, CC_TR_R, 0, 0, CC_B_R]
@@ -48,37 +45,40 @@ function cc_cover_plane() =
     round_corners(shape, radius = radii);
 
 module cc_cover() {
-    edge_mask_y = 5; // any sufficiently large number to clear the object
+    // Position the forward face
+    fwd_face = apply(
+        // Transformations are applied last to first
+        IDENT
+            * move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
+            * zrot(-SCR_FWD_A) // angle relative to the model
+            * xmove(-CC_VISIBLE_DEPTH) // cover depth
+            * yrot(-90), // orient relative to the model
+        path3d(cc_cover_plane(CC_VISIBLE_DEPTH))
+    );
+    // stroke(fwd_face, closed=true);
 
-    difference() {
-        // Cover object
-        linear_sweep(
-            cc_cover_plane(),
-            height = CC_VISIBLE_DEPTH
-        );
+    // Position the back face
+    back_face = apply(
+        // Transformations are applied last to first
+        IDENT
+            * move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
+            * zrot(-SCR_FWD_A) // angle relative to the model
+            * yrot(-90), // orient relative to the model
+        path3d(cc_cover_plane(0))
+    );
+    // stroke(back_face, closed=true);
 
-        // Cut off bottom edge to match KBD_TOP_A + SCR_FWD_A
-        // TODO this isn't good enough, bottom corners will still interfere with kbd/scr fillet
-        // we also need to cut of the back side of the radiuses at an angle
-        // the correct way is to do a skin() with two planes, copy it from screen.scad
-        // and the same thing will be needed for the hole
-        move([-DELTA, 0, -DELTA])
-            prismoid(
-                size2 = [cc_hole_width + 2 * DELTA, edge_mask_y],
-                xang = [90, 90],
-                yang = [90, 90 - KBD_TOP_A - SCR_FWD_A],
-                h = CC_VISIBLE_DEPTH + 2 * DELTA,
-                anchor = LEFT + BACK + DOWN
-            );
-    }
+    faces = [fwd_face, back_face];
+    skin(faces, slices = 10);
 }
 
-// polygon(cc_cover_plane());
+// %polygon(cc_cover_plane(CC_VISIBLE_DEPTH));
+// polygon(cc_cover_plane(0));
+
 // cc_cover();
 
-include <body.scad>
-
-xrot(90) {
-//    cc_cover();
-    body(true);
-}
+// include <body.scad>
+// xrot(90) {
+//     cc_cover();
+//     %body(true);
+// }
