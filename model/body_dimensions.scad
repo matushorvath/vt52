@@ -72,7 +72,7 @@ extend_fwd_bot_x = extend_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 
 // X values for which we have YZ_CURVE_X* tables
-YZ_X = [0, 50, 100, 150, 200, 250, 300, 350, 400];
+YZ_X = [0, 50, 100, 150, 200, 250/*, 300, 350, 400*/];
 
 // Values from Sheet 29, Data List #1 for X values in YZ_X
 XZ_CURVE_Y000 = [
@@ -82,9 +82,9 @@ XZ_CURVE_Y000 = [
     262.07143,  // X = 150
     262.78571,  // X = 200
     263.26191,  // X = 250
-    263.50000,  // X = 300
-    263.50000,  // X = 350
-    263.29190,  // X = 400
+    // 263.50000,  // X = 300
+    // 263.50000,  // X = 350
+    // 263.29190,  // X = 400
 ];
 
 // Sheet 5
