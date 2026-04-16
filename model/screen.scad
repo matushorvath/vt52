@@ -1,9 +1,11 @@
+// use
 include <common.scad>
-include <screen_bottom_details.scad>
 include <screen_dimensions.scad>
-include <screen_planes.scad>
-include <screen_top_details.scad>
 include <BOSL2/std.scad>
+
+use <screen_bottom_details.scad>
+use <screen_planes.scad>
+use <screen_top_details.scad>
 
 module screen_object(mask) {
     // Mask extends in front of the screen area to clear the keyboard/screen fillet
@@ -105,5 +107,5 @@ module screen_mask() {
 //screen_bezels();
 //%screen_mask();
 
-//include <body.scad>
+//use <body.scad>
 //%body(true);

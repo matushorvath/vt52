@@ -1,8 +1,10 @@
+// use
 include <common.scad>
-include <body_details.scad>
 include <body_dimensions.scad>
-include <body_planes.scad>
 include <BOSL2/std.scad>
+
+use <body_details.scad>
+use <body_planes.scad>
 
 // TODO texture = "rough" for both body shapes?
 
@@ -66,5 +68,5 @@ module body(outside) {
     };
 }
 
-// xrot(90) // orient the model for easy viewing in OpenSCAD
-//     body(true);
+// body(false);
+// %body(true);
