@@ -1,8 +1,10 @@
+// use
 include <common.scad>
 include <body_dimensions.scad>
 include <keyboard_dimensions.scad>
-include <keyboard.scad>
 include <BOSL2/std.scad>
+
+use <keyboard.scad>
 
 // TODO
 // - design mounting hardware

@@ -1,4 +1,4 @@
-TARGETS=vt52.stl
+TARGETS=shell.stl vt52.stl
 PREVIEWS=$(TARGETS:.stl=.png)
 
 all: $(TARGETS)

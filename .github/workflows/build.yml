@@ -20,7 +20,9 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install OpenSCAD
-        run: sudo apt install openscad
+        run: |
+          sudo apt update
+          sudo apt install openscad
 
       - name: Install BOSL2
         run: |
