@@ -81,10 +81,5 @@ module cc_cover() {
 // %polygon(cc_cover_plane(CC_VISIBLE_DEPTH));
 // polygon(cc_cover_plane(0));
 
-// cc_cover();
-
-// include <body.scad>
-// xrot(90) {
-//     cc_cover();
-//     %body(true);
-// }
+xrot(90)
+    cc_cover();
