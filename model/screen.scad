@@ -42,7 +42,7 @@ module screen_object(mask) {
     back_face = apply(
         // Transformations are applied last to first
         IDENT
-            * xmove(mask ? DELTA : 0) // punch the mask through the back face // TODO remove once we have spheric back face
+            * xmove(mask ? DELTA : 0) // punch the mask through the back face
             * move([scr_back_bottom_x, scr_back_bottom_y, back_shift_z]) // move to position relative to the model
             * rot(a = -SCR_BACK_A, v = [0, 0, 1]) // angle relative to the model
             * rot(a = -90, v = [0, 1, 0]), // orient relative to the model

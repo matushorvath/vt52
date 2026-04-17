@@ -6,7 +6,7 @@ include <BOSL2/std.scad>
 
 use <keyboard.scad>
 
-// TODO
+// TODO keyboard
 // - design mounting hardware
 //   - pins for the holes, they will be fragile, stiffen them
 //   - rests for the dampers, top and bottom

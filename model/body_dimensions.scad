@@ -25,8 +25,8 @@ BODY_WALL = 4; // custom
 // Calculate missing coordinates
 kbd_fwd_x = adj_ang_to_opp(KBD_FWD_Y, KBD_FWD_A);
 
-//echo("kbd_fwd_x", kbd_fwd_x);
-//echo("KBD_FWD_Y", KBD_FWD_Y);
+// echo("kbd_fwd_x", kbd_fwd_x); // 7.79423
+// echo("KBD_FWD_Y", KBD_FWD_Y); // 13.5
 
 /* Top back point of the keyboard
 kbd_back_x and kbd_back_y are only defined by KBD_FWD_A and KBD_TOP_A
@@ -49,8 +49,8 @@ x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR
 kbd_back_x = (kbd_fwd_x * tan(KBD_TOP_A) - KBD_FWD_Y - SCR_TOP_X * cotan(SCR_FWD_A) + SCR_TOP_Y) / (tan(KBD_TOP_A) - cotan(SCR_FWD_A));
 kbd_back_y = kbd_back_x * tan(KBD_TOP_A) - kbd_fwd_x * tan(KBD_TOP_A) + KBD_FWD_Y;
 
-//echo("kbd_back_x", kbd_back_x);
-//echo("kbd_back_y", kbd_back_y);
+// echo("kbd_back_x", kbd_back_x); // 130.303
+// echo("kbd_back_y", kbd_back_y); // 41.7833
 
 // Extend the model to -Y and shorten the front edge to fit a larger keyboard; custom
 EXTEND_Y = 6;
@@ -72,7 +72,7 @@ extend_fwd_bot_x = extend_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 
 // X values for which we have YZ_CURVE_X* tables
-YZ_X = [0, 50, 100, 150, 200, 250, 300, 350, 400];
+YZ_X = [0, 50, 100, 150, 200, 250/*, 300, 350, 400*/];
 
 // Values from Sheet 29, Data List #1 for X values in YZ_X
 XZ_CURVE_Y000 = [
@@ -82,9 +82,9 @@ XZ_CURVE_Y000 = [
     262.07143,  // X = 150
     262.78571,  // X = 200
     263.26191,  // X = 250
-    263.50000,  // X = 300
-    263.50000,  // X = 350
-    263.29190,  // X = 400
+    // 263.50000,  // X = 300
+    // 263.50000,  // X = 350
+    // 263.29190,  // X = 400
 ];
 
 // Sheet 5

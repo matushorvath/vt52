@@ -4,7 +4,7 @@ include <screen_dimensions.scad>
 include <BOSL2/std.scad>
 
 module rib(length) {
-    // TODO edge rounding
+    // The original has rounded edges
     xrot(90)
         prismoid(
             size1 = [length, SCR_RIB_WIDTH],

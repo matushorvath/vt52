@@ -151,13 +151,12 @@ Performance
 - simple models for preview, e.g. simplify the table based curves
 
 
-README Notes
-============
+Videos
+======
 
-- extended for keyboard to -X, -Y, same angles and curves, except curves in keyboard area
-- which keyboard to use, how to mount it
-- which display to use, how to mount it
-- how to adjust the model (dimensions, "custom", link to DEC diagrams)
+https://www.youtube.com/watch?v=nb2bxaj79rc
+https://www.youtube.com/watch?v=ksL232PHivI
+https://www.youtube.com/watch?v=3gNN4nL5F-k
 
 
 TODOs
@@ -165,8 +164,9 @@ TODOs
 
 - rename outside to !mask in body models
 - terminal top and bottom are an interference between the two body planes, you can see it if you color body_xy red
-- screen bezel interferes with body vertical front, move screen bezel back by DELTA
+- screen bezel and cassette mask interfere with keyboard surface, move screen bezel/cassette mask back by DELTA?
 - move some of the _dimensions that are not shared between files into the .scad file that uses them
   - comment out dimensions that are not yet used at all
 - Section AK-AK Sheet 10: Display top has 5 stiffening ribs
   - add stiffening ribs to other places as well
+- rotate the model for easy viewing (needs also adjusting make preview)

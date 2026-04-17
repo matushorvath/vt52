@@ -25,10 +25,9 @@ module body_yz_half(outside) {
         body_yz_half_plane(outside, XZ_CURVE_Y000[3], YZ_CURVE_X150),
         body_yz_half_plane(outside, XZ_CURVE_Y000[4], YZ_CURVE_X200),
         body_yz_half_plane(outside, XZ_CURVE_Y000[5], YZ_CURVE_X250),
-        body_yz_half_plane(outside, XZ_CURVE_Y000[6], YZ_CURVE_X300),
-        body_yz_half_plane(outside, XZ_CURVE_Y000[7], YZ_CURVE_X350),
-        body_yz_half_plane(outside, XZ_CURVE_Y000[8], YZ_CURVE_X400),
-        // TODO decide depth of the model
+        // body_yz_half_plane(outside, XZ_CURVE_Y000[6], YZ_CURVE_X300),
+        // body_yz_half_plane(outside, XZ_CURVE_Y000[7], YZ_CURVE_X350),
+        // body_yz_half_plane(outside, XZ_CURVE_Y000[8], YZ_CURVE_X400),
     ];
 
     // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area

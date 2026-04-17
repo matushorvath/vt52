@@ -3,16 +3,16 @@ include <common.scad>
 include <BOSL2/std.scad>
 
 use <body.scad>
+use <cassette_mask.scad>
 use <keyboard.scad>
 use <keyboard_position.scad>
 use <screen.scad>
 use <top_louvres.scad>
 
-// TODO decorative bezel around
 // TODO screen mounting features
 // TODO screws between body and base
-// TODO texture
 // TODO mount the keyboard USB board
+// TODO consider adding fake panel borders on top
 
 module shell() {
     difference() {
@@ -30,8 +30,11 @@ module shell() {
             top_louvres_backing();
         }
 
-        // Mask the screen cavity and surrounding parts of the body
+        // Mask the screen cavity
         screen_mask();
+
+        // Mask the cassette cover cavity
+        cc_mask();
 
         // Mask the top louvres
         top_louvres_mask();

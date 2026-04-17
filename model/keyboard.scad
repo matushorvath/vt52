@@ -3,7 +3,7 @@ include <common.scad>
 include <keyboard_dimensions.scad>
 include <BOSL2/std.scad>
 
-// TODO
+// TODO keyboard
 // - holes for mounting pins
 // - check docs how is the keycap hole finished (rounded corners/edges?)
 

@@ -38,7 +38,7 @@ function screen_extra_plane(mask) =
             [scr_extra_width + owall, 0 - owall],                   // bottom right
         ],
 
-        // TODO corner radius should also be adjusted to form a continuous curve
+        // to improve: corner radius could also be adjusted to form a continuous curve
         radii = [
             SCR_FWD_BL_R + owall,
             SCR_FWD_TL_R + owall,
