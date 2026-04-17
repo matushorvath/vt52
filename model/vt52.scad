@@ -9,6 +9,7 @@ use <shell.scad>
 // TODO bottom cover
 // TODO keyboard plate
 // TODO try to put "DIGITAL decscope" near the backspace
+// TODO use colors
 
 // Orient the model for easy viewing in OpenSCAD
 xrot(90) {

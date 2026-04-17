@@ -3,6 +3,8 @@ include <common.scad>
 include <cassette_dimensions.scad>
 include <BOSL2/std.scad>
 
+// TODO mask off top part of the R14 fillet to make space for the cover corner
+
 // Cover mask, same height as forward screen plane
 function cc_mask_plane(dist) =
     // Generate plane for given distance from the screen plane
@@ -66,7 +68,7 @@ module cc_mask() {
 
 // cc_mask();
 
-// include <body.scad>
+// use <body.scad>
 // xrot(90) {
 //     difference() {
 //         body(true);
