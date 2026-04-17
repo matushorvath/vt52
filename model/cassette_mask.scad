@@ -3,7 +3,29 @@ include <common.scad>
 include <cassette_dimensions.scad>
 include <BOSL2/std.scad>
 
-// TODO mask off top part of the R14 fillet to make space for the cover corner
+// Mask off top part of the R14 kbd/scr fillet to make space for the cover corner
+// See also the cuboid we diff in cc_bottom_corner_mask()
+module cc_mask_bottom_corners() {
+    // Mask depth must be more than max(depth of the cover, depth of the relevant part of kbd/scr fillet)
+    mask_depth = KBD_BACK_R;
+
+    // Looser fit between the cover and these notches
+    z_fit = 0.2;
+
+    // Mirror for near side
+    zflip_copy(z = cc_mask_width / 2)
+        // Start where the cover corner radius ends, the cover will rest the surface this mask creates
+        // DELTA in X is to avoid artifacts on screen face after cc_mask() is applied to the whole body
+        move([-DELTA, CC_B_R, DELTA])
+            cuboid(
+                // Enough depth to clear the kbd/scr fillet (X), height of the remaining part of kbd/scr
+                // fillet above the cover corner radius (Y), width of the cover margin (Z)
+                [mask_depth, KBD_BACK_R - CC_B_R + DELTA, CC_COVER_MARGIN + z_fit],
+                anchor = FRONT + RIGHT + TOP
+            );
+}
+
+// cc_mask_bottom_corners();
 
 // Cover mask, same height as forward screen plane
 function cc_mask_plane(dist) =
@@ -28,8 +50,6 @@ module cc_mask() {
     extra_face = apply(
         // Transformations are applied last to first
         IDENT
-            * move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
-            * zrot(-SCR_FWD_A) // angle relative to the model
             * xmove(-scr_extra_dist_x) // place in front of the screen plane
             * yrot(-90), // orient relative to the model
         path3d(cc_mask_plane(scr_extra_dist_x))
@@ -40,8 +60,6 @@ module cc_mask() {
     fwd_face = apply(
         // Transformations are applied last to first
         IDENT
-            * move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
-            * zrot(-SCR_FWD_A) // angle relative to the model
             * yrot(-90), // orient relative to the model
         path3d(cc_mask_plane(0))
     );
@@ -51,16 +69,19 @@ module cc_mask() {
     back_face = apply(
         // Transformations are applied last to first
         IDENT
-            * move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
-            * zrot(-SCR_FWD_A) // angle relative to the model
             * xmove(BODY_WALL * 2) // make sure to clear the wall at an angle
             * yrot(-90), // orient relative to the model
         path3d(cc_mask_plane(-BODY_WALL * 2))
     );
     //stroke(back_face, closed=true);
 
-    faces = [extra_face, fwd_face, back_face];
-    skin(faces, slices = 10);
+    move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
+        zrot(-SCR_FWD_A) { // angle relative to the model
+            faces = [extra_face, fwd_face, back_face];
+            skin(faces, slices = 10);
+
+            cc_mask_bottom_corners();
+        }
 }
 
 // %polygon(cc_mask_plane(10));
