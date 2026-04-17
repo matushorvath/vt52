@@ -76,12 +76,13 @@ CC_HANDLE_MARGIN_Z = 1;
 // Top of the cover to bottom of the handle
 CC_HANDLE_POS = 205;
 
-// Forward of the handle to back of the cover, since that's defined by the drawings
-CC_HANDLE_TOTAL_DEPTH = 20;
-// Actual visible handle depth, without depth of the cover
-cc_handle_depth = CC_HANDLE_TOTAL_DEPTH - 4; // estimated cover depth, 4 = CC_VISIBLE_DEPTH(=1) + 3
+// Visible handle depth; partly from drawings and partly estimated
+CC_HANDLE_DEPTH = 12; // custom; original is (20 - estimated 4)
 
 CC_HANDLE_HEIGHT = 2; // estimated
+
+// Handle corner rounding; custom
+CC_HANDLE_R = 1;
 
 // Page 13, Sheet 2, Shell VT50, View E-E
 

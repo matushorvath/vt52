@@ -12,6 +12,6 @@ use <shell.scad>
 
 // Orient the model for easy viewing in OpenSCAD
 xrot(90) {
-    shell();
-    cc_cover();
+    color("moccasin") shell();
+    color("dimgray") cc_cover();
 }

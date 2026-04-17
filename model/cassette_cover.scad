@@ -5,16 +5,22 @@ include <BOSL2/std.scad>
 
 // TODO locating features on cover
 // TODO mounting tabs on cover
-// TODO handle
 
-// TODO remove
-// Space left and right of the handle; estimated from photos
-// CC_HANDLE_MARGIN_Z = 1;
-// Top of the cover to bottom of the handle
-// CC_HANDLE_POS = 205;
-// Actual visible handle depth, without depth of the cover
-// cc_handle_depth = CC_HANDLE_TOTAL_DEPTH - 4;
-// CC_HANDLE_HEIGHT = 2;
+module cc_cover_handle() {
+    move([
+        -CC_VISIBLE_DEPTH + DELTA,
+        scr_fwd_height - CC_HANDLE_POS,
+        CC_HANDLE_MARGIN_Z
+    ])
+        cuboid(
+            [CC_HANDLE_DEPTH, CC_HANDLE_HEIGHT, cc_mask_width - 2 * CC_HANDLE_MARGIN_Z],
+            rounding = CC_HANDLE_R,
+            edges = [LEFT + TOP, LEFT + BOTTOM],
+            anchor = RIGHT + BOTTOM + FRONT
+        );
+}
+
+//cc_cover_handle();
 
 // Cover plane, same height as forward screen plane + margin except at the bottom
 function cc_cover_plane(dist) =
@@ -65,7 +71,7 @@ module cc_bottom_corner_mask() {
 
 // cc_bottom_corner_mask();
 
-module cc_cover() {
+module cc_cover_object() {
     // Position the forward face
     fwd_face = apply(
         // Transformations are applied last to first
@@ -85,13 +91,20 @@ module cc_cover() {
     );
     // stroke(back_face, closed=true);
 
+    // Cover without the bottom corners
+    faces = [fwd_face, back_face];
+    skin(faces, slices = 10);
+}
+
+module cc_cover() {
     // Angle and move the cover together with the corner mask
     move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
         zrot(-SCR_FWD_A) // angle relative to the model
             difference() {
-                // Cover without the bottom corners
-                faces = [fwd_face, back_face];
-                skin(faces, slices = 10);
+                union() {
+                    cc_cover_object();
+                    cc_cover_handle();
+                }
 
                 cc_bottom_corner_mask();
             }
