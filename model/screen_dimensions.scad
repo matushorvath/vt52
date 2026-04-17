@@ -80,7 +80,7 @@ scr_top_a = adj_opp_to_ang(scr_back_top_x - scr_fwd_top_x, SCR_FWD_TOP_Y - scr_b
 
 // Calculate how to extend the forward plane more to front, to mask the keyboard/screen fillet
 scr_extra_dist_x = KBD_BACK_R * 2; // double the fillet to make sure we clear it, the fillet is at an angle, so slightly wider in X than KBD_BACK_R
-scr_extra_ratio = scr_extra_dist_x / (SCR_BACK_CENTER_X - scr_fwd_center_x); // TODO separate top/bottom ratios, at least for radiuses?
+scr_extra_ratio = scr_extra_dist_x / (SCR_BACK_CENTER_X - scr_fwd_center_x); // to improve: separate top/bottom ratios, at least for radiuses
 
 scr_extra_width = scr_fwd_width + (scr_fwd_width - SCR_BACK_WIDTH) * scr_extra_ratio;
 scr_extra_height = scr_fwd_height + (scr_fwd_height - SCR_BACK_HEIGHT) * scr_extra_ratio;
@@ -99,7 +99,6 @@ SCR_BUG_BACK_A = 0.5;
 // Far end of the bug only works for spherical screens
 // With a flat screen, there is no space between the bug and the bottom of the screen
 // We need about 4 mm of space for the hole behind the bug
-// TODO adjust if we have spherical screen viewport back
 //SCR_BUG_BACK_X = 194; // original value from docs is 194
 SCR_BUG_BACK_X = 190; // custom, remove 4 mm for hole behind the bug
 scr_bug_back_y = KBD_FWD_Y + adj_ang_to_opp(SCR_BUG_BACK_X - kbd_fwd_x, KBD_TOP_A);

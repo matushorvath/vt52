@@ -5,7 +5,7 @@ include <BOSL2/std.scad>
 use <cassette_cover.scad>
 use <shell.scad>
 
-// TODO right side dark cover
+// TODO finish right side dark cover
 // TODO bottom cover
 // TODO keyboard plate
 // TODO try to put "DIGITAL decscope" near the backspace

@@ -93,5 +93,4 @@ CC_B_R = SCR_FWD_BR_R;
 // This does not match CC_WIDTH_Z, the difference is 6.5 mm, that's why we don't use CC_WIDTH_Z
 CC_MASK_LEFT_Z = 63;
 CC_MASK_RIGHT_Z = 222.5;
-//cc_mask_center_z = (CC_MASK_LEFT_Z + CC_MASK_RIGHT_Z) / 2; TODO uncomment or delete
 cc_mask_width = CC_MASK_RIGHT_Z - CC_MASK_LEFT_Z;

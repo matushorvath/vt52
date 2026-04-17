@@ -9,10 +9,8 @@ use <keyboard_position.scad>
 use <screen.scad>
 use <top_louvres.scad>
 
-// TODO decorative bezel around
 // TODO screen mounting features
 // TODO screws between body and base
-// TODO texture
 // TODO mount the keyboard USB board
 // TODO consider adding fake panel borders on top
 
