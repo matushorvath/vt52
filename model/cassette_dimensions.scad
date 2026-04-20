@@ -95,3 +95,24 @@ CC_B_R = SCR_FWD_BR_R;
 CC_MASK_LEFT_Z = 63;
 CC_MASK_RIGHT_Z = 222.5;
 cc_mask_width = CC_MASK_RIGHT_Z - CC_MASK_LEFT_Z;
+
+// Cover mounting features
+
+// Depth of the mounting bezel (in addition to BODY_WALL to clear the wall)
+CC_BEZEL_EXTRA_DEPTH = 4;
+
+// Mounting bezel width, needs to be thin enough to be flexible
+CC_BEZEL_WIDTH = 1.5;
+
+// Mounting features on the bezel
+CC_MOUNT_DISTANCE = 140;
+CC_MOUNT_LENGTH = 4;
+CC_MOUNT_GAP = 1;
+
+CC_COVER_FIT = 0.1; // gap around the bezel
+CC_COVER_INTERFERENCE = 0.5; // how much the ball extends past the bezel; should be at least CC_COVER_FIT
+CC_MOUNT_BALL_R = 2;
+CC_MOUNT_BALL_FIT = 0.2;
+
+// Bezel position; relative to cover edges
+CC_BEZEL_POSITION = 20;

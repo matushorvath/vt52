@@ -4,7 +4,7 @@ PREVIEWS=$(TARGETS:.stl=.png)
 all: $(TARGETS)
 preview: $(PREVIEWS)
 
-include $(wildcard *.deps)
+-include $(wildcard *.deps)
 
 # Detect OpenSCAD location
 ifneq ($(shell wslinfo --version),)

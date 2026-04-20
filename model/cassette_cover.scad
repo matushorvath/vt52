@@ -3,9 +3,6 @@ include <common.scad>
 include <cassette_dimensions.scad>
 include <BOSL2/std.scad>
 
-// TODO locating features on cover
-// TODO mounting tabs on cover
-
 module cc_cover_handle() {
     move([
         -CC_VISIBLE_DEPTH + DELTA,
@@ -40,6 +37,9 @@ function cc_cover_plane(dist) =
     )
     round_corners(shape, radius = radii, $fn=fn_where_needed);
 
+//%polygon(cc_cover_plane(CC_VISIBLE_DEPTH));
+//polygon(cc_cover_plane(0));
+
 module cc_bottom_corner_mask() {
     // Rounding for bottom corners
     // Needs to be applied after skin(), because it causes different
@@ -69,7 +69,78 @@ module cc_bottom_corner_mask() {
         }
 }
 
-// cc_bottom_corner_mask();
+//cc_bottom_corner_mask();
+
+module cc_cover_top_bezel() {
+    move([
+        DELTA,
+        scr_fwd_height - CC_BEZEL_WIDTH - CC_COVER_FIT,
+        CC_BEZEL_POSITION
+    ])
+        cuboid([
+                BODY_WALL + CC_BEZEL_EXTRA_DEPTH,
+                CC_BEZEL_WIDTH,
+                cc_mask_width - 2 * CC_BEZEL_POSITION
+            ],
+            anchor = LEFT + BOTTOM + FRONT
+        );
+}
+
+module cc_cover_side_bezel() {
+    move([
+        DELTA,
+        CC_BEZEL_POSITION,
+        CC_COVER_FIT
+    ])
+        // Use diff, not difference, so we can position the gaps and the ball with the same operation
+        diff() {
+            bezel_side_height = scr_fwd_height - 2 * CC_BEZEL_POSITION;
+
+            // Bezel side body
+            cuboid([
+                    BODY_WALL + CC_BEZEL_EXTRA_DEPTH,
+                    bezel_side_height,
+                    CC_BEZEL_WIDTH
+                ],
+                anchor = LEFT + BOTTOM + FRONT
+            );
+
+            // Mounting points (two sets of two gaps and and a ball)
+            move([DELTA, bezel_side_height / 2, -DELTA]) // move mount points relative to bezel body
+                ycopies(CC_MOUNT_DISTANCE + CC_MOUNT_LENGTH + CC_MOUNT_GAP) { // two pairs of mounting points per bezel side
+                    ycopies(CC_MOUNT_LENGTH + CC_MOUNT_GAP) // two gaps around each mounting point
+                        // Gaps around mounting points, to make them flexible
+                        tag("remove") cuboid([
+                                BODY_WALL + CC_BEZEL_EXTRA_DEPTH + 2 * DELTA,
+                                CC_MOUNT_GAP,
+                                CC_BEZEL_WIDTH + 2 * DELTA
+                            ],
+                            anchor = LEFT + BOTTOM
+                        );
+
+                    // Mounting point ball
+                    move([
+                        BODY_WALL - CC_MOUNT_BALL_FIT, // ball starts right behind the wall, with a small delta to make the fit tight
+                        0,
+                        CC_MOUNT_BALL_R - CC_COVER_INTERFERENCE // 
+                    ])
+                        bottom_half(z = CC_COVER_INTERFERENCE - CC_MOUNT_BALL_R + DELTA)
+                            sphere(
+                                r = CC_MOUNT_BALL_R,
+                                anchor = LEFT
+                            );
+                }
+        }
+}
+
+module cc_cover_mounts() {
+    cc_cover_top_bezel();
+
+    zflip_copy(z = cc_mask_width / 2)
+        cc_cover_side_bezel();
+}
+
+//cc_cover_mounts();
 
 module cc_cover_object() {
     // Position the forward face
@@ -96,6 +167,8 @@ module cc_cover_object() {
     skin(faces, slices = 10);
 }
 
+//cc_cover_object();
+
 module cc_cover() {
     // Angle and move the cover together with the corner mask
     move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
@@ -103,15 +176,13 @@ module cc_cover() {
             difference() {
                 union() {
                     cc_cover_object();
+                    cc_cover_mounts();
                     cc_cover_handle();
                 }
 
                 cc_bottom_corner_mask();
             }
 }
-
-// %polygon(cc_cover_plane(CC_VISIBLE_DEPTH));
-// polygon(cc_cover_plane(0));
 
 // use <body.scad>
 // xrot(90) {
