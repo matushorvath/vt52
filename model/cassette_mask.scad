@@ -3,6 +3,9 @@ include <common.scad>
 include <cassette_dimensions.scad>
 include <BOSL2/std.scad>
 
+// TODO original has a lip around the hole, consider doing that, perhaps the cover holds better
+// e.g. Page 57, Sheet 45
+
 // Mask off top part of the R14 kbd/scr fillet to make space for the cover corner
 // See also the cuboid we diff in cc_bottom_corner_mask()
 module cc_mask_bottom_corners() {
