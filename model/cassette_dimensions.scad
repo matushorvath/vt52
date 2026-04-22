@@ -63,26 +63,26 @@ include <BOSL2/std.scad>
 // CC_WIDTH_Z = 166;
 
 // Depth of the cover above screen plane
-CC_VISIBLE_DEPTH = 1; // estimated
+CC_VISIBLE_DEPTH = 4; // custom; estimated as 1; TODO verify for full size; 2 would be better
 
 // Difference between cover size and mask size; custom
-CC_COVER_MARGIN = 1;
+CC_COVER_MARGIN = 2; // was 1; TODO verify for full size
 
 // Handle
 
 // Space left and right of the handle; estimated from photos
-CC_HANDLE_MARGIN_Z = 1;
+CC_HANDLE_MARGIN_Z = 2; // was 1; TODO verify for full size
 
 // Top of the cover to bottom of the handle
 CC_HANDLE_POS = 205;
 
 // Visible handle depth; partly from drawings and partly estimated
-CC_HANDLE_DEPTH = 12; // custom; original is (20 - estimated 4)
+CC_HANDLE_DEPTH = 14; // custom; original is (20 - estimated 4)
 
-CC_HANDLE_HEIGHT = 2; // estimated
+CC_HANDLE_HEIGHT = 4; // estimated as 2; TODO verify for full size
 
 // Handle corner rounding; custom
-CC_HANDLE_R = 1;
+CC_HANDLE_R = 2; // was 1; TODO verify for full size
 
 // Page 13, Sheet 2, Shell VT50, View E-E
 
@@ -102,11 +102,11 @@ cc_mask_width = CC_MASK_RIGHT_Z - CC_MASK_LEFT_Z;
 CC_BEZEL_EXTRA_DEPTH = 4;
 
 // Mounting bezel width, needs to be thin enough to be flexible
-CC_BEZEL_WIDTH = 1.5;
+CC_BEZEL_WIDTH = 2; // was 1.5; TODO verify for full size
 
 // Mounting features on the bezel
 CC_MOUNT_DISTANCE = 140;
-CC_MOUNT_LENGTH = 4;
+CC_MOUNT_LENGTH = 6; // was 4; TODO verify for full size
 CC_MOUNT_GAP = 1;
 
 CC_COVER_FIT = 0.1; // gap around the bezel
