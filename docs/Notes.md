@@ -170,3 +170,47 @@ TODOs
 - Section AK-AK Sheet 10: Display top has 5 stiffening ribs
   - add stiffening ribs to other places as well
 - rotate the model for easy viewing (needs also adjusting make preview)
+
+
+Base
+====
+
+Page 25, Sheet 13 - side outline
+Page 41, Sheet 29, Data List 1 - side outline curve
+  - it's partly already in the model
+Pages 59-61 - base drawings
+  - bottom shape is defined in page 61
+Page 62 - base below the keyboard, for angles
+  - fwd bottom base is 21 degrees to keyboard (Page 62)
+  - fwd bottom base is 21 - KBD_TOP_A = 21 - 13 = 8 degrees to horizontal
+
+bottom shape:
+  - try defining it with cuts along X, starting just behind the front corners (24.5 REF P61 Right Side)
+  - use Section E-E, Section F-F for the cuts
+    - behind 241.8 it's all constant Section F-F
+    - might move that to the front, since we are finishing at X = 250 currently
+  - need to redesign feet locations
+    - perhaps use the original front foot as back foot
+    - add a new front foot, something subtle below the keyboard, but make sure it doesn't wobble
+    - e.g. a bar along Z, a bit behind X=24.5 REF (end of corners) but not too much, maybe X=30,
+      with margins in Z to make it less obvious
+    - pressing on space bar must be supported without wobble, perhaps put the front feet below space bar in X
+    - design exact dimensions for obtainable rubber feet
+  - front corners
+    - complex shape, blend from horizontal radius to vertical radius
+    - maybe model that with a 2d shape extruded along a curve, possibly a circle or ellipse section
+      (P61 RIGHT SIDE looks like perhaps it's even a parabole)
+    - design the curve:
+      - front tangent should be vertical
+      - back tangent should be similar to but not exact: P62 21 - KBD_TOP_A = 21 - 13 = 8 degrees to horizontal
+      - P61 says the two points of tangency should blend with surrounding areas, so perhaps the whole
+        E-E to F-F section is extruded along a curve, or perhaps calculate more cuts and make them form a curve in Y,
+        that is continuous with before E-E and after F-F
+        - or ask BOSL2 to make it continuous if it can
+
+first design:
+  - make 2 cuts E-E and F-F
+  - somehow convince BOSL2 to use defined angles when connecting to the cuts
+  - or make fake cuts before and after that define those angles
+  - connect with a straight F-F to back section
+  - connect with a front to E-E section
