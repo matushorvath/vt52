@@ -26,7 +26,7 @@ endef
 	$(run-openscad)
 
 # Aspect ratio and camera position matches vt52-wikipedia.png
-%.png: OPENSCAD_FLAGS = --projection=p --camera=170,0,110,70,0,-115,1400 \
+%.png: OPENSCAD_FLAGS = --projection=o --camera=170,0,110,70,0,-115,1400 \
 	--imgsize=1452,1080 --colorscheme=Monotone --render
 %.png: %.scad
 	$(run-openscad)
