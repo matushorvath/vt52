@@ -15,6 +15,9 @@ jobs:
     name: Build
     runs-on: ubuntu-24.04
 
+    env:
+      GH_TOKEN: ${{ github.token }} # for gh cli
+
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
@@ -26,7 +29,7 @@ jobs:
 
       - name: Install BOSL2
         run: |
-          wget --output-document /tmp/bosl2.tar.gz https://github.com/BelfrySCAD/BOSL2/archive/refs/tags/v2.0.731.tar.gz
+          wget --output-document /tmp/bosl2.tar.gz https://github.com/BelfrySCAD/BOSL2/archive/refs/tags/v2.0.735.tar.gz
           mkdir -p $HOME/.local/share/OpenSCAD/libraries/BOSL2
           tar -xzf /tmp/bosl2.tar.gz --directory=$HOME/.local/share/OpenSCAD/libraries/BOSL2 --strip-components=1
 
