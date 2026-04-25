@@ -27,4 +27,4 @@ version-check:
 clean:
 	rm -f $(TARGETS) $(PREVIEWS) *.deps
 
-.PHONY: all preview clean
+.PHONY: all clean preview version-check
