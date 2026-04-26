@@ -189,6 +189,7 @@ bottom shape:
   - use Section E-E, Section F-F for the cuts
     - behind 241.8 it's all constant Section F-F
     - might move that to the front, since we are finishing at X = 250 currently
+      - also we have extended the keyboard section in model
   - need to redesign feet locations
     - perhaps use the original front foot as back foot
     - add a new front foot, something subtle below the keyboard, but make sure it doesn't wobble
@@ -214,3 +215,12 @@ first design:
   - or make fake cuts before and after that define those angles
   - connect with a straight F-F to back section
   - connect with a front to E-E section
+
+notes from base pictures:
+  - front corners have a steep angle in Z
+  - the weird C-C (?) profile is around X=100, can be ignored
+  - F-F does really start at 241.8, weird
+
+base pictures:
+  - https://youtu.be/ksL232PHivI?si=0KYnzbPQB_4y2-OS&t=13
+  - https://www.youtube.com/watch?v=nb2bxaj79rc

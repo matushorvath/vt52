@@ -88,7 +88,7 @@ XZ_CURVE_Y000 = [
 ];
 
 // Sheet 5
-ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H
+ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H; same corner in base is R18.5 Page 61
 
 // Empirically tuned to match keyboard forward rounded corners to the body sides
 KBD_FWD_CORNER_ADJ_BOTTOM_Y = 0.55; // added to XZ_CURVE_Y000[0] when positioning bottom of the corner
