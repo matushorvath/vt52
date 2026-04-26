@@ -1,7 +1,5 @@
 // include
 
-// TODO rename file to data_lists.scad
-
 // Format: [X, Z]
 
 // Sheet 29, Data List #1

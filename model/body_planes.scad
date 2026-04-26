@@ -1,7 +1,7 @@
 // use
 include <common.scad>
 include <body_dimensions.scad>
-include <body_tables.scad>
+include <data_lists.scad>
 include <BOSL2/std.scad>
 
 PREVIEW_TABLE_SKIP = 20;

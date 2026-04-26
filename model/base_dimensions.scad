@@ -32,7 +32,8 @@ BASE_FF_A = 15; // side angle of the base
 BASE_LIP_Y = 10;
 
 // TODO base
-// - use data table 1
+// - decide how many slices we need for EE-FF part of base
+// - extend the keyboard section of base
 // - model before E-E
 // - design a curve to seamlessly connect to E-E and F-F, use the curve for height_y
 // - model after F-F
@@ -42,4 +43,3 @@ BASE_LIP_Y = 10;
 // - add mounting to shell
 // - add stiffening ribs
 // - mount keyboard, various boards, maybe connectors at the back for USB/HDMI extensions
-// - decide if we need more of data table 1 for the curves to look contiguous (we have just 6 values)
