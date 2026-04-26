@@ -30,13 +30,22 @@ BASE_FF_A = 15; // side angle of the base
 // TODO lip has more complex geometry
 BASE_LIP_Y = 10;
 
-// TODO
-// apply top view curve for Z dimension of the base
-// make EE and FF angle contiguous
+// TODO base
+// - try to connect the planes using skin(), see if we can avoid artifacts
+// - decide how dense the planes should be in X, based on BOSL docs and data table 1
+// - import enough of data table 1 in to allow for that density, use data table 1
+// - model before E-E
+// - design a curve to seamlessly connect to E-E and F-F, use the curve for height_y
+// - model after F-F
+// - add internal mask
+// - add lip
+// - add feet
+// - add mounting to shell
+// - add stiffening ribs
+// - mount keyboard, various boards, maybe connectors at the back for USB/HDMI extensions
 
 // One of the
 // TODO mask parameter for the mask
-// TODO parametrize along the E-E F-F curve
 function base_ee_ff_half_plane(width_z, height_y, angle) =
     // Unlike some other _plane functions, this uses model coordinates (horizontal Z and vertical Y)
     let(
