@@ -9,7 +9,7 @@ use <base_planes.scad>
 // TODO add mask parameter
 module base_object_half() {
     profiles = [
-        // TODO perhaps sample more than every X=50, use more slices
+        // TODO use more slices, decide how many
         // TODO base_ee_ff_half_plane should receive a parameter 0.0 - 1.0, position between E-E and F-F
         base_ee_ff_half_plane(lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A),
         base_ee_ff_half_plane(lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000), (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2), // tmp mid plane

@@ -31,10 +31,11 @@ function base_ee_ff_half_plane(width_z, height_y, angle) =
     )
     round_corners(shape, radius = radii, $fn = corner_fn);
 
-polygon(base_ee_ff_half_plane(260, base_ee_y, BASE_EE_A)); // TODO use real curve instead of 260
+polygon(base_ee_ff_half_plane(lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));
 
 ymove(100)
-    polygon(base_ee_ff_half_plane(260, (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2)); // TODO use real curve instead of 260
+    polygon(base_ee_ff_half_plane(lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000),
+        (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2));
 
 ymove(200)
-    polygon(base_ee_ff_half_plane(260, base_ff_y, BASE_FF_A)); // TODO use real curve instead of 260
+    polygon(base_ee_ff_half_plane(lookup(BASE_FF_X, XZ_CURVE_Y000), base_ff_y, BASE_FF_A));
