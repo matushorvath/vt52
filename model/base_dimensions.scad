@@ -18,10 +18,12 @@ BASE_Y = 60; // Page 61; height with half-lip 65 - half-lip 5
 BASE_R = 18.5;
 
 // Parameters in Section E-E
+BASE_EE_X = 24.5;
 base_ee_y = BASE_R; // height of the base, same as side radius
 BASE_EE_A = 30; // side angle of the base
 
 // Parameters in Section F-F
+BASE_FF_X = 241.8;
 base_ff_y = BASE_Y; // height of the base, full height
 BASE_FF_A = 15; // side angle of the base
 

@@ -1,6 +1,7 @@
 // use
 include <common.scad>
 include <body_dimensions.scad>
+include <body_tables.scad>
 include <BOSL2/std.scad>
 
 module kbd_fwd_one_corner_mask(outside) {
@@ -27,7 +28,7 @@ module kbd_fwd_corners_mask(outside) {
     shift = [
         -DELTA - extend_fwd_bot_x + owall,
         -DELTA - extend_fwd_bot_y,
-        XZ_CURVE_Y000[0] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall
+        XZ_CURVE_Y000[0][1] + KBD_FWD_CORNER_ADJ_BOTTOM_Y - owall
     ];
 
     zflip_copy()

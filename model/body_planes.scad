@@ -1,6 +1,7 @@
 // use
 include <common.scad>
 include <body_dimensions.scad>
+include <body_tables.scad>
 include <BOSL2/std.scad>
 
 PREVIEW_TABLE_SKIP = 20;
@@ -101,13 +102,13 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
     )
     round_corners(shape, radius = radii);
 
-// %polygon(body_yz_half_plane(true, XZ_CURVE_Y000[0], YZ_CURVE_X000));
-// polygon(body_yz_half_plane(false, XZ_CURVE_Y000[0], YZ_CURVE_X000));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[1], YZ_CURVE_X050));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[2], YZ_CURVE_X100));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[3], YZ_CURVE_X150));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[4], YZ_CURVE_X200));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[5], YZ_CURVE_X250));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[6], YZ_CURVE_X300));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[7], YZ_CURVE_X350));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[8], YZ_CURVE_X400));
+// %polygon(body_yz_half_plane(true, lookup(0, XZ_CURVE_Y000), YZ_CURVE_X000));
+// polygon(body_yz_half_plane(false, lookup(0, XZ_CURVE_Y000), YZ_CURVE_X000));
+// polygon(body_yz_half_plane(true, lookup(50, XZ_CURVE_Y000), YZ_CURVE_X050));
+// polygon(body_yz_half_plane(true, lookup(100, XZ_CURVE_Y000), YZ_CURVE_X100));
+// polygon(body_yz_half_plane(true, lookup(150, XZ_CURVE_Y000), YZ_CURVE_X150));
+// polygon(body_yz_half_plane(true, lookup(200, XZ_CURVE_Y000), YZ_CURVE_X200));
+// polygon(body_yz_half_plane(true, lookup(250, XZ_CURVE_Y000), YZ_CURVE_X250));
+// polygon(body_yz_half_plane(true, lookup(300, XZ_CURVE_Y000), YZ_CURVE_X300));
+// polygon(body_yz_half_plane(true, lookup(350, XZ_CURVE_Y000), YZ_CURVE_X350));
+// polygon(body_yz_half_plane(true, lookup(400, XZ_CURVE_Y000), YZ_CURVE_X400));
