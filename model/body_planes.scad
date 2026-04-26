@@ -76,7 +76,7 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
         owall = outside ? 0 : BODY_WALL,
         oclear = outside ? 0 : DELTA,
 
-        // Make the model taller to accomodate for EXTEND_Y
+        // Make the model taller to accommodate for EXTEND_Y
         stretched_side_curve = stretch_side_curve(side_curve, kbd_back_y, EXTEND_Y),
 
         // Skip most points if we are in preview mode
