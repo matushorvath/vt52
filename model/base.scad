@@ -39,15 +39,15 @@ module base_object_half() {
         );
 }
 
-base_object_half();
+//base_object_half();
 
 // TODO add mask parameter
-// module base_object() {
-//     zflip_copy()
-//         base_object_half();
-// }
+module base_object() {
+    zflip_copy()
+        base_object_half();
+}
 
-//base_object();
+base_object();
 
 // module base() {
 //     difference() {
