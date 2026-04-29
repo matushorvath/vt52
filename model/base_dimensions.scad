@@ -11,6 +11,20 @@ include <BOSL2/std.scad>
 // The comments and variable names below use the same coordinate system as the shell, which isn't consistent
 // with Page 61. Sitting at the terminal, front to back is X, bottom to top is Y, right to left is Z.
 
+// Continuity before E-E and after E-E discussion:
+//
+// Blending the vertical 18.5R to the horizontal 18.5R while also keeping the curve contiguous was likely
+// not defined analytically in the drawing, even if I had the whole drawing, which I don't.
+// It was likely done by sculpting the shape until it looked good. The same for the bottom curve between
+// E-E and F-F, which is also either not defined or I don't have the definition.
+//
+// Decision:
+// The 18.5R will not be vertical between E-E and F-F. It will be in planes perpendicular to the bottom curve
+// in every location. This makes it easy to make the curve contiguous in point E-E, just define the curve to be
+// contiguous through E-E, define planes perpendicular to the bottom curve that have an 18.5R corner, and do
+// a skin() from all of those planes. Make sure the planes don't intersect, skin() probably doesn't like that.
+// We need to define the curve, make sure it is contiguous in F-F (= horizontal) and in E-E (= define an angle).
+
 // Base height from top of the feet to bottom of the lip
 BASE_Y = 60; // Page 61; height with half-lip 65 - half-lip 5
 
@@ -32,10 +46,12 @@ BASE_FF_A = 15; // side angle of the base
 BASE_LIP_Y = 10;
 
 // TODO base
+// - define the bottom curve, all the way from 0 to F-F
+// - use the curve for height_y in EE-FF shape
+// - redesign EE-FF with slices perpendicular to the bottom curve, not vertical
+// - model the 0-EE shape
 // - decide how many slices we need for EE-FF part of base
-// - extend the keyboard section of base
-// - model before E-E
-// - design a curve to seamlessly connect to E-E and F-F, use the curve for height_y
+// - extend the keyboard section of base to match the extended shell (for real-world keyboard)
 // - model after F-F
 // - add internal mask
 // - add lip
