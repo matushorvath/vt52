@@ -1,7 +1,7 @@
 TARGETS=cassette_cover.stl shell.stl vt52.stl
 PREVIEWS=$(TARGETS:.stl=.png)
 
-all: version-check $(TARGETS)
+all: $(TARGETS)
 preview: $(PREVIEWS)
 
 -include $(wildcard *.deps)
@@ -20,9 +20,6 @@ endef
 	--imgsize=1452,1080 --colorscheme=Monotone --render
 %.png: %.scad
 	$(run-openscad)
-
-version-check:
-	./bosl2_version.sh
 
 clean:
 	rm -f $(TARGETS) $(PREVIEWS) *.deps
