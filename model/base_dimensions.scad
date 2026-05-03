@@ -17,13 +17,6 @@ include <BOSL2/std.scad>
 // not defined analytically in the drawing, even if I had the whole drawing, which I don't.
 // It was likely done by sculpting the shape until it looked good. The same for the bottom curve between
 // E-E and F-F, which is also either not defined or I don't have the definition.
-//
-// Decision:
-// The 18.5R will not be vertical between E-E and F-F. It will be in planes perpendicular to the bottom curve
-// in every location. This makes it easy to make the curve contiguous in point E-E, just define the curve to be
-// contiguous through E-E, define planes perpendicular to the bottom curve that have an 18.5R corner, and do
-// a skin() from all of those planes. Make sure the planes don't intersect, skin() probably doesn't like that.
-// We need to define the curve, make sure it is contiguous in F-F (= horizontal) and in E-E (= define an angle).
 
 // Base height from top of the feet to bottom of the lip
 BASE_Y = 60; // Page 61; height with half-lip 65 - half-lip 5
@@ -44,12 +37,13 @@ BASE_FF_A = 15; // side angle of the base
 // Gap between each two slices between E-E and F-F
 BASE_EE_FF_STEP_X = 10;
 
-// Tangent angle at E-E
-// TODO this angle should be calculated from base_ee_y, not given as a constant
-BASE_TANGENT_EE_A = 15;
-
 // Radius of the circle section curve between E-E and F-F
-BASE_CURVE_EE_FF_R = (BASE_FF_X - BASE_EE_X) / sin(BASE_TANGENT_EE_A);
+base_ee_ff_x = BASE_FF_X - BASE_EE_X;
+base_ee_ff_y = base_ff_y - base_ee_y;
+base_curve_ee_ff_r = (base_ee_ff_x^2 + base_ee_ff_y^2) / (2 * base_ee_ff_y);
+
+// Tangent angle at E-E
+// TODO verify/remove BASE_TANGENT_EE_A = arcsin(base_ee_ff_x / base_curve_ee_ff_r);
 
 // Lip around the top of the base, where it connects to shell
 // TODO lip has more complex geometry
@@ -57,10 +51,7 @@ BASE_LIP_Y = 10;
 
 // TODO base
 // - define the bottom curve, all the way from 0 to F-F
-// - use the curve for height_y in EE-FF shape
-// - redesign EE-FF with slices perpendicular to the bottom curve, not vertical
 // - model the 0-EE shape
-// - decide how many slices we need for EE-FF part of base
 // - extend the keyboard section of base to match the extended shell (for real-world keyboard)
 // - model after F-F
 // - add internal mask

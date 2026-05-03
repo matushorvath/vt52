@@ -7,15 +7,12 @@ include <BOSL2/std.scad>
 use <base_planes.scad>
 
 // Bottom curve between EE and FF
-// The curve is a circle section with tangent angle = 0 at FF and given tangent angle at EE
-// The curve is a circle section with R = (BASE_FF_X - BASE_EE_X) / sin(BASE_TANGENT_EE_A)
-// Height above FF = R - sqrt(r^2 - x^2), where x is distance from BASE_FF_X
 function base_bottom_curve_y_ee_ff(x) =
     let(
         // X distance between this point and FF
         dx = BASE_FF_X - x,
         // Y distance between this point and EE
-        dy = BASE_CURVE_EE_FF_R - sqrt(BASE_CURVE_EE_FF_R^2 - dx^2)
+        dy = base_curve_ee_ff_r - sqrt(base_curve_ee_ff_r^2 - dx^2)
     )
     base_ff_y - dy;
 
