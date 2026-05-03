@@ -7,9 +7,17 @@ include <BOSL2/std.scad>
 use <base_planes.scad>
 
 // Bottom curve between EE and FF
-// TODO this should be rounded, not linear
+// The curve is a circle section with tangent angle = 0 at FF and given tangent angle at EE
+// The curve is a circle section with R = (BASE_FF_X - BASE_EE_X) / sin(BASE_TANGENT_EE_A)
+// Height above FF = R - sqrt(r^2 - x^2), where x is distance from BASE_FF_X
 function base_bottom_curve_y_ee_ff(x) =
-    base_ee_y + (x - BASE_EE_X) * (base_ff_y - base_ee_y) / (BASE_FF_X - BASE_EE_X);
+    let(
+        // X distance between this point and FF
+        dx = BASE_FF_X - x,
+        // Y distance between this point and EE
+        dy = BASE_CURVE_EE_FF_R - sqrt(BASE_CURVE_EE_FF_R^2 - dx^2)
+    )
+    base_ff_y - dy;
 
 function base_bottom_curve_y(x) =
     (x < BASE_EE_X)
@@ -34,6 +42,7 @@ module base_object_half() {
     profiles = [
         for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X])
             base_ee_ff_half_plane(lookup(x, XZ_CURVE_Y000), base_bottom_curve_y(x), base_side_angle(x))
+        // TODO add one slice at the end of the FF->back section, but first we need to define depth in X as a constant (and use it in body)
     ];
 
     // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area

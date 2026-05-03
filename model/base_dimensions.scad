@@ -33,7 +33,7 @@ BASE_R = 18.5;
 
 // Parameters in Section E-E
 BASE_EE_X = 24.5;
-base_ee_y = BASE_R; // height of the base, same as side radius
+base_ee_y = BASE_Y / 2; // height of the base at E-E; estimated
 BASE_EE_A = 30; // side angle of the base
 
 // Parameters in Section F-F
@@ -43,6 +43,13 @@ BASE_FF_A = 15; // side angle of the base
 
 // Gap between each two slices between E-E and F-F
 BASE_EE_FF_STEP_X = 10;
+
+// Tangent angle at E-E
+// TODO this angle should be calculated from base_ee_y, not given as a constant
+BASE_TANGENT_EE_A = 15;
+
+// Radius of the circle section curve between E-E and F-F
+BASE_CURVE_EE_FF_R = (BASE_FF_X - BASE_EE_X) / sin(BASE_TANGENT_EE_A);
 
 // Lip around the top of the base, where it connects to shell
 // TODO lip has more complex geometry
