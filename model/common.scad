@@ -2,8 +2,9 @@
 
 DELTA = .01;
 
-$fa = $preview ? 24 : 6;
-fn_where_needed = $preview ? 12 : 64;
+fa_value = $preview ? 24 : 6;
+fn_value = $preview ? 24 : 64;
+$fa = fa_value;
 
 function cotan(angle) = 1 / tan(angle);
 

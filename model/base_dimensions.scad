@@ -41,6 +41,9 @@ BASE_FF_X = 241.8;
 base_ff_y = BASE_Y; // height of the base, full height
 BASE_FF_A = 15; // side angle of the base
 
+// Gap between each two slices between E-E and F-F
+BASE_EE_FF_STEP_X = 10;
+
 // Lip around the top of the base, where it connects to shell
 // TODO lip has more complex geometry
 BASE_LIP_Y = 10;

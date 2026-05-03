@@ -1,6 +1,7 @@
 // use
 include <common.scad>
 include <base_dimensions.scad>
+include <data_lists.scad>
 include <BOSL2/std.scad>
 
 // TODO mask parameter for the mask
@@ -25,11 +26,11 @@ function base_ee_ff_half_plane(width_z, height_y, angle) =
         ],
 
         // Make number of segments in the rounded corners the same, it looks better after skin()
-        // The rounded corner is a (90 - angle) circle section, let's scale $fn based on that
-        // (the number of segments for a 90 degree corner will instead fit into a (90 - angle) corner)
-        corner_fn = fn_where_needed * 90 / (90 - angle)
+        // Scale fa_value from 90 degrees to (90 - angle) degrees to achieve that
+        // There will still be artifacts for small values of fa
+        corner_fa = fa_value * (90 - angle) / 90
     )
-    round_corners(shape, radius = radii, $fn = corner_fn);
+    round_corners(shape, radius = radii, $fa = corner_fa);
 
 polygon(base_ee_ff_half_plane(lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));
 

@@ -6,14 +6,34 @@ include <BOSL2/std.scad>
 
 use <base_planes.scad>
 
+// Bottom curve between EE and FF
+// TODO this should be rounded, not linear
+function base_bottom_curve_y_ee_ff(x) =
+    base_ee_y + (x - BASE_EE_X) * (base_ff_y - base_ee_y) / (BASE_FF_X - BASE_EE_X);
+
+function base_bottom_curve_y(x) =
+    (x < BASE_EE_X)
+    ? base_ee_y // TODO rounded front corner
+    : (x >= BASE_EE_X && x < BASE_FF_X)
+        ? base_bottom_curve_y_ee_ff(x)
+        : base_ff_y;
+
+// Side angle between EE and FF
+function base_side_angle_ee_ff(x) =
+    BASE_EE_A + (x - BASE_EE_X) * (BASE_FF_A - BASE_EE_A) / (BASE_FF_X - BASE_EE_X);
+
+function base_side_angle(x) =
+    (x < BASE_EE_X)
+    ? BASE_EE_A // TODO rounded front corner
+    : (x >= BASE_EE_X && x < BASE_FF_X)
+        ? base_side_angle_ee_ff(x)
+        : BASE_FF_A;
+
 // TODO add mask parameter
 module base_object_half() {
     profiles = [
-        // TODO use more slices, decide how many
-        // TODO base_ee_ff_half_plane should receive a parameter 0.0 - 1.0, position between E-E and F-F
-        base_ee_ff_half_plane(lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A),
-        base_ee_ff_half_plane(lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000), (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2), // tmp mid plane
-        base_ee_ff_half_plane(lookup(BASE_FF_X, XZ_CURVE_Y000), base_ff_y, BASE_FF_A)
+        for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X])
+            base_ee_ff_half_plane(lookup(x, XZ_CURVE_Y000), base_bottom_curve_y(x), base_side_angle(x))
     ];
 
     // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area
@@ -26,13 +46,15 @@ module base_object_half() {
     //         else
     //             x
     // ];
-    stretched_yz_x = [BASE_EE_X, (BASE_EE_X + BASE_FF_X) / 2, BASE_FF_X]; // tmp X coordinates
+    stretched_yz_x = [
+        for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X]) x
+    ];
 
     // TODO xmove(outside ? 0 : DELTA) // move inside plane to clear the back side of the terminal
         skin(
             profiles,
             z = stretched_yz_x,
-            slices = 20, // TODO we should calculate enough of our own slices, avoid interpolation by BOSL
+            slices = 0, // we calculate enough of our own slices, avoid interpolation by BOSL
             method = "fast_distance", // needed because the rounded corners are incommensurate
             orient = RIGHT
         );

@@ -35,7 +35,7 @@ function cc_cover_plane(dist) =
 
         radii = [0, CC_TL_R, CC_TR_R, 0]
     )
-    round_corners(shape, radius = radii, $fn=fn_where_needed);
+    round_corners(shape, radius = radii, $fn=fn_value);
 
 //%polygon(cc_cover_plane(CC_VISIBLE_DEPTH));
 //polygon(cc_cover_plane(0));
