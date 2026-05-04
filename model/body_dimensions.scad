@@ -15,8 +15,8 @@ SCR_TOP_X = 182;
 // but we simplify it a constant 285
 SCR_TOP_Y = 285; // custom; Sheet 30, Data List #2 for X=182
 
-// Depth of the model
-BODY_BACK_X = 400; // custom
+// Depth of the model; must be a multiple of YZ_INTERVAL_X
+BODY_BACK_X = 250; // custom
 
 // Default wall thickness
 BODY_WALL = 4; // custom
@@ -70,8 +70,8 @@ extend_fwd_bot_x = extend_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_
 
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 
-// X values for which we have YZ_CURVE_X* tables
-YZ_X = [0, 50, 100, 150, 200, 250/*, 300, 350, 400*/];
+// X values for which we have YZ_CURVE_X* tables are 50 apart
+YZ_INTERVAL_X = 50;
 
 // Sheet 5
 ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H; same corner in base is R18.5 Page 61

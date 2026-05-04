@@ -36,7 +36,7 @@ module body_yz_half(outside) {
     // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area
     // planes further from each other in X; keyboard area is x < kbd_back_x
     stretched_yz_x = [
-        for (x = YZ_X)
+        for (x = [0:YZ_INTERVAL_X:BODY_BACK_X])
             if (x < kbd_back_x)
                 kbd_back_x - (kbd_back_x - x) * (kbd_back_x + extend_fwd_bot_x) / kbd_back_x
             else

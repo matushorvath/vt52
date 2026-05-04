@@ -46,7 +46,7 @@ module base_object_half() {
     // planes further from each other in X; keyboard area is x < kbd_back_x
     // TODO implement
     // stretched_yz_x = [
-    //     for (x = YZ_X)
+    //     for (x = [0:YZ_INTERVAL_X:BODY_BACK_X])
     //         if (x < kbd_back_x)
     //             kbd_back_x - (kbd_back_x - x) * (kbd_back_x + extend_fwd_bot_x) / kbd_back_x
     //         else
