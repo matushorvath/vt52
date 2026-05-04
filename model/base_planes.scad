@@ -1,13 +1,18 @@
 // use
 include <common.scad>
 include <base_dimensions.scad>
+include <body_dimensions.scad>
 include <data_lists.scad>
 include <BOSL2/std.scad>
 
 // TODO mask parameter for the mask
-function base_ee_ff_half_plane(width_z, height_y, angle) =
+function base_ee_ff_half_plane(mask, width_z, height_y, angle) =
     // Unlike some other _plane functions, this uses model coordinates (horizontal Z and vertical Y)
     let(
+        // If mask, leave a wall around, and add a DELTA where there is no wall
+        owall = mask ? BODY_WALL : 0,
+        oclear = mask ? DELTA : 0,
+
         // Bottom coordinate is raised to align the top edge
         bottom_y = BASE_Y - height_y,
 
@@ -15,14 +20,14 @@ function base_ee_ff_half_plane(width_z, height_y, angle) =
         bottom_z = width_z - ang_adj_to_opp(angle, height_y),
 
         shape = [
-            [0, bottom_y],
-            [0, BASE_Y],
-            [width_z, BASE_Y],
-            [bottom_z, bottom_y]
+            [0, bottom_y + owall],                  // center bottom
+            [0, BASE_Y + oclear],                   // center top
+            [width_z - owall, BASE_Y + oclear],     // side top
+            [bottom_z - owall, bottom_y + owall]    // side bottom
         ],
 
         radii = [
-            0, 0, 0, BASE_R
+            0, 0, 0, BASE_R - owall
         ],
 
         // Make number of segments in the rounded corners the same, it looks better after skin()
@@ -32,11 +37,17 @@ function base_ee_ff_half_plane(width_z, height_y, angle) =
     )
     round_corners(shape, radius = radii, $fa = corner_fa);
 
-polygon(base_ee_ff_half_plane(lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));
+polygon(base_ee_ff_half_plane(true, lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));
+%polygon(base_ee_ff_half_plane(false, lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));
 
-ymove(100)
-    polygon(base_ee_ff_half_plane(lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000),
+ymove(100) {
+    polygon(base_ee_ff_half_plane(true, lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000),
         (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2));
+    %polygon(base_ee_ff_half_plane(false, lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000),
+        (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2));
+}
 
-ymove(200)
-    polygon(base_ee_ff_half_plane(lookup(BASE_FF_X, XZ_CURVE_Y000), base_ff_y, BASE_FF_A));
+ymove(200) {
+    polygon(base_ee_ff_half_plane(true, lookup(BASE_FF_X, XZ_CURVE_Y000), base_ff_y, BASE_FF_A));
+    %polygon(base_ee_ff_half_plane(false, lookup(BASE_FF_X, XZ_CURVE_Y000), base_ff_y, BASE_FF_A));
+}

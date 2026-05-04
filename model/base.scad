@@ -25,6 +25,7 @@ function base_bottom_curve_y(x) =
         : base_ff_y;
 
 // Side angle between EE and FF
+// TODO this looks weird linear, use a similar curve to base_bottom_curve_y
 function base_side_angle_ee_ff(x) =
     BASE_EE_A + (x - BASE_EE_X) * (BASE_FF_A - BASE_EE_A) / (BASE_FF_X - BASE_EE_X);
 
@@ -35,15 +36,14 @@ function base_side_angle(x) =
         ? base_side_angle_ee_ff(x)
         : BASE_FF_A;
 
-// TODO add mask parameter
-module base_object_half() {
+module base_object_half(mask) {
     profiles = [
         // Slices along the E-E to F-F section
         for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X])
-            base_ee_ff_half_plane(lookup(x, XZ_CURVE_Y000), base_bottom_curve_y(x), base_side_angle(x)),
+            base_ee_ff_half_plane(mask, lookup(x, XZ_CURVE_Y000), base_bottom_curve_y(x), base_side_angle(x)),
 
         // One slice at the end of the F-F to back section
-        base_ee_ff_half_plane(lookup(BODY_BACK_X, XZ_CURVE_Y000), base_bottom_curve_y(BODY_BACK_X), base_side_angle(BODY_BACK_X))
+        base_ee_ff_half_plane(mask, lookup(BODY_BACK_X, XZ_CURVE_Y000), base_bottom_curve_y(BODY_BACK_X), base_side_angle(BODY_BACK_X))
     ];
 
     // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area
@@ -61,7 +61,7 @@ module base_object_half() {
         BODY_BACK_X
     ];
 
-    // TODO xmove(outside ? 0 : DELTA) // move inside plane to clear the back side of the terminal
+    xmove(mask ? DELTA : 0) // move inside plane to clear the back side of the terminal
         skin(
             profiles,
             z = stretched_yz_x,
@@ -71,26 +71,22 @@ module base_object_half() {
         );
 }
 
-//base_object_half();
+// base_object_half(false);
 
-// TODO add mask parameter
-module base_object() {
+module base_object(mask) {
     zflip_copy()
-        base_object_half();
+        base_object_half(mask);
 }
 
-base_object();
+// base_object(true);
+// %base_object(false);
 
-// module base() {
-//     difference() {
-//         intersection() {
-//             body_xy(outside);
-//             body_yz(outside);
-//         };
+module base() {
+    difference() {
+        // Base object with a cavity
+        base_object(false);
+        base_object(true);
+    };
+}
 
-//         kbd_fwd_corners_mask(outside);
-//     };
-// }
-
-// body(false);
-// %body(true);
+base();

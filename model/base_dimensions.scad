@@ -53,7 +53,6 @@ BASE_LIP_Y = 10;
 // - define the bottom curve, all the way from 0 to F-F
 // - model the 0-EE shape
 // - extend the keyboard section of base to match the extended shell (for real-world keyboard)
-// - add internal mask
 // - add lip
 // - add feet
 // - add mounting to shell
