@@ -30,7 +30,7 @@ base_ee_y = BASE_Y / 2; // height of the base at E-E; estimated
 BASE_EE_A = 30; // side angle of the base
 
 // Parameters in Section F-F
-BASE_FF_X = 241.8;
+BASE_FF_X = 241.8; // TODO this probably needs to be more forward
 base_ff_y = BASE_Y; // height of the base, full height
 BASE_FF_A = 15; // side angle of the base
 
@@ -53,7 +53,6 @@ BASE_LIP_Y = 10;
 // - define the bottom curve, all the way from 0 to F-F
 // - model the 0-EE shape
 // - extend the keyboard section of base to match the extended shell (for real-world keyboard)
-// - model after F-F
 // - add internal mask
 // - add lip
 // - add feet
