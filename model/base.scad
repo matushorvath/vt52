@@ -82,11 +82,14 @@ module base_object(mask) {
 // %base_object(false);
 
 module base() {
-    difference() {
-        // Base object with a cavity
-        base_object(false);
-        base_object(true);
-    };
+    ymove(-BASE_Y)
+        difference() {
+            // Base object with a cavity
+            base_object(false);
+            base_object(true);
+        };
 }
 
-base();
+// Orient the model for easy viewing in OpenSCAD
+xrot(90)
+    base();

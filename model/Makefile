@@ -1,4 +1,4 @@
-TARGETS=cassette_cover.stl shell.stl vt52.stl
+TARGETS=base.stl cassette_cover.stl shell.stl vt52.stl
 PREVIEWS=$(TARGETS:.stl=.png)
 
 all: $(TARGETS)

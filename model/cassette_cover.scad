@@ -171,17 +171,18 @@ module cc_cover_object() {
 
 module cc_cover() {
     // Angle and move the cover together with the corner mask
-    move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
-        zrot(-SCR_FWD_A) // angle relative to the model
-            difference() {
-                union() {
-                    cc_cover_object();
-                    cc_cover_mounts();
-                    cc_cover_handle();
-                }
+    ymove(EXTEND_Y) // match the movement in shell()
+        move([kbd_back_x, kbd_back_y, CC_MASK_LEFT_Z]) // move to position relative to the model
+            zrot(-SCR_FWD_A) // angle relative to the model
+                difference() {
+                    union() {
+                        cc_cover_object();
+                        cc_cover_mounts();
+                        cc_cover_handle();
+                    }
 
-                cc_bottom_corner_mask();
-            }
+                    cc_bottom_corner_mask();
+                }
 }
 
 // use <body.scad>

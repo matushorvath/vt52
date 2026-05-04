@@ -5,7 +5,6 @@ include <body_dimensions.scad>
 include <data_lists.scad>
 include <BOSL2/std.scad>
 
-// TODO mask parameter for the mask
 function base_ee_ff_half_plane(mask, width_z, height_y, angle) =
     // Unlike some other _plane functions, this uses model coordinates (horizontal Z and vertical Y)
     let(
