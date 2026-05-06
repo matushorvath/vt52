@@ -41,9 +41,9 @@ polygon(base_ee_ff_half_plane(true, lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y,
 
 ymove(100) {
     polygon(base_ee_ff_half_plane(true, lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000),
-        (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2));
+        (base_ee_y + base_ff_y) / 2, (BASE_EE_A + BASE_FF_A) / 2));
     %polygon(base_ee_ff_half_plane(false, lookup((BASE_EE_X + BASE_FF_X) / 2, XZ_CURVE_Y000),
-        (base_ee_y + base_ff_y) / 2 , (BASE_EE_A + BASE_FF_A) / 2));
+        (base_ee_y + base_ff_y) / 2, (BASE_EE_A + BASE_FF_A) / 2));
 }
 
 ymove(200) {

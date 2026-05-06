@@ -40,15 +40,15 @@ module base_object_half(mask) {
     profiles = [
         // Slices along the E-E to F-F section
         for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X])
-            base_ee_ff_half_plane(mask, lookup(x, XZ_CURVE_Y000), base_bottom_curve_y(x), base_side_angle(x)),
+            path3d(base_ee_ff_half_plane(mask, lookup(x, XZ_CURVE_Y000), base_bottom_curve_y(x), base_side_angle(x)), x),
 
         // One slice at the end of the F-F to back section
-        base_ee_ff_half_plane(mask, lookup(BODY_BACK_X, XZ_CURVE_Y000), base_bottom_curve_y(BODY_BACK_X), base_side_angle(BODY_BACK_X))
+        path3d(base_ee_ff_half_plane(mask, lookup(BODY_BACK_X, XZ_CURVE_Y000), base_bottom_curve_y(BODY_BACK_X), base_side_angle(BODY_BACK_X)), BODY_BACK_X)
     ];
 
     // The keyboard area is extended into -X by extend_fwd_bot_x, so we need to space the keyboard area
     // planes further from each other in X; keyboard area is x < kbd_back_x
-    // TODO implement
+    // TODO implement; the X coordinate to stretch is part of 3d profiles above
     // stretched_yz_x = [
     //     for (x = [0:YZ_INTERVAL_X:BODY_BACK_X])
     //         if (x < kbd_back_x)
@@ -56,15 +56,14 @@ module base_object_half(mask) {
     //         else
     //             x
     // ];
-    stretched_yz_x = [
-        for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X]) x,
-        BODY_BACK_X
-    ];
+    // stretched_yz_x = [
+    //     for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X]) x,
+    //     BODY_BACK_X
+    // ];
 
     xmove(mask ? DELTA : 0) // move inside plane to clear the back side of the terminal
         skin(
             profiles,
-            z = stretched_yz_x,
             slices = 0, // we calculate enough of our own slices, avoid interpolation by BOSL
             method = "fast_distance", // needed because the rounded corners are incommensurate
             orient = RIGHT
