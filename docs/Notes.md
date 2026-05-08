@@ -224,3 +224,26 @@ notes from base pictures:
 base pictures:
   - https://youtu.be/ksL232PHivI?si=0KYnzbPQB_4y2-OS&t=13
   - https://www.youtube.com/watch?v=nb2bxaj79rc
+
+
+Base Front Edge
+---------------
+
+[0.0000000, 258.5000000],
+[5.0000000, 258.6535700],
+[10.0000000, 258.8047803],
+[15.0000000, 258.9535700],
+[20.0000000, 259.1000000],
+[25.0000000, 259.2440500],
+
+echo("18.5", lookup(18.5, XZ_CURVE_Y000));
+ECHO: "18.5", 259.056
+echo("24.5", lookup(24.5, XZ_CURVE_Y000));
+ECHO: "24.5", 259.23
+
+echo(adj_opp_to_ang(24.5 - 18.5, lookup(24.5, XZ_CURVE_Y000) - lookup(18.5, XZ_CURVE_Y000)));
+ECHO: 1.65705
+
+width_z = lookup(24.5, XZ_CURVE_Y000) = 259.23
+
+=> the very first half plane (horizontal) has angle = 1.65705, width_z = 259.23, height_y = 24.5

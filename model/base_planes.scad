@@ -5,12 +5,12 @@ include <body_dimensions.scad>
 include <data_lists.scad>
 include <BOSL2/std.scad>
 
+// TODO rename to base_half_plane
 function base_ee_ff_half_plane(mask, width_z, height_y, angle) =
-    // Unlike some other _plane functions, this uses model coordinates (horizontal Z and vertical Y)
+    // Unlike some other _plane functions, this uses model coordinate naming (horizontal Z and vertical Y)
     let(
         // If mask, leave a wall around, and add a DELTA where there is no wall
         owall = mask ? BODY_WALL : 0,
-        oclear = mask ? DELTA : 0,
 
         // Bottom coordinate is raised to align the top edge
         bottom_y = BASE_Y - height_y,
@@ -20,8 +20,8 @@ function base_ee_ff_half_plane(mask, width_z, height_y, angle) =
 
         shape = [
             [0, bottom_y + owall],                  // center bottom
-            [0, BASE_Y + oclear],                   // center top
-            [width_z - owall, BASE_Y + oclear],     // side top
+            [0, BASE_Y],                            // center top
+            [width_z - owall, BASE_Y],              // side top
             [bottom_z - owall, bottom_y + owall]    // side bottom
         ],
 
@@ -35,6 +35,12 @@ function base_ee_ff_half_plane(mask, width_z, height_y, angle) =
         corner_fa = fa_value * (90 - angle) / 90
     )
     round_corners(shape, radius = radii, $fa = corner_fa);
+
+ymove(-100) {
+    slice0_angle = adj_opp_to_ang(base_fc_x - BASE_R, lookup(base_fc_x, XZ_CURVE_Y000) - lookup(BASE_R, XZ_CURVE_Y000));
+    polygon(base_ee_ff_half_plane(true, lookup(24.5, XZ_CURVE_Y000), 24.5, slice0_angle));
+    %polygon(base_ee_ff_half_plane(false, lookup(24.5, XZ_CURVE_Y000), 24.5, slice0_angle));
+}
 
 polygon(base_ee_ff_half_plane(true, lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));
 %polygon(base_ee_ff_half_plane(false, lookup(BASE_EE_X, XZ_CURVE_Y000), base_ee_y, BASE_EE_A));

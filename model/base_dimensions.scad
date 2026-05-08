@@ -43,7 +43,15 @@ base_ee_ff_y = base_ff_y - base_ee_y;
 base_curve_ee_ff_r = (base_ee_ff_x^2 + base_ee_ff_y^2) / (2 * base_ee_ff_y);
 
 // Tangent angle at E-E
-// TODO verify/remove BASE_TANGENT_EE_A = arcsin(base_ee_ff_x / base_curve_ee_ff_r);
+// TODO remove? BASE_TANGENT_EE_A = asin(base_ee_ff_x / base_curve_ee_ff_r);
+
+// Parameters for front rounded corner
+base_fc_x = BASE_EE_X;
+base_fc_y = BASE_Y;
+base_fc_r = BASE_R;
+
+// Angle gap between each two slices between 0 and F-F
+BASE_0_FF_STEP_A = 5;
 
 // Lip around the top of the base, where it connects to shell
 // TODO lip has more complex geometry
