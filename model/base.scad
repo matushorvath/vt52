@@ -7,17 +7,23 @@ include <BOSL2/std.scad>
 
 use <base_planes.scad>
 
-// Bottom curve between 0 and EE, which defines slice height for the corner [base_fc_x, base_fc_y]
-function base_bottom_height_y_0_ee(a) =
-    // At a = 90 the height is base_fc_x, at a = 0 the height is base_ee_y
-    // The mixed X and Y coordinates are because the slices rotate from X to Y
-    let(
-        ratio_a = (90 - a) / 90,
-        dh = (base_ee_y - base_fc_x)
-    )
-    base_fc_x + ratio_a * dh;
+// Bottom curve between 0 and EE, added to the rotated slice in Y direction
+function base_bottom_curve_y_0_ee(x) =
+    // At x = 0 we don't add anything; at x = BASE_EE_X we add (base_ee_y - BASE_R)
+    x * (base_ee_y - BASE_R) / BASE_EE_X;
+
+// Center of rotation for the 0 to EE slices
+function base_rot_center_x_0_ee(x) =
+    // At x = 0 the center is at BASE_R; at x = BASE_EE_X the center is at BASE_EE_X
+    BASE_R + x * (BASE_EE_X - BASE_R) / BASE_EE_X;
+
+// Angle of rotation for the 0 to EE slices
+function base_rot_angle_0_ee(x) =
+    // At x = 0 the angle is 90; at x = BASE_EE_X the angle is 0
+    90 - x * 90 / BASE_EE_X;
 
 // Side angle between 0 and EE
+// TODO wrong, it should be defined in X and Y and combined, so it looks contiguous
 function base_side_angle_0_ee(a) =
     // At a = 90 the side angle is calculated from XZ_CURVE_Y000
     // At a = 0 the side angle is BASE_EE_A
@@ -61,20 +67,34 @@ module base_object_half(mask) {
     profiles = [
         // Slices for the rounded front edge; the ZY slice maps to XY coordinates here
         // TODO refactor this into functions
-        for (a = [90:-BASE_0_FF_STEP_A:0])
-            xrot(
-                a = a,
-                p = path3d(base_ee_ff_half_plane(mask, lookup(base_fc_x, XZ_CURVE_Y000),
-                    base_bottom_height_y_0_ee(a), base_side_angle_0_ee(a)), base_fc_x),
-                cp = [0, base_fc_y, base_fc_x]
-            ),
+        for (x = [0:BASE_0_EE_STEP_X:BASE_EE_X])
+            let(
+                // Avoid calculating these multiple times
+                bottom_curve_y = base_bottom_curve_y_0_ee(x),
+                rot_center_x = base_rot_center_x_0_ee(x),
+                rot_angle = base_rot_angle_0_ee(x),
 
-        // TODO not contiguous in E-E
-        // TODO weird angle in 0, should be at most horizontal, but is actually over horizontal
-        // because the planes get extended with every angle increase - the shape is wrong, rethink
-        // TODO the correct shape won't be extending slice height but slice vertical position (then we have to calc slice height)
-        // TODO the side angle is also wrong 0 to E-E, it shouldn't just linearly change,
-        // it should be defined in X and Y and combined, so it looks contiguous
+                // Extend each slice up by bottom_curve_y so its top reaches BODY_Y, at the correct angle
+                extend_height = x == 0 ? 0 : ang_adj_to_hyp(rot_angle, bottom_curve_y)
+            )
+            ymove(
+                y = -bottom_curve_y,
+                p = xrot(
+                    a = rot_angle,
+                    p = path3d(
+                            ymove(
+                                y = extend_height,
+                                p = base_ee_ff_half_plane(
+                                    mask,
+                                    lookup(rot_center_x, XZ_CURVE_Y000),
+                                    BASE_R + extend_height,
+                                    30 // TODO wrong, was base_side_angle_0_ee(a)
+                                )
+                            ),
+                        rot_center_x),
+                    cp = [0, base_fc_y, rot_center_x]
+                )
+            ),
 
         // Slices along the E-E to F-F section
         for (x = [BASE_EE_X:BASE_EE_FF_STEP_X:BASE_FF_X])
@@ -115,6 +135,7 @@ module base_object(mask) {
         base_object_half(mask);
 }
 
+// TODO base_object with true or false causes render errors, base_object_half works; maybe it's because of complex and wrong ZY profile
 // base_object(true);
 // %base_object(false);
 
