@@ -50,7 +50,7 @@ These are simply the parts I purchased; I have no affiliation with their manufac
 The model was created mostly by hand. That said, AI was used in a few specific ways:
 
 - **Geometric debugging:** I used Claude to help debug trigonometric calculations when I got completely lost.
-- **Data extraction:** Claude was used to read numeric data tables from low-quality scanned technical drawings (see `body_tables.scad`). The scans had too many numbers to copy manually, so Claude was used essentially as an OCR tool.
+- **Data extraction:** Claude was used to read numeric data tables from low-quality scanned technical drawings (see `data_lists.scad`). The scans had too many numbers to copy manually, so Claude was used essentially as an OCR tool.
 - **This document:** Claude was used to improve the language. I wrote the original text by hand, but English is not my first language - trust me, you prefer this version.
 
 No AI was used in any other part of creating this model.

@@ -24,7 +24,7 @@ function screen_fwd_plane(mask) =
             SCR_FWD_BR_R + owall,
         ]
     )
-    round_corners(shape, radius = radii, $fn = fn_where_needed);
+    round_corners(shape, radius = radii, $fn = fn_value);
 
 // Extra plane is only used when mask = true
 function screen_extra_plane(mask) =
@@ -46,7 +46,7 @@ function screen_extra_plane(mask) =
             SCR_FWD_BR_R + owall,
         ]
     )
-    round_corners(shape, radius = radii, $fn = fn_where_needed);
+    round_corners(shape, radius = radii, $fn = fn_value);
 
 function screen_back_plane(mask) =
     let(
@@ -66,7 +66,7 @@ function screen_back_plane(mask) =
             SCR_BACK_CORNER_A + owall,
         ]
     )
-    round_corners(shape, radius = radii, $fn = fn_where_needed);
+    round_corners(shape, radius = radii, $fn = fn_value);
 
 // %polygon(screen_fwd_plane(true));
 // polygon(screen_fwd_plane(false));

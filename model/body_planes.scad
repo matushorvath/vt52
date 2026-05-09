@@ -1,6 +1,7 @@
 // use
 include <common.scad>
 include <body_dimensions.scad>
+include <data_lists.scad>
 include <BOSL2/std.scad>
 
 PREVIEW_TABLE_SKIP = 20;
@@ -76,7 +77,7 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
         owall = outside ? 0 : BODY_WALL,
         oclear = outside ? 0 : DELTA,
 
-        // Make the model taller to accomodate for EXTEND_Y
+        // Make the model taller to accommodate for EXTEND_Y
         stretched_side_curve = stretch_side_curve(side_curve, kbd_back_y, EXTEND_Y),
 
         // Skip most points if we are in preview mode
@@ -101,13 +102,13 @@ function body_yz_half_plane(outside, bottom_z, side_curve) =
     )
     round_corners(shape, radius = radii);
 
-// %polygon(body_yz_half_plane(true, XZ_CURVE_Y000[0], YZ_CURVE_X000));
-// polygon(body_yz_half_plane(false, XZ_CURVE_Y000[0], YZ_CURVE_X000));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[1], YZ_CURVE_X050));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[2], YZ_CURVE_X100));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[3], YZ_CURVE_X150));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[4], YZ_CURVE_X200));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[5], YZ_CURVE_X250));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[6], YZ_CURVE_X300));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[7], YZ_CURVE_X350));
-// polygon(body_yz_half_plane(true, XZ_CURVE_Y000[8], YZ_CURVE_X400));
+// %polygon(body_yz_half_plane(true, lookup(0, XZ_CURVE_Y000), YZ_CURVE_X000));
+// polygon(body_yz_half_plane(false, lookup(0, XZ_CURVE_Y000), YZ_CURVE_X000));
+// polygon(body_yz_half_plane(true, lookup(50, XZ_CURVE_Y000), YZ_CURVE_X050));
+// polygon(body_yz_half_plane(true, lookup(100, XZ_CURVE_Y000), YZ_CURVE_X100));
+// polygon(body_yz_half_plane(true, lookup(150, XZ_CURVE_Y000), YZ_CURVE_X150));
+// polygon(body_yz_half_plane(true, lookup(200, XZ_CURVE_Y000), YZ_CURVE_X200));
+// polygon(body_yz_half_plane(true, lookup(250, XZ_CURVE_Y000), YZ_CURVE_X250));
+// polygon(body_yz_half_plane(true, lookup(300, XZ_CURVE_Y000), YZ_CURVE_X300));
+// polygon(body_yz_half_plane(true, lookup(350, XZ_CURVE_Y000), YZ_CURVE_X350));
+// polygon(body_yz_half_plane(true, lookup(400, XZ_CURVE_Y000), YZ_CURVE_X400));

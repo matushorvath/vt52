@@ -1,6 +1,5 @@
 // include
 include <common.scad>
-include <body_tables.scad>
 include <BOSL2/std.scad>
 
 // Sheet 1
@@ -16,8 +15,8 @@ SCR_TOP_X = 182;
 // but we simplify it a constant 285
 SCR_TOP_Y = 285; // custom; Sheet 30, Data List #2 for X=182
 
-// Depth of the model
-BODY_BACK_X = 400; // custom
+// Depth of the model; must be a multiple of YZ_INTERVAL_X
+BODY_BACK_X = 250; // custom
 
 // Default wall thickness
 BODY_WALL = 4; // custom
@@ -71,27 +70,14 @@ extend_fwd_bot_x = extend_fwd_top_x - kbd_fwd_x + ang_adj_to_opp(KBD_FWD_A, KBD_
 
 YZ_TOP_CORNER_R = 20; // Sheet 6, Section AA-AA
 
-// X values for which we have YZ_CURVE_X* tables
-YZ_X = [0, 50, 100, 150, 200, 250/*, 300, 350, 400*/];
-
-// Values from Sheet 29, Data List #1 for X values in YZ_X
-XZ_CURVE_Y000 = [
-    258.50000,  // X = 0
-    259.92857,  // X = 50
-    261.11905,  // X = 100
-    262.07143,  // X = 150
-    262.78571,  // X = 200
-    263.26191,  // X = 250
-    // 263.50000,  // X = 300
-    // 263.50000,  // X = 350
-    // 263.29190,  // X = 400
-];
+// X values for which we have YZ_CURVE_X* tables are 50 apart
+YZ_INTERVAL_X = 50;
 
 // Sheet 5
-ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H
+ZX_FWD_CORNER_R = 20; // Sheet 5, Bottom View H-H; same corner in base is R18.5 Page 61
 
 // Empirically tuned to match keyboard forward rounded corners to the body sides
-KBD_FWD_CORNER_ADJ_BOTTOM_Y = 0.55; // added to XZ_CURVE_Y000[0] when positioning bottom of the corner
+KBD_FWD_CORNER_ADJ_BOTTOM_Y = 0.55; // added to XZ_CURVE_Y000[0][1] when positioning bottom of the corner
 KBD_FWD_CORNER_ADJ_TOP_Y = 0.2; // additional shift when positioning top of the corner
 
 // Decorative bezel on certain edges
